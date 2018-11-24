@@ -1,24 +1,6 @@
-<%@page import="kr.co.techpedia.member.model.vo.MemberSession"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-	<%
-		session = request.getSession(false);
-		//System.out.println("\nindex page session : "+session);/////////////////////////
-		if(session!=null) {
-			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			System.out.println("index page session check\n"+memSession);///////////////////
-			if(memSession!=null) {
-	%>
-			<script>
-				location.href="/views/main/mainpage.jsp";
-			</script>
-	<%
-			}
-		}
-	%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Techpedia</title>
     <link href="/css/index.css" rel="stylesheet" type="text/css">

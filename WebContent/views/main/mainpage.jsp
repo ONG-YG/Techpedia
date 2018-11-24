@@ -7,11 +7,11 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Techpedia</title>
-    <link href="../../css/main_common.css" rel="stylesheet" type="text/css">
+    <link href="/css/main_common.css" rel="stylesheet" type="text/css">
     
     <script
       type="text/javascript"
-        src="../../resources/jquery-3.3.1.js">
+        src="/resources/jquery-3.3.1.js">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	</script>

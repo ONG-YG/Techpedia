@@ -10,21 +10,40 @@
 
 	<div id="sidebar">
 		
-		<div class="menu">
-		   	 마이페이지
-		</div>
-		<div class="menu">
-		    	공지사항
-		</div>
-		<div class="menu">
-		    	기술 지원 게시판
-		</div>
-		<div class="menu">
-		    	기술 공유 게시판
-		</div>
-		<div class="menu">
-		    	관리자 페이지
-		</div>
+		<ul class="menu-ul">
+            <li class="menu" id="mypage-li">
+                <span>마이페이지</span>
+                <ul class="submenu-ul">
+                    <li id="memberInfoMgr"><span>회원정보 조회/수정/탈퇴</span></li>
+                    <li id="progTechSppt"><span>진행 중 기술지원</span></li>
+                    <li id="myTechShr"><span>작성한 기술 공유 게시물</span></li>
+                </ul>
+            </li>
+            <li class="menu" id="notice-li">
+                <span>공지사항</span>
+            </li>
+            <li class="menu" id="tech-support-li">
+                <span>기술 지원 게시판</span>
+            </li>
+            <li class="menu" id="tech-share-li">
+                <span>기술 공유 게시판</span>
+            </li>
+            <li class="menu" id="admin-page-li">
+                <span>관리자 페이지</span>
+                <ul class="submenu-ul">
+                    <li id="joinApprove"><span>회원가입 신청자 관리</span></li>
+                    <li id="techSpptEngAssign"><span>기술 지원 엔지니어 할당</span></li>
+                    <li id="mainNoticeSet"><span>메인페이지 공지 설정</span></li>
+                    <li id="totalMemberMgr"><span>전체 회원 관리</span></li>
+                </ul>
+            </li>
+		</ul>
+        <script>
+            $('.menu').click(function(){
+                $(this).siblings().children('ul').removeClass('showMenu');
+                $(this).children('ul').toggleClass('showMenu');
+            });
+        </script>
 		
 	</div>
 
