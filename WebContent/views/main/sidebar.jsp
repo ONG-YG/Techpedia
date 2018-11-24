@@ -39,10 +39,12 @@
             </li>
 		</ul>
         <script>
-            $('.menu').click(function(){
-                $(this).siblings().children('ul').removeClass('showMenu');
-                $(this).children('ul').toggleClass('showMenu');
-            });
+	        $(document).ready(function(){
+	            $('.menu').click(function(){
+	                $(this).siblings().children('ul').removeClass('showMenu');
+	                $(this).children('ul').toggleClass('showMenu');
+	            });
+	        });
         </script>
 		
 	</div>

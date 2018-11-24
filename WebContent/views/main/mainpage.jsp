@@ -37,6 +37,9 @@
             
             <div id="mainView">
             	<!-- 메인 공지사항 띄워주는 공간 -->
+            	
+            	<jsp:include page="/views/main/main_notice.jsp"></jsp:include>
+            	
             </div>
             
         </div>

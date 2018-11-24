@@ -15,15 +15,15 @@
 		//System.out.println("\nmainpage session : "+session);/////////////////////////
 		if(session!=null) {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			System.out.println("\nmainpage memSession check 1\n"+memSession);////////////////////////
+			System.out.println("\nmainpage(header) memSession check 1\n"+memSession);////////////////////////
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				
-				System.out.println("\nmainpage memSession check 2\n"+memSession);////////////////////////
+				System.out.println("\nmainpage(header) memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
-				alert("memberTypeCD : "+memberTypeCD);/////////////////////////
+				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
 			</script>
 	<%
 			}else {			
