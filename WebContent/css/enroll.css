@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+div{
+/*    border: 5px solid; border-color: white;*/
+}
+
+html{
+/*    border: 5px solid; border-color: red;*/
+    height: 95%; width: 98%;
+    min-height: 900px;
+    min-width: 620px;
+    background-image: url("../img/v5R405z.jpg");
+    background-position: topcenter;
+    background-color: black;
+    box-sizing: border-box;
+}
+body, #wrapper{
+    height: 100%; width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+#header{
+/*    border: 5px solid; border-color: blue;*/
+    height: 20%; width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 50px;
+}
+#header #mainTitle{
+    margin-top: 50px;
+}
+#header strong{
+    color: white;
+    text-shadow: 3px 3px 5px #16293A;
+    font-size: 50px;
+}
+#header strong:hover{
+    cursor: pointer;
+}
+
+
+#content{
+/*    border: 5px dashed; border-color: white;*/
+    height: 70%; width: 100%;
+    box-sizing: border-box;
+    color: white;
+    text-shadow: 3px 3px 5px #16293A;
+    
+}
+#content #login-box{
+/*    border: 5px dashed; border-color: greenyellow;*/
+    height: 100%; width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+}
+#content #login-box div{
+    margin-left: auto;
+    margin-right: auto;
+}
+#content #login-box div table{
+    margin-left: 70px;
+    margin-right: 0px;
+}
+#content #login-box div table th{
+    width: 110px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 12px;
+    text-shadow: -1px 0 5px #16293A,
+                0 1px 5px #16293A,
+                1px 0 5px #16293A,
+                0 -1px 5px #16293A;
+}
+#content #login-box div table input{
+    height: 20px; width: 200px;
+    padding-left: 5px;
+}
+#content #login-box div table select{
+    height: 25px; width: 170px;
+    padding: 0px;
+    padding-left: 5px;
+}
+#content #login-box div table td:nth-child(2){
+    height: 30px; width: 400px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+#content #login-box div table #idUniqCheck{
+    /*    border: 1px solid; border-color: blue;*/
+    height: 30px; width: 70px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+    color: white;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#content #login-box div table .conditions td{
+    color: red;
+    font-size: 12px;
+    height: 20px;
+    padding: 0px;
+    padding-left: 10px;
+    text-shadow: -1px 0 2px black,
+                0 1px 2px black,
+                1px 0 2px black,
+                0 -1px 2px black;
+    display: none;
+/*    display: table;*/
+}
+#content #login-box #enroll{
+/*    border: 1px solid; border-color: red;*/
+    text-align: center;
+}
+#content #login-box #enrollSubmit{
+/*    border: 1px solid; border-color: blue;*/
+    height: 40px; width: 70px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 30px;
+    
+    background-color: gainsboro;
+/*    background-color: rgb(0,0,65);*/
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+    color: dimgray;
+/*    color: white;*/
+}
+
+
+
+#footer{
+/*    border: 5px dashed; border-color: blue;*/
+    height: 10%; width: 100%;
+    box-sizing: border-box;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+}
+#footer span{
+    margin-left: auto;
+    margin-right: auto;
+}

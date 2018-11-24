@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Techpedia</title>
+    <link href="../../css/main_common.css" rel="stylesheet" type="text/css">
+    
+    <script
+      type="text/javascript"
+        src="../../resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+    <script>
+        
+	    $(document).ready(function(){
+	    	
+            
+	    });
+        
+        function goMain(){
+            location.href="/views/main/mainpage.html";
+            //location.href="/views/main/mainpage.jsp";
+        }
+        
+        function logout(){
+            //Ajax로 로그아웃 후 성공 시 index.jsp로 이동
+            location.href="/index.html";
+            //location.href="/index.jsp";
+        }
+        
+    </script>
+    
+</head>
+<body>
+    
+    <div id="wrapper">
+        
+        <div id="header">
+            <span id="logout" onclick="logout();">로그아웃</span>
+            <strong onclick="goMain();">Techpedia</strong>
+        </div>
+        
+        
+        <div id="content">
+            <div id="sidebar">
+                <div class="menu">
+                    마이페이지
+                </div>
+                <div class="menu">
+                    공지사항
+                </div>
+                <div class="menu">
+                    기술 지원 게시판
+                </div>
+                <div class="menu">
+                    기술 공유 게시판
+                </div>
+                <div class="menu">
+                    관리자 페이지
+                </div>
+            </div>
+            <div id="mainView">
+            </div>
+        </div>
+        
+        <div id="footer">
+            <span>
+                All rights reserved ⓒTechpedia
+            </span>
+        </div>
+        
+    </div>
+    
+    
+</body>
+</html>

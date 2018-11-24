@@ -1,0 +1,806 @@
+<%@page import="kr.co.techpedia.member.model.vo.MemberSession"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<%
+		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
+		System.out.println("enroll page session check\n"+memSession);/////////////////
+		if(memSession!=null) {
+	%>
+		<script>
+			location.href="/views/main/mainpage.jsp";
+		</script>
+	<%
+		}
+	%>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Techpedia</title>
+    <link href="/css/enroll.css" rel="stylesheet" type="text/css">
+    
+    <script
+      type="text/javascript"
+        src="../../resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+    <script>
+    	var memberTypeList = [];
+    	var compList = [];
+    	
+        var checkId = false;
+        var checkPw = false;
+        var checkRePw = false;
+        var checkName = false;
+        var checkPhoneP = false;
+        var checkPhoneC = false;
+        var checkEmail = false;
+        var checkMemberTypeCD = false;
+        var checkCompNo = false;
+        var checkCompMemNo = false;
+        
+        var checkIdUniq = false;
+        
+	    $(document).ready(function(){
+	    	
+	    	getMemberTypeList();
+	    	check();
+	    	
+            $('#enrollSubmit').click(function() {
+                check();
+                if(!checkId) {
+                    $('#idCheck').attr('style','display: table');
+                }
+                if(!checkPw) {
+                    $('#pwCheck').attr('style','display: table');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }else {
+                    $('#pwReCheck').attr('style','display: none');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }
+                if(!checkName) {
+                    $('#nameCheck').attr('style','display: table');
+                }
+                if(!checkPhoneP) {
+                    $('#pPhoneCheck').attr('style','display: table');
+                }
+                if(!checkPhoneC) {
+                    $('#cPhoneCheck').attr('style','display: table');
+                }
+                if(!checkEmail) {
+                    $('#emailCheck').attr('style','display: table');
+                }
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+                if(!checkCompMemNo) {
+                    $('#compMemNoCheck').attr('style','display: table');
+                }
+                if(checkId
+					&& checkPw
+					&& checkRePw
+					&& checkName
+					&& checkPhoneP
+					&& checkPhoneC
+					&& checkEmail
+					&& checkMemberTypeCD
+					&& checkCompNo
+					&& checkCompMemNo
+					&& !checkIdUniq) {
+                	
+                	alert("아이디 중복체크를 해주세요.");
+                }
+            });
+            
+            $(document).change(function(){
+	    		//console.log("mouseup");
+	    		check();
+	    	});
+	    	
+	    	$(document).keyup(function(){
+	    		//console.log("keyup");
+	    		check();
+	    	});
+            
+            $('#memberIdInput').blur(function() {
+                if(!checkId) {
+                    $('#idCheck').attr('style','display: table');
+                }
+            });
+            $('#memberIdInput').keyup(function() {
+            	checkIdUniq = false;
+            });
+            $('#memberPwInput').blur(function() {
+                if(!checkPw) {
+                    $('#pwCheck').attr('style','display: table');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }else {
+                    $('#pwReCheck').attr('style','display: none');
+                }
+            });
+            $('#memberPwReInput').blur(function() {
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }
+            });
+            $('#memberNameInput').blur(function() {
+                if(!checkName) {
+                    $('#nameCheck').attr('style','display: table');
+                }
+            });
+            $('#member_P_PhoneInput').blur(function() {
+                if(!checkPhoneP) {
+                    $('#pPhoneCheck').attr('style','display: table');
+                }
+            });
+            $('#member_C_PhoneInput').blur(function() {
+                if(!checkPhoneC) {
+                    $('#cPhoneCheck').attr('style','display: table');
+                }
+            });
+            $('#memberEmailInput').blur(function() {
+                if(!checkEmail) {
+                    $('#emailCheck').attr('style','display: table');
+                }
+            });
+            $('#memberTypeCDSelect').mouseup(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                else {
+                	//ajax로 compNoSelect받아오기//////////////////
+                	getCompanyList();
+                }
+            });
+            $('#compNoSelect').mouseup(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            $('#compMemNoInput').focusin(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            $('#compMemNoInput').blur(function() {
+                if(!checkCompMemNo) {
+                    $('#compMemNoCheck').attr('style','display: table');
+                }
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            
+	    });//$(document).ready END
+	    
+	    
+	    function getMemberTypeList() {
+	    	$.ajax({
+				url : "/getMemberTypeList.do",
+				//data : {},
+				//type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log("memberTypeList data");
+					//console.log(data);
+					if(data==false) {
+						alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/index.jsp";
+					}
+					else {
+						memberTypeList = [];
+						for(var i=0; i<data.length; i++) {
+							var memberType = [data[i].memberTypeCD,
+											data[i].memberTypeName,
+											data[i].compCTG];
+							memberTypeList.push(memberType);
+						}
+						
+						var memTypeList = "<option value='none'>선택</option>";
+						for(var i=0; i<memberTypeList.length; i++) {
+							memTypeList += "<option value='"+memberTypeList[i][0]
+											+"' class='"+memberTypeList[i][2]+"'>"
+											+memberTypeList[i][1]+"</option>";
+						}
+						$('#memberTypeCDSelect').html(memTypeList);
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/index.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+	    }//function END
+	    
+	    function getCompanyList() {
+	    	$.ajax({
+				url : "/getCompanyList.do",
+				//data : {},
+				//type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data==false) {
+						alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/index.jsp";
+					}
+					else {
+						compList = [];
+						for(var i=0; i<data.length; i++) {
+							var company = [data[i].compNo,
+											data[i].compName,
+											data[i].compCTG];
+							compList.push(company);
+						}
+						
+						var memberTypeCDSelect = $('#memberTypeCDSelect').val();
+						var compCTG = null;
+						for (var j=0; j<memberTypeList.length; j++) {
+							if(memberTypeList[j][0]==memberTypeCDSelect) {
+								compCTG = memberTypeList[j][2];
+							}
+						}
+						
+						var compSelList = "<option value='none'>선택</option>";
+						for(var i=0; i<compList.length; i++) {
+							if(compList[i][2]==compCTG) {
+								compSelList += "<option value='"+compList[i][0]+"'>"
+								+compList[i][1]+"</option>";
+							}				
+						}
+						$('#compNoSelect').html(compSelList);
+						
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/index.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+	    }//function END
+        
+        function goIndex(){
+            //location.href="/index.html";
+            location.href="/index.jsp";
+        }//function END
+        
+	    function check() {
+            //alert("check start");
+			var memberIdInput = document.getElementById("memberIdInput").value;
+            var memberPwInput = document.getElementById("memberPwInput").value;
+            var memberPwReInput = document.getElementById("memberPwReInput").value;
+            var memberNameInput = document.getElementById("memberNameInput").value;
+            var member_P_PhoneInput = document.getElementById("member_P_PhoneInput").value;
+            var member_C_PhoneInput = document.getElementById("member_C_PhoneInput").value;
+            var memberEmailInput = document.getElementById("memberEmailInput").value;
+            var memberTypeCDSelect = document.getElementById("memberTypeCDSelect").value;
+            var compNoSelect = document.getElementById("compNoSelect").value;
+            var compMemNoInput = document.getElementById("compMemNoInput").value;
+            
+            //아이디 확인
+            //var checkId = false;
+            var patt_Id1 = new RegExp("[a-z]+");
+            var patt_Id2 = new RegExp("^[a-z0-9_-]{5,20}$");
+		   	var res_Id1 = patt_Id1.test( memberIdInput );
+            var res_Id2 = patt_Id2.test( memberIdInput );
+            
+            if(res_Id1 && res_Id2 && !checkIdUniq) {
+                checkId = true;
+                $('#idCheck').attr('style','display: table');
+                $('#idCheck').html("사용 가능한 아이디입니다. 중복 검사를 해주세요.");
+                $('#idCheck').css('color','greenyellow');
+            }
+            else if(checkIdUniq) {
+                checkId = true;
+                $('#idCheck').attr('style','display: table');
+                $('#idCheck').html("사용 가능한 아이디입니다.");
+                $('#idCheck').css('color','greenyellow');
+            }
+            else {
+                checkId = false;
+                $('#idCheck').html("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용하여 작성해주세요.");
+                $('#idCheck').css('color','red');
+            }
+            //console.log("res_Id1 "+res_Id1);
+            //console.log("res_Id2 "+res_Id2);
+            //console.log("checkId "+checkId);
+            //console.log("----");
+            
+            //비밀번호 확인
+            //var checkPw = false;
+            var patt_Pw1 = new RegExp("[a-zA-Z]+");
+            var patt_Pw2 = new RegExp("^.{8,16}$");
+		   	var res_Pw1 = patt_Pw1.test( memberPwInput );
+            var res_Pw2 = patt_Pw2.test( memberPwInput );
+            
+            if(res_Pw1 && res_Pw2) {
+                checkPw = true;
+                $('#pwCheck').attr('style','display: table');
+                $('#pwCheck').html("사용가능한 비밀번호입니다.");
+                $('#pwCheck').css('color','greenyellow');
+            }else {
+                checkPw = false;
+                $('#pwCheck').html("8~16자 영문 대 소문자, 숫자, 특수문자를  사용하여 작성해주세요.");
+                $('#pwCheck').css('color','red');
+            }
+            //console.log("res_Pw1 "+res_Pw1);
+            //console.log("res_Pw2 "+res_Pw2);
+            //console.log("checkPw "+checkPw);
+            //console.log("----");
+            
+            //비밀번호 재입력 일치 확인
+            //var checkRePw = false;
+            if(memberPwInput==memberPwReInput) {
+                checkRePw = true;
+                //$('#pwReCheck').attr('style','display: none');
+                $('#pwReCheck').html("비밀번호가 일치합니다.");
+                $('#pwReCheck').css('color','greenyellow');
+            }else {
+                checkRePw = false;
+                $('#pwReCheck').html("비밀번호가 일치하지 않습니다.");
+                $('#pwReCheck').css('color','red');
+            }
+            //console.log("checkRePw "+checkRePw);
+            //console.log("----");
+            
+            //이름 입력 확인
+            //var checkName = false;
+            var patt_Name = new RegExp("^.{0,30}$");
+            var res_Name = patt_Name.test( memberNameInput );
+            
+            if(memberNameInput=="") {
+            	checkName = false;
+                $('#nameCheck').html("필수입력 사항입니다.");
+                $('#nameCheck').css('color','red');
+                
+            }
+            else if(!res_Name) {
+            	checkName = false;
+            	$('#nameCheck').attr('style','display: table');
+                $('#nameCheck').html("이름은 30자 까지 입력 가능합니다.");
+                $('#nameCheck').css('color','red');
+            }
+            else {
+            	checkName = true;
+                $('#nameCheck').attr('style','display: none');
+            }
+            //console.log("checkName "+checkName);
+            
+            //개인 연락처 확인
+            //var checkPhoneC = false;
+			var patt_P1 = new RegExp("^[0-9]+$");
+		   	var patt_P2 = new RegExp("^[0-9]{9,30}$");
+		   	var res_P1 = patt_P1.test( member_P_PhoneInput );
+		   	var res_P2 = patt_P2.test( member_P_PhoneInput );
+		   	
+            if(member_P_PhoneInput!="" && !res_P1) {
+                checkPhoneP = false;
+                $('#pPhoneCheck').attr('style','display: table');
+                $('#pPhoneCheck').html("숫자로만 입력해주세요.");
+                $('#pPhoneCheck').css('color','red');
+            }
+            else if(member_P_PhoneInput!="" && !res_P2) {
+                checkPhoneP = false;
+                $('#pPhoneCheck').attr('style','display: table');
+                $('#pPhoneCheck').html("연락처는 9자리 이상 30자리 이하로 입력해주세요.");
+                $('#pPhoneCheck').css('color','red');
+            }
+            else {
+                checkPhoneP = true;
+                $('#pPhoneCheck').attr('style','display: none');
+            }
+            //console.log("checkPhoneP "+checkPhoneP);
+            //console.log("----");
+            
+            //회사 연락처 확인
+            //var checkPhoneC = false;
+			var patt_C1 = new RegExp("^[0-9]+$");
+		   	var patt_C2 = new RegExp("^[0-9]{9,30}$");
+		   	var res_C1 = patt_C1.test( member_C_PhoneInput );
+		   	var res_C2 = patt_C2.test( member_C_PhoneInput );
+		   	
+		   	
+            if(member_C_PhoneInput=="") {
+				checkPhoneC = false;
+				$('#cPhoneCheck').html("필수입력 사항입니다.");
+				$('#cPhoneCheck').css('color','red');
+            }
+            else if(!res_C1) {
+				checkPhoneC = false;
+				$('#cPhoneCheck').attr('style','display: table');
+				$('#cPhoneCheck').html("숫자로만 입력해주세요.");
+				$('#cPhoneCheck').css('color','red');
+            }
+            else if(!res_C2) {
+				checkPhoneC = false;
+				$('#cPhoneCheck').attr('style','display: table');
+				$('#cPhoneCheck').html("연락처는 9자리 이상 30자리 이하로 입력해주세요.");
+				$('#cPhoneCheck').css('color','red');
+            }
+            else {
+				checkPhoneC = true;
+				$('#cPhoneCheck').attr('style','display: none');
+            }
+            //console.log("checkPhoneC "+checkPhoneC);
+            //console.log("----");
+            
+            //이메일 입력 확인
+            //var checkEmail = false;
+            var patt_E1 = new RegExp("^.+@.+$");
+            var patt_E2 = new RegExp("^.{3,30}$");
+		   	var res_E1 = patt_E1.test( memberEmailInput );
+		   	var res_E2 = patt_E2.test( memberEmailInput );
+            if(memberEmailInput=="") {
+                checkEmail = false;
+                $('#emailCheck').html("필수입력 사항입니다.");
+                $('#emailCheck').css('color','red');
+            }
+            else if(!res_E1) {
+                checkEmail = false;
+                $('#emailCheck').html("올바른 이메일 주소를 입력해주세요.");
+                $('#emailCheck').css('color','red');
+            }
+            else if(!res_E2) {
+                checkEmail = false;
+                $('#emailCheck').html("이메일 주소는 30자 까지 입력 가능합니다.");
+                $('#emailCheck').css('color','red');
+            }
+            else {
+                checkEmail = true;
+                $('#emailCheck').html("유효한 이메일 주소입니다.");
+                $('#emailCheck').css('color','greenyellow');
+            }
+            //console.log("checkEmail "+checkEmail);
+            //console.log("----");
+            
+            //회원구분코드 선택 확인
+            //var checkMemberTypeCD = false;
+            if(memberTypeCDSelect!="none") {
+                checkMemberTypeCD = true;
+                $('#memberTypeCDCheck').attr('style','display: none');
+            }else {
+                checkMemberTypeCD = false;
+            }
+            //console.log("checkMemberTypeCD "+checkMemberTypeCD);
+            //console.log("----");
+            
+            //소속기업 선택 확인
+            //var checkCompNo = false;
+            if(compNoSelect!="none") {
+                checkCompNo = true;
+                $('#compNoCheck').attr('style','display: none');
+            }else {
+                checkCompNo = false;
+            }
+            //console.log("checkCompNo "+checkCompNo);
+            //console.log("----");
+            
+            //사번 입력 확인
+            //var checkCompMemNo = false;
+            var patt_CompMemNo = new RegExp("^.{0,20}$");
+            var res_CompMemNo = patt_CompMemNo.test( compMemNoInput );
+            
+            if(compMemNoInput=="") {
+            	checkCompMemNo = false;
+                $('#compMemNoCheck').html("필수입력 사항입니다.");
+                $('#compMemNoCheck').css('color','red');
+                
+            }
+            else if(!res_CompMemNo) {
+            	checkCompMemNo = false;
+            	$('#compMemNoCheck').attr('style','display: table');
+                $('#compMemNoCheck').html("사번은 30자 까지 입력 가능합니다.");
+                $('#compMemNoCheck').css('color','red');
+            }
+            else {
+            	checkCompMemNo = true;
+                $('#compMemNoCheck').attr('style','display: none');
+            }
+            //console.log("checkCompMemNo "+checkCompMemNo);
+            //console.log("----");
+            
+            
+			if(checkId
+               && checkPw
+               && checkRePw
+               && checkName
+               && checkPhoneP
+               && checkPhoneC
+               && checkEmail
+               && checkMemberTypeCD
+               && checkCompNo
+               && checkCompMemNo
+               && checkIdUniq) {
+				$('#enrollSubmit').css('background-color','rgb(0,0,65)');
+                $('#enrollSubmit').css('color','white');
+                $('#enrollSubmit').attr('onclick','return enroll();');
+			}else {
+				$('#enrollSubmit').css('background-color','gainsboro');
+                $('#enrollSubmit').css('color','dimgray');
+                $('#enrollSubmit').attr('onclick','return false;');
+			}
+			
+		}//function END
+	    
+	    function checkIdUnique() {
+	    	var memberId = $('#memberIdInput').val();
+	    	
+            if(checkId) {
+            	$.ajax({
+    				url : "/idCheck.do",
+    				data : {memberId: memberId},
+    				type : "post",
+    				success : function(data){
+    					//console.log("정상 처리 완료");
+    					//console.log(data);////////////////////////
+    					//alert("success");
+    					if(data) {
+    						alert("사용 가능한 아이디 입니다.");
+    						checkIdUniq = true;
+    					}
+    					else {
+    						alert("이미 사용 중인 아이디 입니다.\n"
+    								+"다른 아이디를 입력해주세요.");
+    						checkIdUniq = false;
+    					}
+    				},
+    				error : function(){
+    					//console.log("ajax 통신 에러");
+    					alert("오류가 발생했습니다. 다시 시도해주세요.\n"
+    							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+    					checkIdUniq = false;
+    				},
+    				complete : function(){
+    					//alert("complete");
+    					check();
+    					//console.log("checkIdUniq : "+checkIdUniq);///////////////////
+    				}
+    			});
+            }
+            else if(memberId=="") {
+            	alert("아이디를 입력해주세요.");
+            }
+            else {
+            	alert("올바른 아이디를 입력해주세요.");
+            }
+            
+	    }//function END
+        
+        function enroll() {
+            var memberId = $('#memberIdInput').val();
+            var memberPw = $('#memberPwInput').val();
+            var memberName = $('#memberNameInput').val();
+            var member_P_Phone = $('#member_P_PhoneInput').val();
+            var member_C_Phone = $('#member_C_PhoneInput').val();
+            var memberEmail = $('#memberEmailInput').val();
+            var memberTypeCD = $('#memberTypeCDSelect').val();
+            var compNo = $('#compNoSelect').val();
+            var compMemNo = $('#compMemNoInput').val();
+            
+            $.ajax({
+				url : "/enroll.do",
+				data : {memberId: memberId,
+	            		memberPw: memberPw,
+	            		memberName: memberName,
+	            		member_P_Phone: member_P_Phone,
+	            		member_C_Phone: member_C_Phone,
+	            		memberEmail: memberEmail,
+	            		memberTypeCD: memberTypeCD,
+	            		compNo: compNo,
+	            		compMemNo: compMemNo},
+				type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//console.log(data);///////////
+					//alert("success");
+					if(data) {
+						alert("성공적으로 가입 신청이 완료되었습니다.\n"
+								+"관리자의 승인 후 가입이 완료됩니다.")
+						location.href = "/index.jsp";
+					}
+					else {
+						alert("가입 신청에 실패하였습니다.\n"
+								+"입력하신 내용을 다시 한번확인해주세요.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("가입 도중 오류가 발생했습니다. 다시 시도해주세요.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+            
+        }//function END
+        
+    </script>
+    
+</head>
+<body>
+    
+    <div id="wrapper">
+        
+        <div id="header">
+        	<div id="mainTitle">
+            	<strong onclick="goIndex();">Techpedia</strong>
+            </div>
+        </div>
+        
+        
+        <div id="content">
+                <div id="login-box">
+                	<div>
+                    <!-- <form id="enrollForm" action="/enroll.do" method="post"> -->
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <td>
+                                	<input type="text" name="memberId" id="memberIdInput"/>
+                                	<button id="idUniqCheck" onclick="checkIdUnique();">중복체크</button>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="idCheck">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용하여 작성해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호</th>
+                                <td>
+                                    <input type="password" name="memberPw" id="memberPwInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pwCheck">8~16자 영문 대 소문자, 숫자, 특수문자를  사용하여 작성해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호 재확인</th>
+                                <td>
+                                    <input type="password"  id="memberPwReInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pwReCheck">비밀번호가 일치하지 않습니다.</td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <td>
+                                    <input type="text" name="memberName" id="memberNameInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="nameCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>연락처(개인)(선택)</th>
+                                <td>
+                                    <input type="text" name="member_P_Phone" id="member_P_PhoneInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pPhoneCheck">숫자로만 입력해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>연락처(회사)</th>
+                                <td>
+                                    <input type="text" name="member_C_Phone" id="member_C_PhoneInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="cPhoneCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>
+                                    <input type="text" name="memberEmail" id="memberEmailInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="emailCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>회원구분코드</th>
+                                <td>
+                                    <select name="memberTypeCD" id="memberTypeCDSelect">
+                                        <option value="none">선택</option>
+                                        <!-- 
+                                        <option value="HP_AD">홈페이지 관리자</option>
+                                        <option value="MNFE_AD">제조사 엔지니어 관리자</option>
+                                        <option value="MNFE">제조사 엔지니어</option>
+                                        <option value="COP">협력사 직원</option>
+                                         -->
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="memberTypeCDCheck">필수선택 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>소속기업</th>
+                                <td>
+                                    <select name="compNo" id="compNoSelect">
+                                        <option value="none">선택</option>
+                                        <!-- 
+                                        <option value="100">BEST TECH</option>
+                                        <option value="101">WE ARE THE ONE</option>
+                                         -->
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="compNoCheck">필수선택 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>사번</th>
+                                <td>
+                                    <input type="text" name="compMemNo" id="compMemNoInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="compMemNoCheck">필수입력 사항입니다.</td>
+                            </tr>
+                        </table>
+                        <div id="enroll">
+                            <button id="enrollSubmit" onclick="return false;">가입</button>
+                        </div>
+                    <!-- </form> -->
+                    </div>
+                </div>
+        </div>
+        
+        
+        <div id="footer">
+            <span>
+                가입은 관리자 승인 후 완료됩니다.
+            </span>
+        </div>
+        
+    </div>
+    
+    
+</body>
+</html>

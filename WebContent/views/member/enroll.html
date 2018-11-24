@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Techpedia</title>
+    <link href="../../css/enroll.css" rel="stylesheet" type="text/css">
+    
+    <script
+      type="text/javascript"
+        src="../../resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+    <script>
+        var checkId = false;
+        var checkPw = false;
+        var checkRePw = false;
+        var checkName = false;
+        var checkPhoneP = false;
+        var checkPhoneC = false;
+        var checkEmail = false;
+        var checkMemberTypeCD = false;
+        var checkCompNo = false;
+        var checkCompMemNo = false;
+        
+	    $(document).ready(function(){
+	    	//alert("hello");
+	    	
+	    	check();
+	    	
+            $('#enrollInput').click(function() {
+                check();
+                if(!checkId) {
+                    $('#idCheck').attr('style','display: table');
+                }
+                if(!checkPw) {
+                    $('#pwCheck').attr('style','display: table');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }else {
+                    $('#pwReCheck').attr('style','display: none');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }
+                if(!checkName) {
+                    $('#nameCheck').attr('style','display: table');
+                }
+                if(!checkPhoneP) {
+                    $('#pPhoneCheck').attr('style','display: table');
+                }
+                if(!checkPhoneC) {
+                    $('#cPhoneCheck').attr('style','display: table');
+                }
+                if(!checkEmail) {
+                    $('#emailCheck').attr('style','display: table');
+                }
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+                if(!checkCompMemNo) {
+                    $('#compMemNoCheck').attr('style','display: table');
+                }
+            });
+            
+            $(document).change(function(){
+	    		//console.log("mouseup");
+	    		check();
+	    	});
+	    	
+	    	$(document).keyup(function(){
+	    		//console.log("keyup");
+	    		check();
+	    	});
+            
+            $('#memberIdInput').blur(function() {
+                if(!checkId) {
+                    $('#idCheck').attr('style','display: table');
+                }
+            });
+            $('#memberPwInput').blur(function() {
+                if(!checkPw) {
+                    $('#pwCheck').attr('style','display: table');
+                }
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }else {
+                    $('#pwReCheck').attr('style','display: none');
+                }
+            });
+            $('#memberPwReInput').blur(function() {
+                if(checkPw && !checkRePw) {
+                    $('#pwReCheck').attr('style','display: table');
+                }
+            });
+            $('#memberNameInput').blur(function() {
+                if(!checkName) {
+                    $('#nameCheck').attr('style','display: table');
+                }
+            });
+            $('#member_P_PhoneInput').blur(function() {
+                if(!checkPhoneP) {
+                    $('#pPhoneCheck').attr('style','display: table');
+                }
+            });
+            $('#member_C_PhoneInput').blur(function() {
+                if(!checkPhoneC) {
+                    $('#cPhoneCheck').attr('style','display: table');
+                }
+            });
+            $('#memberEmailInput').blur(function() {
+                if(!checkEmail) {
+                    $('#emailCheck').attr('style','display: table');
+                }
+            });
+            $('#memberTypeCDSelect').mouseup(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+            });
+            $('#compNoSelect').mouseup(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            $('#compMemNoInput').focusin(function() {
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            $('#compMemNoInput').blur(function() {
+                if(!checkCompMemNo) {
+                    $('#compMemNoCheck').attr('style','display: table');
+                }
+                if(!checkMemberTypeCD) {
+                    $('#memberTypeCDCheck').attr('style','display: table');
+                }
+                if(!checkCompNo) {
+                    $('#compNoCheck').attr('style','display: table');
+                }
+            });
+            
+	    });
+        
+        
+        function goIndex(){
+            location.href="/index.html";
+            //location.href="/index.jsp";
+        }
+        
+	    function check() {
+            //alert("check start");
+			var memberIdInput = document.getElementById("memberIdInput").value;
+            var memberPwInput = document.getElementById("memberPwInput").value;
+            var memberPwReInput = document.getElementById("memberPwReInput").value;
+            var memberNameInput = document.getElementById("memberNameInput").value;
+            var member_P_PhoneInput = document.getElementById("member_P_PhoneInput").value;
+            var member_C_PhoneInput = document.getElementById("member_C_PhoneInput").value;
+            var memberEmailInput = document.getElementById("memberEmailInput").value;
+            var memberTypeCDSelect = document.getElementById("memberTypeCDSelect").value;
+            var compNoSelect = document.getElementById("compNoSelect").value;
+            var compMemNoInput = document.getElementById("compMemNoInput").value;
+            
+            //아이디 확인
+            //var checkId = false;
+            var patt_Id1 = new RegExp("[a-z]+");
+            var patt_Id2 = new RegExp("^[a-z0-9_-]{5,20}$");
+		   	var res_Id1 = patt_Id1.test( memberIdInput );
+            var res_Id2 = patt_Id2.test( memberIdInput );
+            
+            if(res_Id1 && res_Id2) {
+                checkId = true;
+                //$('#idCheck').attr('style','display: none');
+                $('#idCheck').html("사용 가능한 아이디입니다.");
+                $('#idCheck').css('color','greenyellow');
+            }else {
+                checkId = false;
+                $('#idCheck').html("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용하여 작성해주세요.");
+                $('#idCheck').css('color','red');
+            }
+            //console.log("res_Id1 "+res_Id1);
+            //console.log("res_Id2 "+res_Id2);
+            //console.log("checkId "+checkId);
+            //console.log("----");
+            
+            //비밀번호 확인
+            //var checkPw = false;
+            var patt_Pw1 = new RegExp("[a-zA-Z]+");
+            var patt_Pw2 = new RegExp("^.{8,16}$");
+		   	var res_Pw1 = patt_Pw1.test( memberPwInput );
+            var res_Pw2 = patt_Pw2.test( memberPwInput );
+            
+            if(res_Pw1 && res_Pw2) {
+                checkPw = true;
+                //$('#pwCheck').attr('style','display: none');
+                $('#pwCheck').html("사용가능한 비밀번호입니다.");
+                $('#pwCheck').css('color','greenyellow');
+            }else {
+                checkPw = false;
+                $('#pwCheck').html("8~16자 영문 대 소문자, 숫자, 특수문자를  사용하여 작성해주세요.");
+                $('#pwCheck').css('color','red');
+            }
+            //console.log("res_Pw1 "+res_Pw1);
+            //console.log("res_Pw2 "+res_Pw2);
+            //console.log("checkPw "+checkPw);
+            //console.log("----");
+            
+            //비밀번호 재입력 일치 확인
+            //var checkRePw = false;
+            if(memberPwInput==memberPwReInput) {
+                checkRePw = true;
+                //$('#pwReCheck').attr('style','display: none');
+                $('#pwReCheck').html("비밀번호가 일치합니다.");
+                $('#pwReCheck').css('color','greenyellow');
+            }else {
+                checkRePw = false;
+                $('#pwReCheck').html("비밀번호가 일치하지 않습니다.");
+                $('#pwReCheck').css('color','red');
+            }
+            //console.log("checkRePw "+checkRePw);
+            //console.log("----");
+            
+            //이름 입력 확인
+            //var checkName = false;
+            if(memberNameInput!="") {
+                checkName = true;
+                $('#nameCheck').attr('style','display: none');
+            }else {
+                checkName = false;
+            }
+            //console.log("checkName "+checkName);
+            
+            //개인 연락처 확인
+            //var checkPhoneC = false;
+			var patt_P1 = new RegExp("^[0-9]+$");
+		   	var patt_P2 = new RegExp("^[0-9]{9,20}$");
+		   	var res_P1 = patt_P1.test( $("#member_P_PhoneInput").val());
+		   	var res_P2 = patt_P2.test( $("#member_P_PhoneInput").val());
+		   	
+            if(member_P_PhoneInput!="" && !res_P1) {
+                checkPhoneP = false;
+                $('#pPhoneCheck').html("숫자로만 입력해주세요.");
+                $('#pPhoneCheck').css('color','red');
+            }
+            else if(member_P_PhoneInput!="" && !res_P2) {
+                checkPhoneP = false;
+                $('#pPhoneCheck').html("연락처는 9자리 이상이어야 합니다.");
+                $('#pPhoneCheck').css('color','red');
+            }
+            else {
+                checkPhoneP = true;
+                $('#pPhoneCheck').attr('style','display: none');
+            }
+            //console.log("checkPhoneP "+checkPhoneP);
+            //console.log("----");
+            
+            //회사 연락처 확인
+            //var checkPhoneC = false;
+			var patt_C1 = new RegExp("^[0-9]+$");
+		   	var patt_C2 = new RegExp("^[0-9]{9,20}$");
+		   	var res_C1 = patt_C1.test( $("#member_C_PhoneInput").val());
+		   	var res_C2 = patt_C2.test( $("#member_C_PhoneInput").val());
+            if(member_C_PhoneInput=="") {
+               checkPhoneC = false;
+                $('#cPhoneCheck').html("필수입력 사항입니다.");
+                $('#cPhoneCheck').css('color','red');
+            }
+            else if(!res_C1) {
+                checkPhoneC = false;
+                $('#cPhoneCheck').html("숫자로만 입력해주세요.");
+                $('#cPhoneCheck').css('color','red');
+            }
+            else if(!res_C2) {
+                checkPhoneC = false;
+                $('#cPhoneCheck').html("연락처는 9자리 이상이어야 합니다.");
+                $('#cPhoneCheck').css('color','red');
+            }
+            else {
+                checkPhoneC = true;
+                $('#cPhoneCheck').attr('style','display: none');
+            }
+            //console.log("checkPhoneC "+checkPhoneC);
+            //console.log("----");
+            
+            //이메일 입력 확인
+            //var checkEmail = false;
+            var patt_E = new RegExp("^.+@.+$");
+		   	var res_E = patt_E.test( $("#memberEmailInput").val());
+            if(memberEmailInput=="") {
+                checkEmail = false;
+                $('#emailCheck').html("필수입력 사항입니다.");
+                $('#emailCheck').css('color','red');
+            }
+            else if(!res_E) {
+                checkEmail = false;
+                $('#emailCheck').html("올바른 이메일 주소를 입력해주세요.");
+                $('#emailCheck').css('color','red');
+            }
+            else {
+                checkEmail = true;
+                //$('#emailCheck').attr('style','display: none');
+                $('#emailCheck').html("유효한 이메일 주소입니다.");
+                $('#emailCheck').css('color','greenyellow');
+            }
+            //console.log("checkEmail "+checkEmail);
+            //console.log("----");
+            
+            //회원구분코드 선택 확인
+            //var checkMemberTypeCD = false;
+            if(memberTypeCDSelect!="none") {
+                checkMemberTypeCD = true;
+                $('#memberTypeCDCheck').attr('style','display: none');
+            }else {
+                checkMemberTypeCD = false;
+            }
+            //console.log("checkMemberTypeCD "+checkMemberTypeCD);
+            //console.log("----");
+            
+            //소속기업 선택 확인
+            //var checkCompNo = false;
+            if(compNoSelect!="none") {
+                checkCompNo = true;
+                $('#compNoCheck').attr('style','display: none');
+            }else {
+                checkCompNo = false;
+            }
+            //console.log("checkCompNo "+checkCompNo);
+            //console.log("----");
+            
+            //사번 입력 확인
+            //var checkCompMemNo = false;
+            if(compMemNoInput!="") {
+                checkCompMemNo = true;
+                $('#compMemNoCheck').attr('style','display: none');
+            }else {
+                checkCompMemNo = false;
+            }
+            //console.log("checkCompMemNo "+checkCompMemNo);
+            //console.log("----");
+            
+            
+			if(checkId
+               && checkPw
+               && checkRePw
+               && checkName
+               && checkPhoneP
+               && checkPhoneC
+               && checkEmail
+               && checkMemberTypeCD
+               && checkCompNo
+               && checkCompMemNo) {
+				$('#enrollInput').css('background-color','rgb(0,0,65)');
+                $('#enrollInput').css('color','white');
+                $('#enrollInput').attr('onclick','return enroll();');
+			}else {
+				$('#enrollInput').css('background-color','gainsboro');
+                $('#enrollInput').css('color','dimgray');
+			}
+			
+		}
+        
+        function enroll() {
+            alert("가입 - submit 주석풀어주기");
+            //document.getElementById("enrollForm").submit();
+            
+            return false;
+        }
+    </script>
+    
+</head>
+<body>
+    
+    <div id="wrapper">
+        
+        <div id="header">
+            <strong onclick="goIndex();">Techpedia</strong>
+        </div>
+        
+        
+        <div id="content">
+<!--            <center>-->
+                <div id="login-box">
+                    <form id="enrollForm" action="/enroll.do" method="post">
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <td><input type="text" name="memberId" id="memberIdInput"/></td>
+
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="idCheck">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용하여 작성해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호</th>
+                                <td>
+                                    <input type="password" name="memberPw" id="memberPwInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pwCheck">8~16자 영문 대 소문자, 숫자, 특수문자를  사용하여 작성해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>비밀번호 재확인</th>
+                                <td>
+                                    <input type="password"  id="memberPwReInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pwReCheck">비밀번호가 일치하지 않습니다.</td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <td>
+                                    <input type="text" name="memberName" id="memberNameInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="nameCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>연락처(개인)(선택)</th>
+                                <td>
+                                    <input type="text" name="member_P_Phone" id="member_P_PhoneInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="pPhoneCheck">숫자로만 입력해주세요.</td>
+                            </tr>
+                            <tr>
+                                <th>연락처(회사)</th>
+                                <td>
+                                    <input type="text" name="member_C_Phone" id="member_C_PhoneInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="cPhoneCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>
+                                    <input type="email" name="memberEmail" id="memberEmailInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="emailCheck">필수입력 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>회원구분코드</th>
+                                <td>
+                                    <select name="memberTypeCD" id="memberTypeCDSelect">
+                                        <option value="none">선택</option>
+                                        <option value="hp_ad">홈페이지 관리자</option>
+                                        <option value="mnfe_ad">제조사 엔지니어 관리자</option>
+                                        <option value="mnfe">제조사 엔지니어</option>
+                                        <option value="cop">협력사 직원</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="memberTypeCDCheck">필수선택 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>소속기업</th>
+                                <td>
+                                    <select name="compNo" id="compNoSelect">
+                                        <option value="none">선택</option>
+                                        <option value="BEST TECH">BEST TECH</option>
+                                        <option value="WE ARE THE ONE">WE ARE THE ONE</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="compNoCheck">필수선택 사항입니다.</td>
+                            </tr>
+                            <tr>
+                                <th>사번</th>
+                                <td>
+                                    <input type="text" name="compMemNo" id="compMemNoInput"/>
+                                </td>
+                            </tr>
+                            <tr class="conditions">
+                                <th></th>
+                                <td id="compMemNoCheck">필수입력 사항입니다.</td>
+                            </tr>
+                        </table>
+                        <div id="enroll">
+<!--                            <input id="enrollInput" type="submit" value="가입" />-->
+                            <button id="enrollInput" onclick="return false;">가입</button>
+                        </div>
+                    </form>
+                </div>
+<!--            </center>-->
+        </div>
+        
+        
+        <div id="footer">
+            <span>
+                가입은 관리자 승인 후 완료됩니다.
+            </span>
+        </div>
+        
+    </div>
+    
+    
+</body>
+</html>

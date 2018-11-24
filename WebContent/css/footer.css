@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#footer{
+/*    border: 5px dashed; border-color: blue;*/
+    height: 10%; width: 100%;
+    box-sizing: border-box;
+    color: rgb(29,45,78);
+    text-shadow: -1px -1px 0.5px rgb(225,225,225),
+                1px 1px 0.5px black;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+}
+#footer span{
+    margin-left: auto;
+    margin-right: auto;
+}
