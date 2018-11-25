@@ -276,5 +276,28 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public int deActivateMember(Connection conn, String memberId, String memberPw) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TP_MEMBER "
+						+ "SET MEMBER_ACTIVE='N', MEMBER_DELNO=SEQ_MEMDELNO.NEXTVAL "
+						+ "WHERE MEMBER_ID=? AND MEMBER_PW=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPw);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }

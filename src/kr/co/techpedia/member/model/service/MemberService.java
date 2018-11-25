@@ -80,9 +80,26 @@ public class MemberService {
 	}
 
 	public int updateMember(TpMember member) {
-Connection conn = JDBCTemplate.getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 		
 		int result = new MemberDao().updateMember(conn, member);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}
+		else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);		
+		
+		return result;
+	}
+
+	public int deActivateMember(String memberId, String memberPw) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().deActivateMember(conn, memberId, memberPw);
 		
 		if(result>0) {
 			JDBCTemplate.commit(conn);

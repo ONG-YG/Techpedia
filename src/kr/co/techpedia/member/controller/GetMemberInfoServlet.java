@@ -6,12 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import kr.co.techpedia.member.model.service.MemberService;
-import kr.co.techpedia.member.model.vo.MemberSession;
 import kr.co.techpedia.member.model.vo.TpMember;
 
 /**

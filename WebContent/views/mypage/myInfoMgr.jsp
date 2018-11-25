@@ -13,7 +13,7 @@
 	<%
 		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
 		String memberId = "";
-		System.out.println("mypage session check\n"+memSession);/////////////////
+		System.out.println("myInfoMgr session check\n"+memSession);/////////////////
 		if(memSession==null) {
 	%>
 		<script>
@@ -25,7 +25,7 @@
 		}
 	%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/css/mypage.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="/css/myInfoMgr.css?ver=1" rel="stylesheet" type="text/css">
     
 	<!-- 
 	<script
@@ -72,6 +72,13 @@
                 }
                 if(!checkEmail) {
                     $('#emailCheck').attr('style','display: table');
+                }
+            });
+	    	
+	    	$('#signOut').click(function() {
+                check();
+                if(!checkRePw) {
+                    alert("비밀번호 재입력란을 확인해주세요.");
                 }
             });
             
@@ -195,9 +202,9 @@
             
             if(res_Pw1 && res_Pw2) {
                 checkPw = true;
-                $('#pwCheck').attr('style','display: table');
+                //$('#pwCheck').attr('style','display: table');
                 $('#pwCheck').html("사용가능한 비밀번호입니다.");
-                $('#pwCheck').css('color','greenyellow');
+                $('#pwCheck').css('color','limegreen');
             }else {
                 checkPw = false;
                 $('#pwCheck').attr('style','display: table');
@@ -213,11 +220,14 @@
             //var checkRePw = false;
             if(memberPwInput==memberPwReInput) {
                 checkRePw = true;
-                //$('#pwReCheck').attr('style','display: none');
+                $('#pwReCheck').attr('style','display: table');
                 $('#pwReCheck').html("비밀번호가 일치합니다.");
-                $('#pwReCheck').css('color','greenyellow');
+                $('#pwReCheck').css('color','limegreen');
             }else {
                 checkRePw = false;
+                if(checkPw && memberPwReInput!="") {
+                	$('#pwReCheck').attr('style','display: table');
+                }
                 $('#pwReCheck').html("비밀번호가 일치하지 않습니다.");
                 $('#pwReCheck').css('color','red');
             }
@@ -307,7 +317,7 @@
             else {
                 checkEmail = true;
                 $('#emailCheck').html("유효한 이메일 주소입니다.");
-                $('#emailCheck').css('color','greenyellow');
+                $('#emailCheck').css('color','limegreen');
             }
             //console.log("checkEmail "+checkEmail);
             //console.log("----");
@@ -325,6 +335,15 @@
 				$('#updateSubmit').css('background-color','gainsboro');
                 $('#updateSubmit').css('color','dimgray');
                 $('#updateSubmit').attr('onclick','return false;');
+			}
+			if(checkPw && checkRePw) {
+				$('#signOut').css('background-color','rgb(0,0,65)');
+                $('#signOut').css('color','white');
+                $('#signOut').attr('onclick','return signOut();');
+			}else {
+				$('#signOut').css('background-color','gainsboro');
+                $('#signOut').css('color','dimgray');
+                $('#signOut').attr('onclick','return false;');
 			}
 			
 		}//function END
@@ -371,7 +390,42 @@
         }//function END
         
         function signOut(){
-        	alert("회원탈퇴");/////////////////////////////
+        	var memberId = '<%=memberId%>';
+        	var memberPw = $('#memberPwReInput').val();
+        	//console.log(memberPw);//////////////////
+        	if(memberPw==$('#memberPwInput').val()) {
+        		$.ajax({
+     				url : "/signOut.do",
+     				data : {memberId: memberId,
+     	            		memberPw: memberPw},
+     				type : "post",
+     				success : function(data){
+     					//console.log("정상 처리 완료");
+     					//alert("success");
+     					console.log(data);///////////
+     					if(data) {
+     						alert("정상적으로 탈퇴 처리 되었습니다.")
+     						location.href = "/logout.do";
+     					}
+     					else {
+     						alert("탈퇴 처리하는 데 실패했습니다.\n"
+     								+"입력하신 내용을 다시 한번확인해주세요.\n"
+     								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+     					}
+     				},
+     				error : function(){
+     					//console.log("ajax 통신 에러");
+     					alert("처리 도중 오류가 발생했습니다. 다시 시도해주세요.\n"
+     							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+     				},
+     				complete : function(){
+     					//alert("complete");
+     				}
+     			});
+        	}
+        	else {
+        		alert("비밀번호가 맞지 않습니다.");
+        	} 
         }
         
     </script>
@@ -381,7 +435,7 @@
     
     <div id="wrapper">
         
-        <div id="mypage-div">
+        <div id="myInfoMgr-div">
                 <div id="member-info-box">
                 	<div>
                         <table>
@@ -482,7 +536,7 @@
                         </table>
                         <div id="update">
                             <button id="updateSubmit" onclick="return false;">수정</button>
-                            <button id="signOut" onclick="signOut();">탈퇴</button>
+                            <button id="signOut" onclick="return false;">탈퇴</button>
                         </div>
                     </div>
                 </div>

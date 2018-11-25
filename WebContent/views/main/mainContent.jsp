@@ -46,7 +46,7 @@
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
-		    	$('#mainView').load("/views/member/mypage.jsp");
+		    	$('#mainView').load("/views/mypage/myInfoMgr.jsp");
 		    });
 		    
 		});

@@ -1,29 +1,25 @@
 package kr.co.techpedia.member.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.co.techpedia.member.model.service.MemberService;
-import kr.co.techpedia.member.model.vo.MemberSession;
-import kr.co.techpedia.member.model.vo.TpMember;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class SignOutServlet
  */
-@WebServlet(name = "Login", urlPatterns = { "/login.do" })
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SignOut", urlPatterns = { "/signOut.do" })
+public class SignOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public SignOutServlet() {
         super();
     }
 
@@ -36,31 +32,12 @@ public class LoginServlet extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		
-		TpMember member = new TpMember();
-		member.setMemberId(memberId);
-		member.setMemberPw(memberPw);
+		System.out.println("signOut servlet\n"+memberId);//////////////////
+		System.out.println("signOut servlet\n"+memberPw);//////////////////
 		
-		//System.out.println(member);
+		int result = new MemberService().deActivateMember(memberId, memberPw);
 		
-		member = new MemberService().selectOneMember(member);
-		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-		
-		if(member!=null && member.getMemberActive()=='Y') {
-			MemberSession memSession = new MemberSession();
-			memSession.setMemberNo(member.getMemberNo());
-			memSession.setMemberId(member.getMemberId());
-			memSession.setMemberTypeCD(member.getMemberTypeCD());
-			memSession.setCompNo(member.getCompNo());
-			memSession.setMemberActive(member.getMemberActive());
-			memSession.setMemberPhoto(member.getMemberPhoto());
-			
-			//System.out.println(memSession);
-			
-			HttpSession session = request.getSession(true);
-			session.setAttribute("memSession", memSession);
-			
+		if(result>0) {
 			response.getWriter().print(true);
 		}
 		else {
