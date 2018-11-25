@@ -133,11 +133,12 @@
 	    <table id="techSppt-tb">
 	        <tr>
                 <th>번호</th>
-                <th>제목</th>
-                <th id="charger">담당자</th>
-                <th>작성일</th>
                 <th>진행현황</th>
-                <th>엔지니어 확인</th>
+                <th>제목</th>
+                <th>협력사 담당자</th>
+                <th>협력사 담당자</th>
+                <th>작성일</th>
+                <th>조회수</th>
 	        </tr>
             
 	    </table>

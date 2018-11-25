@@ -49,7 +49,7 @@
 	<script>
 	    $(document).ready(function(){
 	    	
-	    	getTechShareList();
+	    	//getTechShareList();
 	    	
 	    });//$(document).ready END
         
@@ -57,9 +57,9 @@
         function getTechShareList(){
 			
            	$.ajax({
-   				url : "/getTechShareList.do",
-   				data : {memberNo: memberNo},
-   				type : "post",
+   				url : "/techShareBoardList.do",
+   				//data : {memberNo: memberNo},
+   				//type : "post",
    				success : function(data){
    					//console.log("정상 처리 완료");
    					//alert("success");
@@ -119,10 +119,58 @@
 	        <tr>
                 <th>번호</th>
                 <th>제목</th>
+                <th>작성자</th>
                 <th>작성일</th>
-                <th>수정</th>
-                <th>삭제</th>
+                <th>조회수</th>
 	        </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>테스트 제목</td>
+                <td>홍길동</td>
+                <td>
+                    2018-11-25
+                </td>
+                <td>
+                    7
+                </td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>테스트 제목</td>
+                <td>홍길동</td>
+                <td>
+                    2018-11-25
+                </td>
+                <td>
+                    3
+                </td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td>테스트 제목</td>
+                <td>홍길동</td>
+                <td>
+                    2018-11-25
+                </td>
+                <td>
+                    14
+                </td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td>테스트 제목</td>
+                <td>홍길동</td>
+                <td>
+                    2018-11-25
+                </td>
+                <td>
+                    10
+                </td>
+            </tr>
             
 	    </table>
 	    
