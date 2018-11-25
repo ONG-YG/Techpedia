@@ -14,10 +14,13 @@
 				String memberTypeCD = memSession.getMemberTypeCD();
 				
 				System.out.println("\nmainContent memSession check 2\n"+memSession);////////////////////////
+				
+				String pg = request.getParameter("board");
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
+				var pg = '<%=pg%>';
 			</script>
 	<%
 			}else {
@@ -38,7 +41,16 @@
 			
 			checkMemType();
 			
-			$('#mainView').load("/views/main/main_notice.jsp");
+			//console.log(pg);///////////////////////////
+			if(pg=='null') {
+				$('#mainView').load("/views/main/main_notice.jsp");
+			}
+			else if(pg=='TechSpp') {
+				$('#mainView').load("/views/board/techSupportPostList.jsp");
+			}
+			else if(pg=='TechSh') {
+				$('#mainView').load("/views/board/techSharePostList.jsp");
+			}
 			
 		    $('.menu span').click(function(){
 		    	$(this).parent().siblings().children('ul').removeClass('showMenu');
@@ -46,19 +58,21 @@
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
-		    	$("script").remove();
-		    	$('#mainView').empty();
 		    	$('#mainView').load("/views/mypage/myInfoMgr.jsp");
 		    });
 		    $('#progTechSppt').click(function() {
-		    	$("script").remove();
-		    	$('#mainView').empty();
 		    	$('#mainView').load("/views/mypage/myTechSppt.jsp");
 		    });
 		    $('#myTechShr').click(function() {
-		    	$("script").remove();
-		    	$('#mainView').empty();
 		    	$('#mainView').load("/views/mypage/myTechShare.jsp");
+		    });
+		    
+		    
+		    $('#tech-support-li').click(function() {
+		    	location.href="/views/main/mainpage.jsp?board=TechSpp";
+		    });
+		    $('#tech-share-li').click(function() {
+		    	location.href="/views/main/mainpage.jsp?board=TechSh";
 		    });
 		    
 		    
@@ -67,16 +81,18 @@
 		function checkMemType() {
 			if(memberTypeCD=='HP_AD') {
 				//모든 메뉴 사용 가능
+				//관리자페이지 활성화
+				//관리자페이지 중 전체회원관리 메뉴 활성화
+				$('#totalMemberMgr').css('display','block');
+				$('#admin-page-li').css('display','block');
 			}
 			else if(memberTypeCD=='MNFE_AD') {
-				//관리자페이지 중 전체회원관리 메뉴 비활성화
-				$('#totalMemberMgr').css('display','none');
-				$('#totalMemberMgr').html('');
+				//관리자페이지 활성화
+				//관리자페이지 중 전체회원관리 메뉴는 활성화하지 않음
+				$('#admin-page-li').css('display','block');
 			}
 			else {
-				//관리자페이지 비활성화
-				$('#admin-page-li').css('display','none');
-				$('#admin-page-li').html('');
+				//관리자페이지 활성화하지 않음
 			}
 		}
 		

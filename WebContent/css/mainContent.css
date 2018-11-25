@@ -91,3 +91,10 @@ div{
     background-color: rgb(255,255,255,0.86);
     float: left;
 }
+
+#totalMemberMgr{
+	display: none;
+}
+#admin-page-li{
+	display: none;
+}
