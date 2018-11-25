@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="/resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="/css/myTechShare.css" rel="stylesheet" type="text/css">
+	
+	<script>
+	    $(document).ready(function(){
+	    	
+	    	//getMainNotice();
+	    	
+	    });//$(document).ready END
+        
+        
+        function getMainNotice(){
+        	var noticeTitle = '';
+			var writer = '';
+			var write_date = '';
+			var noticeContent = '<br>메인에 게시된 공지가 없습니다.';
+			
+           	$.ajax({
+   				url : "/getMainNotice.do",
+   				//data : {},
+   				//type : "post",
+   				success : function(data){
+   					//console.log("정상 처리 완료");
+   					//alert("success");
+   					//console.log(data);
+   					if(data) {
+   						noticeTitle = data.ntcTitle;
+   						writer = data.ntcWriterName;
+   						write_date = data.ntcDate;
+   						noticeContent = data.ntcContent;
+   						$('#writer-span').html("작성자");
+   						$('#write_date-span').html("작성일");
+   					}
+   					else {
+   						$('#writer-span').html('');
+   						$('#write_date-span').html('');
+   					}
+   					$('#noticeTitle').html( noticeTitle );
+			    	$('#writer').html( writer );
+			    	$('#write_date').html( write_date);
+			    	$('#noticeContent').html( noticeContent );
+   				},
+   				error : function(){
+   					//console.log("ajax 통신 에러");
+   					alert("ERROR");
+   				},
+   				complete : function(){
+   					//alert("complete");
+   				}
+   			});
+        }//function login() END
+         
+    </script>
+</head>
+<body>
+	
+	<div id="myTechShare">
+	    
+	    <span>나의 기술 공유 게시물</span>
+	    
+	    <table id="techShare-tb">
+	        <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>수정</th>
+                <th>삭제</th>
+	        </tr>
+            
+            
+            <tr>
+                <td>1</td>
+                <td>테스트 제목</td>
+                <td>2018.11.25</td>
+                <td>
+                    <button id="rewrite-btn">수정</button>
+                </td>
+                <td>
+                    <button id="delete-btn">삭제</button>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>테스트 제목2</td>
+                <td>2018.11.25</td>
+                <td>
+                    <button id="rewrite-btn">수정</button>
+                </td>
+                <td>
+                    <button id="delete-btn">삭제</button>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td>테스트 제목3</td>
+                <td>2018.11.25</td>
+                <td>
+                    <button id="rewrite-btn">수정</button>
+                </td>
+                <td>
+                    <button id="delete-btn">삭제</button>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td>테스트 제목4</td>
+                <td>2018.11.25</td>
+                <td>
+                    <button id="rewrite-btn">수정</button>
+                </td>
+                <td>
+                    <button id="delete-btn">삭제</button>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>테스트 제목5</td>
+                <td>2018.11.25</td>
+                <td>
+                    <button id="rewrite-btn">수정</button>
+                </td>
+                <td>
+                    <button id="delete-btn">삭제</button>
+                </td>
+            </tr>
+            
+            
+	    </table>
+	    
+	</div>
+	
+</body>
+</html>

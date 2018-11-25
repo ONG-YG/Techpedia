@@ -82,12 +82,12 @@
                 }
             });
             
-            $(document).change(function(){
+            $('#myInfoMgr-div').change(function(){
 	    		//console.log("mouseup");
 	    		check();
 	    	});
 	    	
-	    	$(document).keyup(function(){
+	    	$('#myInfoMgr-div').keyup(function(){
 	    		//console.log("keyup");
 	    		check();
 	    	});

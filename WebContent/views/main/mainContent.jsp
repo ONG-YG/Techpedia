@@ -46,8 +46,21 @@
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
+		    	$("script").remove();
+		    	$('#mainView').empty();
 		    	$('#mainView').load("/views/mypage/myInfoMgr.jsp");
 		    });
+		    $('#progTechSppt').click(function() {
+		    	$("script").remove();
+		    	$('#mainView').empty();
+		    	$('#mainView').load("/views/mypage/myTechSppt.jsp");
+		    });
+		    $('#myTechShr').click(function() {
+		    	$("script").remove();
+		    	$('#mainView').empty();
+		    	$('#mainView').load("/views/mypage/myTechShare.jsp");
+		    });
+		    
 		    
 		});
 		

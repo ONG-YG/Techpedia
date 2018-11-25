@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+/* 
+body{
+    border: 3px dashed; border-color: gray;
+    background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
+    background-position: topcenter;
+   background-color: black;
+}
+ */
+#myTechSppt{
+	/* 
+    border: 5px dashed; border-color: gainsboro;
+    background-color: rgb(255,255,255,0.86);
+     */
+    min-width: 920px;
+    text-shadow: none;
+}
+
+#myTechSppt>span{
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 900;
+    color: darkblue;
+    text-shadow: 3px 3px 5px darkgray;
+    
+}
+
+
+#myTechSppt #techSppt-tb{
+/*    border-color: transparent;*/
+    border-spacing: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    height: auto; width: 900px;
+    text-align: center;
+}
+#myTechSppt #techSppt-tb tr:first-child th{
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-color: gray;
+    padding: 0px;
+    height: 30px;
+    font-size: 14.5px;
+    color: rgb(105,105,105);
+    text-shadow: -1px -1px 2px transparent,
+                1px 1px 2px rgb(220,220,220);
+}
+#myTechSppt #techSppt-tb tr td{
+    border-bottom: 1px solid;
+    border-color: gray;
+    height: 45px;
+    font-size: 14px;
+    font-weight: 550;
+    color: rgb(70,70,70);
+}
+
+
+#myTechSppt #techSppt-tb th:nth-child(1){
+    width: 80px;
+}
+#myTechSppt #techSppt-tb th:nth-child(2){
+    width: 450px;
+}
+#myTechSppt #techSppt-tb th:nth-child(3){
+    width: 100px;
+}
+#myTechSppt #techSppt-tb th:nth-child(4){
+    width: 110px;
+}
+#myTechSppt #techSppt-tb th:nth-child(5){
+    width: 100px;
+}
+#myTechSppt #techSppt-tb th:nth-child(6){
+    width: 60px;
+}
+
