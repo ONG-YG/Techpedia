@@ -10,7 +10,9 @@ public class TpMember {
 	private String memberCompanyPhone;
 	private String memberEmail;
 	private String memberTypeCD;
+	private String memberTypeName;
 	private int compNo;
+	private String compName;
 	private String companyMemNo;
 	private char memberActive;
 	private String memberPhoto;
@@ -22,8 +24,9 @@ public class TpMember {
 		super();
 	}
 	public TpMember(int memberNo, String memberId, String memberPw, String memberName, String memberPrivatePhone,
-			String memberCompanyPhone, String memberEmail, String memberTypeCD, int compNo, String companyMemNo,
-			char memberActive, String memberPhoto, String enrollDate, String approvalDate) {
+			String memberCompanyPhone, String memberEmail, String memberTypeCD, String memberTypeName, int compNo,
+			String compName, String companyMemNo, char memberActive, String memberPhoto, String enrollDate,
+			String approvalDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -33,14 +36,15 @@ public class TpMember {
 		this.memberCompanyPhone = memberCompanyPhone;
 		this.memberEmail = memberEmail;
 		this.memberTypeCD = memberTypeCD;
+		this.memberTypeName = memberTypeName;
 		this.compNo = compNo;
+		this.compName = compName;
 		this.companyMemNo = companyMemNo;
 		this.memberActive = memberActive;
 		this.memberPhoto = memberPhoto;
 		this.enrollDate = enrollDate;
 		this.approvalDate = approvalDate;
 	}
-	
 	
 	
 	public int getMemberNo() {
@@ -91,11 +95,23 @@ public class TpMember {
 	public void setMemberTypeCD(String memberTypeCD) {
 		this.memberTypeCD = memberTypeCD;
 	}
+	public String getMemberTypeName() {
+		return memberTypeName;
+	}
+	public void setMemberTypeName(String memberTypeName) {
+		this.memberTypeName = memberTypeName;
+	}
 	public int getCompNo() {
 		return compNo;
 	}
 	public void setCompNo(int compNo) {
 		this.compNo = compNo;
+	}
+	public String getCompName() {
+		return compName;
+	}
+	public void setCompName(String compName) {
+		this.compName = compName;
 	}
 	public String getCompanyMemNo() {
 		return companyMemNo;
@@ -130,6 +146,7 @@ public class TpMember {
 	
 	
 	
+	
 	@Override
 	public String toString() {
 		String memberInfo = "-----------------------------------------------\n"
@@ -141,7 +158,9 @@ public class TpMember {
 							+"memberCompanyPhone : "+memberCompanyPhone+"\n"
 							+"memberEmail : "+memberEmail+"\n"
 							+"memberTypeCD : "+memberTypeCD+"\n"
+							+"memberTypeName : "+memberTypeName+"\n"
 							+"compNo : "+compNo+"\n"
+							+"compName : "+compName+"\n"
 							+"companyMemNo : "+companyMemNo+"\n"
 							+"memberActive : "+memberActive+"\n"
 							+"memberPhoto : "+memberPhoto+"\n"

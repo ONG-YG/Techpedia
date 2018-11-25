@@ -47,7 +47,63 @@ public class MemberDao {
 		
 		return loginMember;
 	}
-
+	
+	public TpMember getMemberInfo(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		TpMember memberInfo = null;
+		
+		String query = "SELECT MEMBER_ID, "
+							+ "MEMBER_PW, "
+							+ "MEMBER_NAME, "
+							+ "MEMBER_P_PHONE, "
+							+ "MEMBER_C_PHONE, "
+							+ "MEMBER_EMAIL, "
+							+ "MEMBER_TYPENAME, "
+							+ "COMP_NAME, "
+							+ "COMPANY_MEMNO, "
+							+ "MEMBER_ACTIVE, "
+							+ "MEMBER_PHOTO "
+							+ "FROM TP_MEMBER "
+							+ "JOIN MEM_TYPE ON(MEM_TYPE.MEMBER_TYPECD = TP_MEMBER.MEMBER_TYPECD) "
+							+ "JOIN COMPANY_L ON(COMPANY_L.COMP_NO = TP_MEMBER.COMP_NO) "
+							+ "WHERE MEMBER_ID=?";
+		// Active 여부는 Servlet에서 직접 memberActive 값 확인
+		// 관리자 페이지에서 Active 여부 상관없이 멤버 정보 가져올 수 있도록 메소드 작성
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				memberInfo = new TpMember();
+				//memberInfo.setMemberNo(rset.getInt("MEMBER_NO"));
+				memberInfo.setMemberId(rset.getString("MEMBER_ID"));
+				memberInfo.setMemberPw(rset.getString("MEMBER_PW"));
+				memberInfo.setMemberName(rset.getString("MEMBER_NAME"));
+				memberInfo.setMemberPrivatePhone(rset.getString("MEMBER_P_PHONE"));
+				memberInfo.setMemberCompanyPhone(rset.getString("MEMBER_C_PHONE"));
+				memberInfo.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				//memberInfo.setMemberTypeCD(rset.getString("MEMBER_TYPECD"));
+				memberInfo.setMemberTypeName(rset.getString("MEMBER_TYPENAME"));
+				//memberInfo.setCompNo(rset.getInt("COMP_NO"));
+				memberInfo.setCompName(rset.getString("COMP_NAME"));
+				memberInfo.setCompanyMemNo(rset.getString("COMPANY_MEMNO"));
+				memberInfo.setMemberActive(rset.getString("MEMBER_ACTIVE").charAt(0));
+				memberInfo.setMemberPhoto(rset.getString("MEMBER_PHOTO"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return memberInfo;
+	}
+	
 	public int joinMember(Connection conn, TpMember member) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -188,4 +244,37 @@ public class MemberDao {
 		return result;
 	}
 
+	public int updateMember(Connection conn, TpMember member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TP_MEMBER SET MEMBER_PW=?, "
+											+ "MEMBER_P_PHONE=?, "
+											+ "MEMBER_C_PHONE=?, "
+											+ "MEMBER_EMAIL=? "
+											+ "WHERE MEMBER_ID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberPw());
+			if(member.getMemberPrivatePhone()=="") {
+				pstmt.setNull(2, java.sql.Types.VARCHAR);
+			}
+			else {
+				pstmt.setString(2, member.getMemberPrivatePhone());
+			}
+			pstmt.setString(3, member.getMemberCompanyPhone());
+			pstmt.setString(4, member.getMemberEmail());
+			pstmt.setString(5, member.getMemberId());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }

@@ -11,16 +11,16 @@ import kr.co.techpedia.member.model.service.MemberService;
 import kr.co.techpedia.member.model.vo.TpMember;
 
 /**
- * Servlet implementation class EnrollServlet
+ * Servlet implementation class UpdateMemberServlet
  */
-@WebServlet(name = "Enroll", urlPatterns = { "/enroll.do" })
-public class EnrollServlet extends HttpServlet {
+@WebServlet(name = "UpdateMember", urlPatterns = { "/updateMember.do" })
+public class UpdateMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EnrollServlet() {
+    public UpdateMemberServlet() {
         super();
     }
 
@@ -32,29 +32,21 @@ public class EnrollServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
-		String memberName = request.getParameter("memberName");
 		String memberPrivatePhone = request.getParameter("member_P_Phone");
 		String memberCompanyPhone = request.getParameter("member_C_Phone");
 		String memberEmail = request.getParameter("memberEmail");
-		String memberTypeCD = request.getParameter("memberTypeCD");
-		int compNo = Integer.parseInt( request.getParameter("compNo") );
-		String companyMemNo = request.getParameter("compMemNo");
 		
 		TpMember member = new TpMember();
 		
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
-		member.setMemberName(memberName);
 		member.setMemberPrivatePhone(memberPrivatePhone);
 		member.setMemberCompanyPhone(memberCompanyPhone);
 		member.setMemberEmail(memberEmail);
-		member.setMemberTypeCD(memberTypeCD);
-		member.setCompNo(compNo);
-		member.setCompanyMemNo(companyMemNo);
 		
-		//System.out.println("enroll servlet\n"+member);//////////////////
+		//System.out.println("update servlet\n"+member);//////////////////
 		
-		int result = new MemberService().joinMember(member);
+		int result = new MemberService().updateMember(member);
 		
 		if(result>0) {
 			response.getWriter().print(true);
@@ -62,7 +54,6 @@ public class EnrollServlet extends HttpServlet {
 		else {
 			response.getWriter().print(false);
 		}
-		
 	}
 
 	/**

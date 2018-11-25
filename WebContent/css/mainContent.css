@@ -84,3 +84,10 @@ div{
     transition-duration: 0s;
 }
 
+#mainView{
+/*    border: 5px dashed; border-color: white;*/
+    height: 100%; width: 1020px;
+    box-sizing: border-box;
+    background-color: rgb(255,255,255,0.86);
+    float: left;
+}

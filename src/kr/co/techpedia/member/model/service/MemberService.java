@@ -19,7 +19,17 @@ public class MemberService {
 		
 		return loginMember;
 	}
-
+	
+	public TpMember getMemberInfo(String memberId) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		TpMember memberInfo = new MemberDao().getMemberInfo(conn, memberId);
+		
+		JDBCTemplate.close(conn);		
+		
+		return memberInfo;
+	}
+	
 	public int joinMember(TpMember member) {
 		Connection conn = JDBCTemplate.getConnection();
 		
@@ -58,11 +68,28 @@ public class MemberService {
 		
 		return companyList;
 	}
-
+	
 	public boolean checkIdUnique(String memberId) {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		boolean result = new MemberDao().checkIdUnique(conn, memberId);
+		
+		JDBCTemplate.close(conn);		
+		
+		return result;
+	}
+
+	public int updateMember(TpMember member) {
+Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new MemberDao().updateMember(conn, member);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}
+		else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		JDBCTemplate.close(conn);		
 		
