@@ -45,6 +45,9 @@
 			if(pg=='null') {
 				$('#mainView').load("/views/main/main_notice.jsp");
 			}
+			else if(pg=='Notice') {
+				$('#mainView').load("/views/board/noticeList.jsp");
+			}
 			else if(pg=='TechSpp') {
 				$('#mainView').load("/views/board/techSupportPostList.jsp");
 			}
@@ -68,6 +71,9 @@
 		    });
 		    
 		    
+		    $('#notice-li').click(function() {
+		    	location.href="/views/main/mainpage.jsp?board=Notice";
+		    });
 		    $('#tech-support-li').click(function() {
 		    	location.href="/views/main/mainpage.jsp?board=TechSpp";
 		    });

@@ -8,16 +8,15 @@ body{
    background-color: black;
 }
  */
-#myTechSppt{
+#noticeBoard{
 	/* 
-    border: 5px dashed; border-color: gainsboro;
+	border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
      */
-    min-width: 920px;
     text-shadow: none;
 }
 
-#myTechSppt>span{
+#noticeBoard>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -30,7 +29,7 @@ body{
 }
 
 
-#myTechSppt #techSppt-tb{
+#noticeBoard #notice-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
     margin-left: auto;
@@ -39,7 +38,8 @@ body{
     height: auto; width: 900px;
     text-align: center;
 }
-#myTechSppt #techSppt-tb tr:first-child th{
+
+#noticeBoard #notice-tb tr:first-child th{
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-color: gray;
@@ -50,7 +50,7 @@ body{
     text-shadow: -1px -1px 2px transparent,
                 1px 1px 2px rgb(220,220,220);
 }
-#myTechSppt #techSppt-tb tr td{
+#noticeBoard #notice-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
     height: 45px;
@@ -60,24 +60,23 @@ body{
 }
 
 
-#myTechSppt #techSppt-tb th:nth-child(1){
+#noticeBoard #notice-tb th:nth-child(1){
+    width: 80px;
+}
+#noticeBoard #notice-tb th:nth-child(2){
+    width: 480px;
+}
+#noticeBoard #notice-tb th:nth-child(3){
+    width: 110px;
+}
+#noticeBoard #notice-tb th:nth-child(4){
+    width: 140px;
+}
+#noticeBoard #notice-tb th:nth-child(5){
     width: 90px;
 }
-#myTechSppt #techSppt-tb th:nth-child(2){
-    width: 100px;
-}
-#myTechSppt #techSppt-tb th:nth-child(3){
-    width: 350px;
-}
-#myTechSppt #techSppt-tb th:nth-child(4){
-    width: 105px;
-}
-#myTechSppt #techSppt-tb th:nth-child(5){
-    width: 105px;
-}
-#myTechSppt #techSppt-tb th:nth-child(6){
-    width: 100px;
-}
-#myTechSppt #techSppt-tb th:nth-child(7){
-    width: 50px;
-}
+
+
+
+
+

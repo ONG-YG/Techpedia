@@ -366,7 +366,7 @@
 				success : function(data){
 					//console.log("정상 처리 완료");
 					//alert("success");
-					console.log(data);///////////
+					//console.log(data);///////////
 					if(data) {
 						alert("성공적으로 회원정보 수정이 완료되었습니다.")
 						location.href = "/views/main/mainpage.jsp";
@@ -402,7 +402,7 @@
      				success : function(data){
      					//console.log("정상 처리 완료");
      					//alert("success");
-     					console.log(data);///////////
+     					//console.log(data);///////////
      					if(data) {
      						alert("정상적으로 탈퇴 처리 되었습니다.")
      						location.href = "/logout.do";

@@ -1,25 +1,31 @@
-package kr.co.techpedia.member.controller;
+package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.techpedia.member.model.service.MemberService;
+import com.google.gson.Gson;
+
+import kr.co.techpedia.board.model.service.BoardService;
+import kr.co.techpedia.board.model.vo.TechSharePost;
+import kr.co.techpedia.main.model.vo.Notice;
 
 /**
- * Servlet implementation class SignOutServlet
+ * Servlet implementation class NoticeBoardListServlet
  */
-@WebServlet(name = "SignOut", urlPatterns = { "/signOut.do" })
-public class SignOutServlet extends HttpServlet {
+@WebServlet(name = "NoticeBoardList", urlPatterns = { "/noticeBoardList.do" })
+public class NoticeBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignOutServlet() {
+    public NoticeBoardListServlet() {
         super();
     }
 
@@ -27,23 +33,19 @@ public class SignOutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("utf-8");
-		String memberId = request.getParameter("memberId");
-		String memberPw = request.getParameter("memberPw");
 		
-		//System.out.println("signOut servlet\n"+memberId);//////////////////
-		//System.out.println("signOut servlet\n"+memberPw);//////////////////
+		ArrayList<Notice> noticeList = new BoardService().noticeBoardList();
 		
-		int result = new MemberService().deActivateMember(memberId, memberPw);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		
-		if(result>0) {
-			response.getWriter().print(true);
+		if(!noticeList.isEmpty()) {
+			new Gson().toJson(noticeList, response.getWriter());
 		}
 		else {
 			response.getWriter().print(false);
 		}
-		
 	}
 
 	/**

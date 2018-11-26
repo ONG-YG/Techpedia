@@ -32,14 +32,14 @@ public class MainDao {
 			
 			if(rset.next()) {
 				mainNotice = new Notice();
-				mainNotice.setPostNo(rset.getInt("POST_NO"));
+				//mainNotice.setPostNo(rset.getInt("POST_NO"));
 				mainNotice.setNtcTitle(rset.getString("NTC_TITLE"));
 				mainNotice.setNtcContent(rset.getString("NTC_CONTENT"));
-				mainNotice.setNtcWriterNo(rset.getString("NTC_WRITER"));
+				//mainNotice.setNtcWriterNo(rset.getInt("NTC_WRITER"));
 				mainNotice.setNtcWriterName(rset.getString("MEMBER_NAME"));
 				mainNotice.setNtcDate(rset.getDate("NTC_DATE").toString());
-				mainNotice.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
-				mainNotice.setNtcCnt(rset.getInt("NTC_CNT"));
+				//mainNotice.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
+				//mainNotice.setNtcCnt(rset.getInt("NTC_CNT"));
 			}
 			
 		} catch (SQLException e) {

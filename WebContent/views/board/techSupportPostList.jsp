@@ -12,28 +12,22 @@
 	</script>
 	<%
 		session = request.getSession(false);
-		//System.out.println("\nmyTechSppt session : "+session);/////////////////////////
+		//System.out.println("\nTechSupportBoard session : "+session);/////////////////////////
 		if(session!=null) {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			//System.out.println("\nmyTechSppt memSession check 1\n"+memSession);////////////////////////
+			//System.out.println("\nTechSupportBoard memSession check 1\n"+memSession);////////////////////////
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				int compNo = memSession.getCompNo();
 				
-				System.out.println("\nmyTechSppt memSession check 2\n"+memSession);////////////////////////
+				System.out.println("\nTechSupportBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var compNo = <%=compNo%>;
 				
-				if(memberTypeCD=='COP') {
-					$('#charger').html("담당 엔지니어");
-				}
-				else {
-					$('#charger').html("협력사 담당자");
-				}
-				
-				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
 			</script>
 	<%
 			}else {			
@@ -52,21 +46,21 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/myTechSppt.css" rel="stylesheet" type="text/css">
+	<link href="/css/techSupportPostList.css" rel="stylesheet" type="text/css">
 	
 	<script>
 	$(document).ready(function(){
     	
-		getTechSpptList();
+		techSpptBoardList();
     	
     });//$(document).ready END
     
     
-    function getTechSpptList(){
+    function techSpptBoardList(){
 		
        	$.ajax({
-				url : "/getTechSpptList.do",
-				data : {memberNo: memberNo, memberTypeCD: memberTypeCD},
+				url : "/techSupportBoardList.do",
+				data : {memberTypeCD: memberTypeCD, compNo: compNo},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");
@@ -76,18 +70,18 @@
 					if(data) {
 						techSpPostList = [];
 					for(var i=0; i<data.length; i++) {
-						var charger = null;
-						if(memberTypeCD=='COP') {
-							charger = data[i].spptEngName;
-						}else {
-							charger = data[i].spptWriterName;
+						var engName = data[i].spptEngName;
+						
+						if (engName==null) {
+							engName = '(배정되지 않음)';
 						}
 						var post = [data[i].postNo,
-									data[i].spptTitle,
-									charger,
-									data[i].spptDate,
 									data[i].spptStatName,
-									data[i].spptEngck];
+									data[i].spptTitle,
+									data[i].spptWriterName,
+									engName,
+									data[i].spptDate,
+									data[i].spptCnt];
 						techSpPostList.push(post);
 					}
 					
@@ -100,6 +94,7 @@
 									+"<td>"+techSpPostList[i][3]+"</td> "
 									+"<td>"+techSpPostList[i][4]+"</td> "
 									+"<td>"+techSpPostList[i][5]+"</td> "
+									+"<td>"+techSpPostList[i][6]+"</td> "
 								+"</tr> ";
 								
 					}
@@ -136,7 +131,7 @@
                 <th>진행현황</th>
                 <th>제목</th>
                 <th>협력사 담당자</th>
-                <th>협력사 담당자</th>
+                <th>담당 엔지니어</th>
                 <th>작성일</th>
                 <th>조회수</th>
 	        </tr>

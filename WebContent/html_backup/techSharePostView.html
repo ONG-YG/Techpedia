@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="/css/techSharePostView.css" rel="stylesheet" type="text/css">
+    
+	<script
+      type="text/javascript"
+        src="/resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+    
+	<script>
+        
+        var checkId = false;
+        var checkPw = false;
+        
+	    $(document).ready(function(){
+	    	
+	    	check();
+	    	
+            $('#enrollSubmit').click(function() {
+                check();
+                if(!checkId) {
+                    $('#idCheck').attr('style','display: table');
+                }
+                if(!checkPw) {
+                    $('#pwCheck').attr('style','display: table');
+                }
+                if(checkId
+					&& checkPw) {
+                	
+                	alert("아이디 중복체크를 해주세요.");
+                }
+            });
+            
+            $(document).change(function(){
+	    		//console.log("mouseup");
+	    		check();
+	    	});
+	    	
+	    	$(document).keyup(function(){
+	    		//console.log("keyup");
+	    		check();
+	    	});
+            
+	    });//$(document).ready END
+	    
+	    
+	    function check() {
+            //alert("check start");
+			var memberIdInput = document.getElementById("memberIdInput").value;
+            var memberPwInput = document.getElementById("memberPwInput").value;
+            
+            //아이디 확인
+            //var checkId = false;
+            var patt_Id1 = new RegExp("[a-z]+");
+            var patt_Id2 = new RegExp("^[a-z0-9_-]{5,20}$");
+		   	var res_Id1 = patt_Id1.test( memberIdInput );
+            var res_Id2 = patt_Id2.test( memberIdInput );
+            
+            if(res_Id1 && res_Id2 && !checkIdUniq) {
+                checkId = true;
+                $('#idCheck').attr('style','display: table');
+                $('#idCheck').html("사용 가능한 아이디입니다. 중복 검사를 해주세요.");
+                $('#idCheck').css('color','greenyellow');
+            }
+            else if(checkIdUniq) {
+                checkId = true;
+                $('#idCheck').attr('style','display: table');
+                $('#idCheck').html("사용 가능한 아이디입니다.");
+                $('#idCheck').css('color','greenyellow');
+            }
+            else {
+                checkId = false;
+                $('#idCheck').html("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용하여 작성해주세요.");
+                $('#idCheck').css('color','red');
+            }
+            //console.log("res_Id1 "+res_Id1);
+            //console.log("res_Id2 "+res_Id2);
+            //console.log("checkId "+checkId);
+            //console.log("----");
+            
+            //비밀번호 확인
+            //var checkPw = false;
+            var patt_Pw1 = new RegExp("[a-zA-Z]+");
+            var patt_Pw2 = new RegExp("^.{8,16}$");
+		   	var res_Pw1 = patt_Pw1.test( memberPwInput );
+            var res_Pw2 = patt_Pw2.test( memberPwInput );
+            
+            if(res_Pw1 && res_Pw2) {
+                checkPw = true;
+                $('#pwCheck').attr('style','display: table');
+                $('#pwCheck').html("사용가능한 비밀번호입니다.");
+                $('#pwCheck').css('color','greenyellow');
+            }else {
+                checkPw = false;
+                $('#pwCheck').html("8~16자 영문 대 소문자, 숫자, 특수문자를  사용하여 작성해주세요.");
+                $('#pwCheck').css('color','red');
+            }
+            //console.log("res_Pw1 "+res_Pw1);
+            //console.log("res_Pw2 "+res_Pw2);
+            //console.log("checkPw "+checkPw);
+            //console.log("----");
+            
+			if(checkId
+               && checkPw
+               && checkRePw
+               && checkName
+               && checkPhoneP
+               && checkPhoneC
+               && checkEmail
+               && checkMemberTypeCD
+               && checkCompNo
+               && checkCompMemNo
+               && checkIdUniq) {
+				$('#enrollSubmit').css('background-color','rgb(0,0,65)');
+                $('#enrollSubmit').css('color','white');
+                $('#enrollSubmit').attr('onclick','return enroll();');
+			}else {
+				$('#enrollSubmit').css('background-color','gainsboro');
+                $('#enrollSubmit').css('color','dimgray');
+                $('#enrollSubmit').attr('onclick','return false;');
+			}
+			
+		}//function END
+	    
+        
+    </script>
+</head>
+<body>
+	
+	<div id="techSharePostDiv">
+	    
+	    <span>기술 공유 게시물 작성</span>
+	    
+	    <table id="notice-tb">
+	        <tr>
+	            <th id="noticeTitle">제목</th>
+                <td><input type="text"></td>
+	        </tr>
+            <tr>
+	            <th id="noticeTitle">내용</th>
+                <td><textarea></textarea></td>
+	        </tr>
+            <tr>
+                <th></th>
+                <td><button id="register">등록</button></td>
+            </tr>
+	    </table>
+	    
+	</div>
+	
+</body>
+</html>

@@ -5,7 +5,7 @@ public class Notice {
 	private int postNo;
 	private String ntcTitle;
 	private String ntcContent;
-	private String ntcWriterNo;
+	private int ntcWriterNo;
 	private String ntcWriterName;
 	private String ntcDate;
 	private char ntcMainview;
@@ -15,7 +15,7 @@ public class Notice {
 	public Notice() {
 		super();
 	}
-	public Notice(int postNo, String ntcTitle, String ntcContent, String ntcWriterNo, String ntcWriterName,
+	public Notice(int postNo, String ntcTitle, String ntcContent, int ntcWriterNo, String ntcWriterName,
 			String ntcDate, char ntcMainview, int ntcCnt) {
 		super();
 		this.postNo = postNo;
@@ -48,10 +48,10 @@ public class Notice {
 	public void setNtcContent(String ntcContent) {
 		this.ntcContent = ntcContent;
 	}
-	public String getNtcWriterNo() {
+	public int getNtcWriterNo() {
 		return ntcWriterNo;
 	}
-	public void setNtcWriterNo(String ntcWriterNo) {
+	public void setNtcWriterNo(int ntcWriterNo) {
 		this.ntcWriterNo = ntcWriterNo;
 	}
 	public String getNtcWriterName() {

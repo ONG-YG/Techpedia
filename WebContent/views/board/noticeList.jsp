@@ -12,20 +12,18 @@
 	</script>
 	<%
 		session = request.getSession(false);
-		//System.out.println("\nTechShareBoard session : "+session);/////////////////////////
+		//System.out.println("\nNoticeBoard session : "+session);/////////////////////////
 		if(session!=null) {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			//System.out.println("\nTechShareBoard memSession check 1\n"+memSession);////////////////////////
+			//System.out.println("\nNoticeBoard memSession check 1\n"+memSession);////////////////////////
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
 				
-				System.out.println("\nTechShareBoard memSession check 2\n"+memSession);////////////////////////
+				System.out.println("\nNoticeBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
-				var memberNo = <%=memberNo%>;
-				
 			</script>
 	<%
 			}else {			
@@ -44,20 +42,20 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/techSharePostList.css" rel="stylesheet" type="text/css">
+	<link href="/css/noticeList.css" rel="stylesheet" type="text/css">
 	
 	<script>
 	    $(document).ready(function(){
 	    	
-	    	techShareBoardList();
+	    	noticeBoardList();
 	    	
 	    });//$(document).ready END
         
         
-        function techShareBoardList(){
+        function noticeBoardList(){
 			
            	$.ajax({
-   				url : "/techShareBoardList.do",
+   				url : "/noticeBoardList.do",
    				//data : {memberNo: memberNo},
    				//type : "post",
    				success : function(data){
@@ -66,27 +64,27 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						techShPostList = [];
+   						noticeList = [];
 						for(var i=0; i<data.length; i++) {
 							var post = [data[i].postNo,
-										data[i].shrTitle,
-										data[i].shrWriterName,
-										data[i].shrDate,
-										data[i].shrCnt];
-							techShPostList.push(post);
+										data[i].ntcTitle,
+										data[i].ntcWriterName,
+										data[i].ntcDate,
+										data[i].ntcCnt];
+							noticeList.push(post);
 						}
 						
-						var postL = $('#techShare-tb').html();
-						for(var i=0; i<techShPostList.length; i++) {
+						var postL = $('#notice-tb').html();
+						for(var i=0; i<noticeList.length; i++) {
 							postL += " <tr> "
-										+"<td>"+techShPostList[i][0]+"</td> "
-										+"<td>"+techShPostList[i][1]+"</td> "
-										+"<td>"+techShPostList[i][2]+"</td> "
-										+"<td>"+techShPostList[i][3]+"</td> "
-										+"<td>"+techShPostList[i][4]+"</td> "
+										+"<td>"+noticeList[i][0]+"</td> "
+										+"<td>"+noticeList[i][1]+"</td> "
+										+"<td>"+noticeList[i][2]+"</td> "
+										+"<td>"+noticeList[i][3]+"</td> "
+										+"<td>"+noticeList[i][4]+"</td> "
 									+"</tr> ";
 						}
-						$('#techShare-tb').html(postL);
+						$('#notice-tb').html(postL);
    					}
    					else {
    						//alert("작성한 기술 공유 게시물이 존재하지 않습니다.");
@@ -109,11 +107,11 @@
 </head>
 <body>
 	
-	<div id="myTechShare">
+	<div id="noticeBoard">
 	    
-	    <span>기술 공유 게시판</span>
+	    <span>공지사항 게시판</span>
 	    
-	    <table id="techShare-tb">
+	    <table id="notice-tb">
 	        <tr>
                 <th>번호</th>
                 <th>제목</th>
