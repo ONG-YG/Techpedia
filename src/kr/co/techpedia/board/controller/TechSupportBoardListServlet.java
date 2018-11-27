@@ -36,6 +36,7 @@ public class TechSupportBoardListServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String memberTypeCD = request.getParameter("memberTypeCD");
 		int compNo = Integer.parseInt( request.getParameter("compNo") );
+		int currPg = Integer.parseInt( request.getParameter("currPg") );
 		
 		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
 		

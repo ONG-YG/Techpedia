@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*
 body{
     border: 3px dashed; border-color: gray;
@@ -99,6 +100,12 @@ body{
 #noticeBoard #bottomSpace #navi a{
     margin-left: 5px;
     margin-right: 5px;
+    text-decoration: none;
+    color: rgb(70,70,70);
+}
+#noticeBoard #bottomSpace #navi #prev_img,
+#noticeBoard #bottomSpace #navi #next_img{
+	padding-top: 20px;
 }
 #noticeBoard #bottomSpace #writeBtn{
 /*    border: 1px solid; border-color: blue;*/

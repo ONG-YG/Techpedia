@@ -16,11 +16,15 @@
 				//System.out.println("\nmainContent memSession check 2\n"+memSession);////////////////////////
 				
 				String pg = request.getParameter("board");
+				String cp = request.getParameter("currPg");//////////
+				//System.out.println("cp(from mainContent.jsp) : "+cp);//////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
 				var pg = '<%=pg%>';
+				var cp = '<%=cp%>';
+				if(cp=='null') { cp = 1; }
 			</script>
 	<%
 			}else {
@@ -46,13 +50,13 @@
 				$('#mainView').load("/views/main/main_notice.jsp");
 			}
 			else if(pg=='Notice') {
-				$('#mainView').load("/views/board/noticeList.jsp");
+				$('#mainView').load("/views/board/noticeList_content.jsp?currPg="+cp);
 			}
 			else if(pg=='TechSpp') {
-				$('#mainView').load("/views/board/techSupportPostList.jsp");
+				$('#mainView').load("/views/board/techSupportPostList_content.jsp?currPg="+cp);
 			}
 			else if(pg=='TechSh') {
-				$('#mainView').load("/views/board/techSharePostList.jsp");
+				$('#mainView').load("/views/board/techSharePostList_content.jsp?currPg="+cp);
 			}
 			
 		    $('.menu span').click(function(){
@@ -61,13 +65,13 @@
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
-		    	$('#mainView').load("/views/mypage/myInfoMgr.jsp");
+		    	$('#mainView').load("/views/mypage/myInfoMgr_content.jsp");
 		    });
 		    $('#progTechSppt').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechSppt.jsp");
+		    	$('#mainView').load("/views/mypage/myTechSppt_content.jsp?currPg="+cp);
 		    });
 		    $('#myTechShr').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechShare.jsp");
+		    	$('#mainView').load("/views/mypage/myTechShare_content.jsp?currPg="+cp);
 		    });
 		    
 		    

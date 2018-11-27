@@ -12,15 +12,12 @@
 			//System.out.println("\nmainContent memSession check 1\n"+memSession);////////////////////////
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
-				
 				//System.out.println("\nmainContent memSession check 2\n"+memSession);////////////////////////
-				
-				String pg = request.getParameter("board");
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
-				var pg = '<%=pg%>';
+				
 			</script>
 	<%
 			}else {
@@ -44,7 +41,6 @@
 		    $('.menu span').click(function(){
 		    	$(this).parent().siblings().children('ul').removeClass('showMenu');
 		        $(this).parent().children('ul').toggleClass('showMenu');
-		        console.log( $(this).parent().attr('id') );//////////////
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {

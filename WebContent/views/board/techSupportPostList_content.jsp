@@ -20,6 +20,13 @@
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
 				int compNo = memSession.getCompNo();
+				String cp = request.getParameter("currPg");
+				//System.out.println("cp : "+cp);//////////////
+				
+				int currPg = 1;
+				if (cp!=null) {
+					currPg = Integer.parseInt(cp);
+				}
 				
 				//System.out.println("\nTechSupportBoard memSession check 2\n"+memSession);////////////////////////
 	%>
@@ -27,7 +34,7 @@
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
 				var compNo = <%=compNo%>;
-				
+				var currPg = <%=currPg%>;
 			</script>
 	<%
 			}else {			
@@ -60,7 +67,7 @@
 		
        	$.ajax({
 				url : "/techSupportBoardList.do",
-				data : {memberTypeCD: memberTypeCD, compNo: compNo},
+				data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");
@@ -144,6 +151,18 @@
 	            
 		    </table>
 	    </div>
+	    <div id="bottomSpace">
+            <div id="navi">
+                <a href="#"><img src='/img/prev.png' id='prev_img' width='20px'></a>
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a href="#"><img src='/img/next.png' id='next_img' width='20px'></a>
+            </div>
+            <button id="writeBtn" onclick="return false;">글 쓰기</button>
+        </div>s
 	</div>
 	
 </body>

@@ -1,29 +1,26 @@
-package kr.co.techpedia.board.controller;
+package kr.co.techpedia.common;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import kr.co.techpedia.board.model.service.BoardService;
-import kr.co.techpedia.board.model.vo.BoardPageData;
+import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class NoticeBoardListServlet
+ * Servlet implementation class LoadPageServlet
  */
-@WebServlet(name = "NoticeBoardList", urlPatterns = { "/noticeBoardList.do" })
-public class NoticeBoardListServlet extends HttpServlet {
+@WebServlet(name = "LoadPage", urlPatterns = { "/loadPage.do" })
+public class LoadPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeBoardListServlet() {
+    public LoadPageServlet() {
         super();
     }
 
@@ -32,20 +29,16 @@ public class NoticeBoardListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		int currPg = Integer.parseInt( request.getParameter("currPg") );
+		String mypageMenu = request.getParameter("checkMenu_Mypage");
+		String adminMenu = request.getParameter("checkMenu_Admin");
 		
-		//ArrayList<Notice> noticeList = new BoardService().noticeBoardList(currPg);
-		BoardPageData pd = new BoardService().noticeBoardList(currPg);
+		HttpSession session = request.getSession(false);
+		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
+		memSession.setMypageMenu(mypageMenu);
+		memSession.setAdminMenu(adminMenu);
 		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-		
-		if(pd!=null) {
-			new Gson().toJson(pd, response.getWriter());
-		}
-		else {
-			response.getWriter().print(false);
-		}
+		session.setAttribute("memSession", memSession);
+		System.out.println(memSession);////////////
 	}
 
 	/**

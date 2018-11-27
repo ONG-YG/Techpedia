@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kr.co.techpedia.board.model.service.BoardService;
+import kr.co.techpedia.board.model.vo.BoardPageData;
 import kr.co.techpedia.board.model.vo.TechSharePost;
 
 /**
@@ -33,14 +34,16 @@ public class TechShareBoardListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		int currPg = Integer.parseInt( request.getParameter("currPg") );
 		
-		ArrayList<TechSharePost> techSharePostL = new BoardService().techShareBoardList();
+		//ArrayList<TechSharePost> techSharePostL = new BoardService().techShareBoardList();
+		BoardPageData pd = new BoardService().techShareBoardList(currPg);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
-		if(!techSharePostL.isEmpty()) {
-			new Gson().toJson(techSharePostL, response.getWriter());
+		if(pd!=null) {
+			new Gson().toJson(pd, response.getWriter());
 		}
 		else {
 			response.getWriter().print(false);

@@ -19,14 +19,13 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
-				//String cp = request.getParameter("currPg");
+				String cp = request.getParameter("currPg");
 				//System.out.println("cp : "+cp);//////////////
-				System.out.println("board : "+request.getParameter("board"));////
+				
 				int currPg = 1;
-				//if (cp!=null) {
-					//currPg = Integer.parseInt(cp);
-					//System.out.println("cp no : "+currPg);//////////////
-				//}
+				if (cp!=null) {
+					currPg = Integer.parseInt(cp);
+				}
 				
 				//System.out.println("\nNoticeBoard memSession check 2\n"+memSession);////////////////////////
 	%>
@@ -62,7 +61,6 @@
         
         
         function noticeBoardList(){
-			alert("currPg : "+currPg);///////////////////
            	$.ajax({
    				url : "/noticeBoardList.do",
    				data : {currPg: currPg},
@@ -73,7 +71,6 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						
    						noticeList = [];
 						for(var i=0; i<data.noticeList.length; i++) {
 							var post = [data.noticeList[i].postNo,
@@ -94,7 +91,6 @@
 										+"<td>"+noticeList[i][3]+"</td> "
 										+"<td>"+noticeList[i][4]+"</td> "
 									+"</tr> ";
-							
 						}
 						$('#notice-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);

@@ -13,7 +13,7 @@
 	<%
 		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
 		String memberId = "";
-		System.out.println("myInfoMgr session check\n"+memSession);/////////////////
+		//System.out.println("myInfoMgr session check\n"+memSession);/////////////////
 		if(memSession==null) {
 	%>
 		<script>

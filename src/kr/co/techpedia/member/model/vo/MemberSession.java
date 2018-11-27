@@ -7,14 +7,15 @@ public class MemberSession {
 	private int compNo;
 	private char memberActive;
 	private String memberPhoto;
-	
+	private String mypageMenu;
+	private String adminMenu;
 	
 	
 	public MemberSession() {
 		super();
 	}
 	public MemberSession(int memberNo, String memberId, String memberTypeCD, int compNo, char memberActive,
-			String memberPhoto) {
+			String memberPhoto, String mypageMenu, String adminMenu) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -22,8 +23,9 @@ public class MemberSession {
 		this.compNo = compNo;
 		this.memberActive = memberActive;
 		this.memberPhoto = memberPhoto;
+		this.mypageMenu = mypageMenu;
+		this.adminMenu = adminMenu;
 	}
-	
 	
 	
 	public int getMemberNo() {
@@ -62,6 +64,19 @@ public class MemberSession {
 	public void setMemberPhoto(String memberPhoto) {
 		this.memberPhoto = memberPhoto;
 	}
+	public String getMypageMenu() {
+		return mypageMenu;
+	}
+	public void setMypageMenu(String mypageMenu) {
+		this.mypageMenu = mypageMenu;
+	}
+	public String getAdminMenu() {
+		return adminMenu;
+	}
+	public void setAdminMenu(String adminMenu) {
+		this.adminMenu = adminMenu;
+	}
+	
 	
 	
 	@Override
@@ -73,6 +88,8 @@ public class MemberSession {
 							+"compNo : "+compNo+"\n"
 							+"memberActive : "+memberActive+"\n"
 							+"memberPhoto : "+memberPhoto+"\n"
+							+"mypageMenu : "+mypageMenu+"\n"
+							+"adminMenu : "+adminMenu+"\n"
 							+"-----------------------------------------------\n";
 		
 		return memberSession;

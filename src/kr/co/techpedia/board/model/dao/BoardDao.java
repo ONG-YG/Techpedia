@@ -156,18 +156,34 @@ public class BoardDao {
 		return techSupportPostL;
 	}
 
-	public ArrayList<TechSharePost> techShareBoardList(Connection conn) {
+	public ArrayList<TechSharePost> techShareBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSharePost> techSharePostL = new ArrayList<>();
 		
-		String query = "SELECT TECH_SHR.*, "
-						+ "MEMBER_NAME "
-						+ "FROM TECH_SHR "
-						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER)";
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+//		String query = "SELECT TECH_SHR.*, "
+//						+ "MEMBER_NAME "
+//						+ "FROM TECH_SHR "
+//						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER)";
+		
+		String query = "SELECT * FROM "
+				+ "(SELECT TECH_SHR.*, "
+					+ "MEMBER_NAME AS WRITER_NAME, "
+					+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+				+ "FROM TECH_SHR "
+				+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER)"
+				+ ") "
+				+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -176,7 +192,7 @@ public class BoardDao {
 				post.setShrTitle(rset.getString("SHR_TITLE"));
 				//post.setShrContent(rset.getString("SHR_CONTENT"));
 				//post.setShrWriter(rset.getInt("SHR_WRITER"));
-				post.setShrWriterName(rset.getString("MEMBER_NAME"));
+				post.setShrWriterName(rset.getString("WRITER_NAME"));
 				post.setShrDate(rset.getDate("SHR_DATE").toString());
 				post.setShrCnt(rset.getInt("SHR_CNT"));
 				
@@ -305,8 +321,6 @@ public class BoardDao {
 		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
 		//끝 게시물 계산
 		int end = currPg * recordCountPerPage;
-		System.out.println(start);//////////
-		System.out.println(end);////////////
 				
 		String query = "SELECT * FROM "
 						+ "(SELECT NOTICE.*, "
@@ -349,14 +363,17 @@ public class BoardDao {
 		return noticeList;
 	}
 
-	public String getPageNavi(Connection conn, int currPg, int recordCountPerPage, int naviCountPerPage) {
+	public String getPageNavi(Connection conn, int currPg, int recordCountPerPage, int naviCountPerPage, String board) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		System.out.println("currPg : "+currPg);
+		
 		//게시물의 토탈 개수
 		int recordTotalCount = 0;	//초기값
 		
-		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM NOTICE";
+		String query = "";
+		if(board.equals("Notice")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM NOTICE";
+		else if(board.equals("TechSpp")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT";
+		else if(board.equals("TechSh")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SHR";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -397,8 +414,7 @@ public class BoardDao {
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
 		}
-		System.out.println(startNavi);///////////
-		System.out.println(endNavi);///////////////
+		
 		boolean needPrev = true;
 		boolean needNext = true;
 		
@@ -410,7 +426,8 @@ public class BoardDao {
 		// 시작페이지가 1이면 false
 		// 시작페이지가 1이 아니라면 true
 		if(needPrev==true) {
-			sb.append("<a id='prev_a' href='/views/main/mainpage.jsp?board=Notice&currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+			//sb.append("<a id='prev_a' href='/views/board/noticeList.jsp?currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+			sb.append("<a id='prev_a' href='/views/main/mainpage.jsp?board="+board+"&currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
 		}
 		else {
 			sb.append("<a id='prev_a'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
@@ -418,15 +435,18 @@ public class BoardDao {
 		
 		for(int i=startNavi; i<=endNavi; i++) {
 			if(i==currPg) {
-				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board=Notice&currPg="+i+"'><B>"+i+"</B></a>");
+				//sb.append("<a class='page_link' href='/views/board/noticeList.jsp?currPg="+i+"'><B>"+i+"</B></a>");
+				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board="+board+"&currPg="+i+"'><B>"+i+"</B></a>");
 			}
 			else {
-				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board=Notice&currPg="+i+"'>"+i+"</a>");
+				//sb.append("<a class='page_link' href='/views/board/noticeList.jsp?currPg="+i+"'>"+i+"</a>");
+				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board="+board+"&currPg="+i+"'>"+i+"</a>");
 			}
 		}
 		
 		if(needNext) {
-			sb.append("<a id='next_a' href='/views/main/mainpage.jsp?board=Notice&currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
+			//sb.append("<a id='next_a' href='/views/board/noticeList.jsp?currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
+			sb.append("<a id='next_a' href='/views/main/mainpage.jsp?board="+board+"&currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
 		}
 		else {
 			sb.append("<a id='next_a'><img src='/img/next.png' id='next_img' width='20px'></a>");
@@ -434,4 +454,6 @@ public class BoardDao {
 		
 		return sb.toString();
 	}
+	
+	
 }
