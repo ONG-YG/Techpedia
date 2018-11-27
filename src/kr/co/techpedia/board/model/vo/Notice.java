@@ -1,4 +1,4 @@
-package kr.co.techpedia.main.model.vo;
+package kr.co.techpedia.board.model.vo;
 
 public class Notice {
 	

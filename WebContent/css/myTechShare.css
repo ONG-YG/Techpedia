@@ -29,12 +29,21 @@ body{
 }
 
 
+#myTechShare #tableDiv{
+	height: 410px; width: 910px;
+	box-sizing: border-box;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
 #myTechShare #techShare-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
+    /*
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    */
     height: auto; width: 900px;
     text-align: center;
 }
@@ -93,11 +102,13 @@ body{
     border-radius: 7px;
 /*    color: dimgray;*/
     color: white;
+    cursor: pointer;
 }
 #myTechShare #techShare-tb #delete-btn{
     border: 1px solid; border-color: dimgray;
     background-color: gainsboro;
     color: dimgray;
+    cursor: pointer;
 }
 
 

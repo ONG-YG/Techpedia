@@ -113,8 +113,8 @@
             else {
             	var id = $('#idInput').val();
             	var pw = $('#pwInput').val();
-            	//console.log(id);
-            	//console.log(pw);
+            	console.log(id);
+            	console.log(pw);
             	
             	$.ajax({
     				url : "/login.do",

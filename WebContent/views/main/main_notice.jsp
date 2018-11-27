@@ -19,7 +19,7 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				
-				System.out.println("\nmain_notice memSession check 2\n"+memSession);////////////////////////
+				//System.out.println("\nmain_notice memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';

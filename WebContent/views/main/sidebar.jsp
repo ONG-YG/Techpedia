@@ -34,51 +34,45 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/mainContent.css" rel="stylesheet" type="text/css">
+	<link href="/css/sidebar.css" rel="stylesheet" type="text/css">
 	
 	<script>
 		$(document).ready(function(){
 			
 			checkMemType();
 			
-			//console.log(pg);///////////////////////////
-			if(pg=='null') {
-				$('#mainView').load("/views/main/main_notice.jsp");
-			}
-			else if(pg=='Notice') {
-				$('#mainView').load("/views/board/noticeList.jsp");
-			}
-			else if(pg=='TechSpp') {
-				$('#mainView').load("/views/board/techSupportPostList.jsp");
-			}
-			else if(pg=='TechSh') {
-				$('#mainView').load("/views/board/techSharePostList.jsp");
-			}
-			
 		    $('.menu span').click(function(){
 		    	$(this).parent().siblings().children('ul').removeClass('showMenu');
 		        $(this).parent().children('ul').toggleClass('showMenu');
+		        console.log( $(this).parent().attr('id') );//////////////
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
-		    	$('#mainView').load("/views/mypage/myInfoMgr.jsp");
+		    	//$('#mainView').load("/views/mypage/myInfoMgr.jsp");
+		    	location.href="/views/mypage/myInfoMgr.jsp";
 		    });
 		    $('#progTechSppt').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechSppt.jsp");
+		    	//$('#mainView').load("/views/mypage/myTechSppt.jsp");
+		    	location.href="/views/mypage/myTechSppt.jsp";
 		    });
 		    $('#myTechShr').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechShare.jsp");
+		    	//$('#mainView').load("/views/mypage/myTechShare.jsp");
+		    	location.href="/views/mypage/myTechShare.jsp";
 		    });
 		    
 		    
 		    $('#notice-li').click(function() {
-		    	location.href="/views/main/mainpage.jsp?board=Notice";
+		    	//location.href="/views/main/mainpage.jsp?board=Notice";
+		    	location.href="/views/board/noticeList.jsp";
 		    });
 		    $('#tech-support-li').click(function() {
-		    	location.href="/views/main/mainpage.jsp?board=TechSpp";
+		    	//location.href="/views/main/mainpage.jsp?board=TechSpp";
+		    	location.href="/views/board/techSupportPostList.jsp";
 		    });
 		    $('#tech-share-li').click(function() {
-		    	location.href="/views/main/mainpage.jsp?board=TechSh";
+		    	//location.href="/views/main/mainpage.jsp?board=TechSh";
+		    	location.href="/views/board/techSharePostList.jsp";
+		    	
 		    });
 		    
 		    
@@ -137,13 +131,6 @@
             </li>
 		</ul>
 		
-	</div>
-	
-	<div id="mainView">
-		<!-- 메인 공지사항 띄워주는 공간 -->
-		
-<%-- 		<jsp:include page="/views/main/main_notice.jsp"></jsp:include> --%>
-			
 	</div>
 
 </body>

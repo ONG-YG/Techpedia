@@ -30,12 +30,21 @@ body{
 }
 
 
+#myTechSppt #tableDiv{
+	height: 410px; width: 910px;
+	box-sizing: border-box;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
 #myTechSppt #techSppt-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
+    /*
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    */
     height: auto; width: 900px;
     text-align: center;
 }

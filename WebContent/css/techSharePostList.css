@@ -8,7 +8,7 @@ body{
    background-color: black;
 }
  */
-#myTechShare{
+#TechShareBoard{
 	/* 
 	border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
@@ -16,7 +16,7 @@ body{
     text-shadow: none;
 }
 
-#myTechShare>span{
+#TechShareBoard>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -29,17 +29,26 @@ body{
 }
 
 
-#myTechShare #techShare-tb{
+#TechShareBoard #tableDiv{
+	height: 410px; width: 910px;
+	box-sizing: border-box;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+#TechShareBoard #techShare-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
+    /*
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    */
     height: auto; width: 900px;
     text-align: center;
 }
 
-#myTechShare #techShare-tb tr:first-child th{
+#TechShareBoard #techShare-tb tr:first-child th{
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-color: gray;
@@ -50,7 +59,7 @@ body{
     text-shadow: -1px -1px 2px transparent,
                 1px 1px 2px rgb(220,220,220);
 }
-#myTechShare #techShare-tb tr td{
+#TechShareBoard #techShare-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
     height: 45px;
@@ -60,19 +69,19 @@ body{
 }
 
 
-#myTechShare #techShare-tb th:nth-child(1){
+#TechShareBoard #techShare-tb th:nth-child(1){
     width: 80px;
 }
-#myTechShare #techShare-tb th:nth-child(2){
+#TechShareBoard #techShare-tb th:nth-child(2){
     width: 480px;
 }
-#myTechShare #techShare-tb th:nth-child(3){
+#TechShareBoard #techShare-tb th:nth-child(3){
     width: 110px;
 }
-#myTechShare #techShare-tb th:nth-child(4){
+#TechShareBoard #techShare-tb th:nth-child(4){
     width: 140px;
 }
-#myTechShare #techShare-tb th:nth-child(5){
+#TechShareBoard #techShare-tb th:nth-child(5){
     width: 90px;
 }
 

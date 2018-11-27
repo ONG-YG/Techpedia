@@ -8,7 +8,7 @@ body{
    background-color: black;
 }
  */
-#myTechSppt{
+#TechSpptBoard{
 	/* 
     border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
@@ -17,7 +17,7 @@ body{
     text-shadow: none;
 }
 
-#myTechSppt>span{
+#TechSpptBoard>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -30,16 +30,25 @@ body{
 }
 
 
-#myTechSppt #techSppt-tb{
+#TechSpptBoard #tableDiv{
+	height: 410px; width: 910px;
+	box-sizing: border-box;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+#TechSpptBoard #techSppt-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
+    /*
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    */
     height: auto; width: 900px;
     text-align: center;
 }
-#myTechSppt #techSppt-tb tr:first-child th{
+#TechSpptBoard #techSppt-tb tr:first-child th{
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-color: gray;
@@ -50,7 +59,7 @@ body{
     text-shadow: -1px -1px 2px transparent,
                 1px 1px 2px rgb(220,220,220);
 }
-#myTechSppt #techSppt-tb tr td{
+#TechSpptBoard #techSppt-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
     height: 45px;
@@ -60,24 +69,24 @@ body{
 }
 
 
-#myTechSppt #techSppt-tb th:nth-child(1){
+#TechSpptBoard #techSppt-tb th:nth-child(1){
     width: 90px;
 }
-#myTechSppt #techSppt-tb th:nth-child(2){
+#TechSpptBoard #techSppt-tb th:nth-child(2){
     width: 100px;
 }
-#myTechSppt #techSppt-tb th:nth-child(3){
+#TechSpptBoard #techSppt-tb th:nth-child(3){
     width: 350px;
 }
-#myTechSppt #techSppt-tb th:nth-child(4){
+#TechSpptBoard #techSppt-tb th:nth-child(4){
     width: 105px;
 }
-#myTechSppt #techSppt-tb th:nth-child(5){
+#TechSpptBoard #techSppt-tb th:nth-child(5){
     width: 105px;
 }
-#myTechSppt #techSppt-tb th:nth-child(6){
+#TechSpptBoard #techSppt-tb th:nth-child(6){
     width: 100px;
 }
-#myTechSppt #techSppt-tb th:nth-child(7){
+#TechSpptBoard #techSppt-tb th:nth-child(7){
     width: 50px;
 }

@@ -7,7 +7,8 @@ import kr.co.techpedia.board.model.dao.BoardDao;
 import kr.co.techpedia.board.model.vo.TechSharePost;
 import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.BoardPageData;
+import kr.co.techpedia.board.model.vo.Notice;
 
 public class BoardService {
 	
@@ -77,14 +78,25 @@ public class BoardService {
 		return techSupportPostL;
 	}
 
-	public ArrayList<Notice> noticeBoardList() {
+	public BoardPageData noticeBoardList(int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		ArrayList<Notice> noticeList = new ArrayList<>();
-		noticeList = new BoardDao().noticeBoardList(conn);
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<Notice> noticeList = new BoardDao().noticeBoardList(conn, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, currPg, recordCountPerPage, naviCountPerPage);
+		
+		BoardPageData pd = null;
+		if(!noticeList.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setNoticeList(noticeList);
+			pd.setPageNavi(pageNavi);
+			System.out.println(pageNavi);//////////
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return noticeList;
+		return pd;
 	}
 }

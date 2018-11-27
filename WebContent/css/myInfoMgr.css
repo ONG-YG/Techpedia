@@ -125,6 +125,7 @@ body, #wrapper{
     border-radius: 7px;
     color: dimgray;
 /*    color: white;*/
+    cursor: pointer;
 }
 #myInfoMgr-div #member-info-box #signOut{
 /*    border: 1px solid; border-color: blue;*/
@@ -141,4 +142,5 @@ body, #wrapper{
     border-radius: 7px;
     color: dimgray;
     /* color: white; */
+    cursor: pointer;
 }

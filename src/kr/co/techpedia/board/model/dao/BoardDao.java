@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import kr.co.techpedia.board.model.vo.TechSharePost;
 import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.Notice;
 
 public class BoardDao {
 	
@@ -296,18 +296,31 @@ public class BoardDao {
 		return techSupportPostL;
 	}
 
-	public ArrayList<Notice> noticeBoardList(Connection conn) {
+	public ArrayList<Notice> noticeBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Notice> noticeList = new ArrayList<>();
 		
-		String query = "SELECT NOTICE.*, "
-						+ "MEMBER_NAME AS WRITER_NAME "
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		System.out.println(start);//////////
+		System.out.println(end);////////////
+				
+		String query = "SELECT * FROM "
+						+ "(SELECT NOTICE.*, "
+							+ "MEMBER_NAME AS WRITER_NAME, "
+							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
 						+ "FROM NOTICE "
-						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER)";
+						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER)"
+						+ ") "
+						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -323,7 +336,7 @@ public class BoardDao {
 				
 				noticeList.add(post);
 				
-				//System.out.println("dao techSharePost check\n"+post);//////////////
+				//System.out.println("dao notice check\n"+post);//////////////
 			}
 			
 		} catch (SQLException e) {
@@ -334,5 +347,91 @@ public class BoardDao {
 		}
 		
 		return noticeList;
+	}
+
+	public String getPageNavi(Connection conn, int currPg, int recordCountPerPage, int naviCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("currPg : "+currPg);
+		//게시물의 토탈 개수
+		int recordTotalCount = 0;	//초기값
+		
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM NOTICE";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				recordTotalCount = rset.getInt("TOTALCOUNT");
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		int pageTotalCount = 0; //초기값
+		
+		// 페이지의 토탈 개수
+		if(recordTotalCount%recordCountPerPage != 0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage +1;
+		}else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+		
+		// 에러 방지
+		if(currPg<1) {
+			currPg=1;
+		}
+		else if(currPg>pageTotalCount) {
+			currPg = pageTotalCount;
+		}
+		
+		// 시작 페이지
+		int startNavi = ((currPg-1)/naviCountPerPage) * naviCountPerPage +1;
+		int endNavi = startNavi + naviCountPerPage -1;
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		System.out.println(startNavi);///////////
+		System.out.println(endNavi);///////////////
+		boolean needPrev = true;
+		boolean needNext = true;
+		
+		if(startNavi==1) { needPrev = false; }
+		if(endNavi==pageTotalCount) { needNext = false; }
+		
+		StringBuilder sb = new StringBuilder();
+		
+		// 시작페이지가 1이면 false
+		// 시작페이지가 1이 아니라면 true
+		if(needPrev==true) {
+			sb.append("<a id='prev_a' href='/views/main/mainpage.jsp?board=Notice&currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+		}
+		else {
+			sb.append("<a id='prev_a'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+		}
+		
+		for(int i=startNavi; i<=endNavi; i++) {
+			if(i==currPg) {
+				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board=Notice&currPg="+i+"'><B>"+i+"</B></a>");
+			}
+			else {
+				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board=Notice&currPg="+i+"'>"+i+"</a>");
+			}
+		}
+		
+		if(needNext) {
+			sb.append("<a id='next_a' href='/views/main/mainpage.jsp?board=Notice&currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
+		}
+		else {
+			sb.append("<a id='next_a'><img src='/img/next.png' id='next_img' width='20px'></a>");
+		}
+		
+		return sb.toString();
 	}
 }

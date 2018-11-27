@@ -1,7 +1,6 @@
 package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kr.co.techpedia.board.model.service.BoardService;
-import kr.co.techpedia.board.model.vo.TechSharePost;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.BoardPageData;
 
 /**
  * Servlet implementation class NoticeBoardListServlet
@@ -34,14 +32,17 @@ public class NoticeBoardListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		int currPg = Integer.parseInt( request.getParameter("currPg") );
+		System.out.println("currPg Servlet : "+currPg);
 		
-		ArrayList<Notice> noticeList = new BoardService().noticeBoardList();
+		//ArrayList<Notice> noticeList = new BoardService().noticeBoardList(currPg);
+		BoardPageData pd = new BoardService().noticeBoardList(currPg);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
-		if(!noticeList.isEmpty()) {
-			new Gson().toJson(noticeList, response.getWriter());
+		if(pd!=null) {
+			new Gson().toJson(pd, response.getWriter());
 		}
 		else {
 			response.getWriter().print(false);

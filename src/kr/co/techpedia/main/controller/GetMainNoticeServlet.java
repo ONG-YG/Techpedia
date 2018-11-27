@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kr.co.techpedia.main.model.service.MainService;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.Notice;
 
 /**
  * Servlet implementation class GetMainNoticeServlet

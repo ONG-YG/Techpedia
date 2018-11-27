@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 import kr.co.techpedia.common.JDBCTemplate;
 import kr.co.techpedia.main.model.dao.MainDao;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.Notice;
 
 public class MainService {
 	

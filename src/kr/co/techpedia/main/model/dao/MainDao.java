@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kr.co.techpedia.common.JDBCTemplate;
-import kr.co.techpedia.main.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.Notice;
 
 public class MainDao {
 	public Notice getMainNotice(Connection conn) {
