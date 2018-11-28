@@ -1,7 +1,6 @@
 package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kr.co.techpedia.board.model.service.BoardService;
-import kr.co.techpedia.board.model.vo.TechSharePost;
+import kr.co.techpedia.board.model.vo.BoardPageData;
 
 /**
  * Servlet implementation class GetTechShareListServlet
@@ -35,14 +34,16 @@ public class GetTechShareListServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		int memberNo = Integer.parseInt( request.getParameter("memberNo") );
+		int currPg = Integer.parseInt( request.getParameter("currPg") );
 		
-		ArrayList<TechSharePost> techSharePostL = new BoardService().getTechShareList(memberNo);
+		//ArrayList<TechSharePost> techSharePostL = new BoardService().getTechShareList(memberNo);
+		BoardPageData pd = new BoardService().getTechShareList(memberNo, currPg);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
-		if(!techSharePostL.isEmpty()) {
-			new Gson().toJson(techSharePostL, response.getWriter());
+		if(pd!=null) {
+			new Gson().toJson(pd, response.getWriter());
 		}
 		else {
 			response.getWriter().print(false);

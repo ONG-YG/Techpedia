@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<script
+    <script
       type="text/javascript"
         src="/resources/jquery-3.3.1.js">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	</script>
-	
+    
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/noticeList.css" rel="stylesheet" type="text/css">
+	<link href="/css/noticeList.css?ver=1" rel="stylesheet" type="text/css">
 	
 	<script>
 	    $(document).ready(function(){
@@ -19,13 +18,16 @@
 	    	
 	    });//$(document).ready END
         
-        
+	    function move(pageNo){
+	    	currPg = pageNo;
+	    	//noticeBoardList();
+	    }
+	    
         function noticeBoardList(){
-			
            	$.ajax({
    				url : "/noticeBoardList.do",
-   				//data : {memberNo: memberNo},
-   				//type : "post",
+   				data : {currPg: currPg},
+   				type : "post",
    				success : function(data){
    					//console.log("정상 처리 완료");
    					//alert("success");
@@ -33,12 +35,12 @@
    					
    					if(data) {
    						noticeList = [];
-						for(var i=0; i<data.length; i++) {
-							var post = [data[i].postNo,
-										data[i].ntcTitle,
-										data[i].ntcWriterName,
-										data[i].ntcDate,
-										data[i].ntcCnt];
+						for(var i=0; i<data.noticeList.length; i++) {
+							var post = [data.noticeList[i].postNo,
+										data.noticeList[i].ntcTitle,
+										data.noticeList[i].ntcWriterName,
+										data.noticeList[i].ntcDate,
+										data.noticeList[i].ntcCnt];
 							noticeList.push(post);
 						}
 						
@@ -52,9 +54,9 @@
 										+"<td>"+noticeList[i][3]+"</td> "
 										+"<td>"+noticeList[i][4]+"</td> "
 									+"</tr> ";
-							
 						}
 						$('#notice-tb tbody').html(postL);
+						$('#navi').html(data.pageNavi);
    					}
    					else {
    						//alert("작성한 기술 공유 게시물이 존재하지 않습니다.");
@@ -101,62 +103,80 @@
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+	            <tbody>
                     <tr>
-		                <td>2</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>3</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>4</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>5</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>6</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>7</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>8</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
-		                <td>9</td>
+		                <td>번호</td>
 		                <td>제목</td>
 		                <td>작성자</td>
 		                <td>작성일</td>
 		                <td>조회수</td>
 			        </tr>
+	            </tbody>
+                <tbody>
                     <tr>
 		                <td>10</td>
 		                <td>제목</td>
@@ -165,20 +185,20 @@
 		                <td>조회수</td>
 			        </tr>
 	            </tbody>
-	            
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
-            <div id="navi">
-                <a>prev</a>
-                <a>1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <a>next</a>
-            </div>
             <button id="writeBtn" onclick="return false;">글 쓰기</button>
+            <div id="navi">
+                <span><img src='/img/prev.png' id='prev_img' width='20px'></span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+                <span><img src='/img/next.png' id='next_img' width='20px'></span>
+            </div>
+            
         </div>
 	</div>
 	

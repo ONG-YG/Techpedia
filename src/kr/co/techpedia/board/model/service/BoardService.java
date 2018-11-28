@@ -12,37 +12,87 @@ import kr.co.techpedia.board.model.vo.Notice;
 
 public class BoardService {
 	
-	public ArrayList<TechSharePost> getTechShareList(int memberNo) {
+	public BoardPageData getTechShareList(int memberNo, int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
+
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
 		
-		ArrayList<TechSharePost> techSharePostL = new ArrayList<>();
-		techSharePostL = new BoardDao().getTechShareList(conn, memberNo);
+		ArrayList<TechSharePost> techSharePostL
+			= new BoardDao().getTechShareList(conn, memberNo, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"myTechShare", 
+														-1, memberNo);
+
+		BoardPageData pd = null;
+		if(!techSharePostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSharePostL(techSharePostL);
+			pd.setPageNavi(pageNavi);
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return techSharePostL;
+		return pd;
 	}
 
-	public ArrayList<TechSupportPost> getTechSpptListByCopNo(int memberNo) {
+	public BoardPageData getTechSpptListByCompMemNo(int memberNo, int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
-		techSupportPostL = new BoardDao().getTechSpptListByCopNo(conn, memberNo);
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		//ArrayList<TechSupportPost> techSupportPostL = new BoardDao().getTechSpptListByCompMemNo(conn, memberNo);
+		ArrayList<TechSupportPost> techSupportPostL
+			= new BoardDao().getTechSpptListByCompMemNo(conn, memberNo, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"myTechSppt-C", 
+														-1, memberNo);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+		pd = new BoardPageData();
+		pd.setTechSupportPostL(techSupportPostL);
+		pd.setPageNavi(pageNavi);
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return techSupportPostL;
+		return pd;
 	}
 
-	public ArrayList<TechSupportPost> getTechSpptListByEngNo(int memberNo) {
+	public BoardPageData getTechSpptListByEngNo(int memberNo, int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
+
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
 		
-		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
-		techSupportPostL = new BoardDao().getTechSpptListByEngNo(conn, memberNo);
+		//ArrayList<TechSupportPost> techSupportPostL = new BoardDao().getTechSpptListByEngNo(conn, memberNo);
+		ArrayList<TechSupportPost> techSupportPostL
+			= new BoardDao().getTechSpptListByEngNo(conn, memberNo, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"myTechSppt-E", 
+														-1, memberNo);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+		pd = new BoardPageData();
+		pd.setTechSupportPostL(techSupportPostL);
+		pd.setPageNavi(pageNavi);
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return techSupportPostL;
+		return pd;
 	}
 
 	public BoardPageData techShareBoardList(int currPg) {
@@ -50,11 +100,16 @@ public class BoardService {
 		
 		int recordCountPerPage = 10;	// 게시물 개수
 		int naviCountPerPage = 5;		// navi 개수
-
+		
 		//ArrayList<TechSharePost> techSharePostL = new ArrayList<>();
 		//techSharePostL = new BoardDao().techShareBoardList(conn);
 		ArrayList<TechSharePost> techSharePostL = new BoardDao().techShareBoardList(conn, currPg, recordCountPerPage);
-		String pageNavi = new BoardDao().getPageNavi(conn, currPg, recordCountPerPage, naviCountPerPage, "TechSh");
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSh", 
+														-1, -1);
 		
 		BoardPageData pd = null;
 		if(!techSharePostL.isEmpty() && !pageNavi.isEmpty()) {
@@ -66,26 +121,57 @@ public class BoardService {
 		return pd;
 	}
 
-	public ArrayList<TechSupportPost> techSupportBoardListByCompNo(int compNo) {
+	public BoardPageData techSupportBoardListByCompNo(int compNo, int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
+
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
 		
-		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
-		techSupportPostL = new BoardDao().techSupportBoardListByCompNo(conn, compNo);
+		ArrayList<TechSupportPost> techSupportPostL
+			= new BoardDao().techSupportBoardListByCompNo(conn, compNo, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSpp", 
+														compNo, -1);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSupportPostL(techSupportPostL);
+			pd.setPageNavi(pageNavi);
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return techSupportPostL;
+		return pd;
 	}
 
-	public ArrayList<TechSupportPost> techSupportBoardList() {
+	public BoardPageData techSupportBoardList(int currPg) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
-		techSupportPostL = new BoardDao().techSupportBoardList(conn);
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<TechSupportPost> techSupportPostL = new BoardDao().techSupportBoardList(conn, currPg, recordCountPerPage);
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSpp", 
+														-1, -1);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSupportPostL(techSupportPostL);
+			pd.setPageNavi(pageNavi);
+		}
 		
 		JDBCTemplate.close(conn);
 		
-		return techSupportPostL;
+		return pd;
 	}
 
 	public BoardPageData noticeBoardList(int currPg) {
@@ -95,7 +181,12 @@ public class BoardService {
 		int naviCountPerPage = 5;		// navi 개수
 		
 		ArrayList<Notice> noticeList = new BoardDao().noticeBoardList(conn, currPg, recordCountPerPage);
-		String pageNavi = new BoardDao().getPageNavi(conn, currPg, recordCountPerPage, naviCountPerPage, "Notice");
+		String pageNavi = new BoardDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"Notice", 
+														-1, -1);
 		
 		BoardPageData pd = null;
 		if(!noticeList.isEmpty() && !pageNavi.isEmpty()) {

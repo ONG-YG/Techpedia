@@ -12,8 +12,8 @@ body{
 /*
 	border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
-*/
     height: 630px; width: 1020px;
+*/
     text-shadow: none;
 }
 
@@ -88,24 +88,27 @@ body{
 
 #noticeBoard #bottomSpace{
 /*    border: 1px solid; border-color: red;*/
-    height: 70px; width: 100%;
+    height: auto; width: auto;
 }
 #noticeBoard #bottomSpace #navi{
 /*    border: 1px solid; border-color: aqua;*/
-    width: 50%;
+    height: auto; width: 50%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
-#noticeBoard #bottomSpace #navi a{
+#noticeBoard #bottomSpace #navi a,
+#noticeBoard #bottomSpace #navi span{
     margin-left: 5px;
     margin-right: 5px;
+    vertical-align: middle;
     text-decoration: none;
     color: rgb(70,70,70);
+    cursor: pointer;
 }
 #noticeBoard #bottomSpace #navi #prev_img,
 #noticeBoard #bottomSpace #navi #next_img{
-	padding-top: 20px;
+	vertical-align: -14.74%;
 }
 #noticeBoard #bottomSpace #writeBtn{
 /*    border: 1px solid; border-color: blue;*/

@@ -1,7 +1,6 @@
 package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kr.co.techpedia.board.model.service.BoardService;
-import kr.co.techpedia.board.model.vo.TechSupportPost;
+import kr.co.techpedia.board.model.vo.BoardPageData;
 
 /**
  * Servlet implementation class TechSupportBoardListServlet
@@ -38,22 +37,25 @@ public class TechSupportBoardListServlet extends HttpServlet {
 		int compNo = Integer.parseInt( request.getParameter("compNo") );
 		int currPg = Integer.parseInt( request.getParameter("currPg") );
 		
-		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
+		//ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
+		BoardPageData pd = null;
 		
 		if(memberTypeCD.equals("COP")) {
 			//로그인한 사람이 협력사 직원인 경우
-			techSupportPostL = new BoardService().techSupportBoardListByCompNo(compNo);
+			//techSupportPostL = new BoardService().techSupportBoardListByCompNo(compNo);
+			pd = new BoardService().techSupportBoardListByCompNo(compNo, currPg);
 		}
 		else {
 			//로그인한 사람이 제조사 직원인 경우
-			techSupportPostL = new BoardService().techSupportBoardList();
+			//techSupportPostL = new BoardService().techSupportBoardList();
+			pd = new BoardService().techSupportBoardList(currPg);
 		}
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
-		if(!techSupportPostL.isEmpty()) {
-			new Gson().toJson(techSupportPostL, response.getWriter());
+		if(pd!=null) {
+			new Gson().toJson(pd, response.getWriter());
 		}
 		else {
 			response.getWriter().print(false);

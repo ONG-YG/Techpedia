@@ -59,8 +59,12 @@
 	    	techShareBoardList();
 	    	
 	    });//$(document).ready END
-        
-        
+	    
+	    function move(pageNo){
+	    	currPg = pageNo;
+	    	techShareBoardList();
+	    }
+	    
         function techShareBoardList(){
 			
            	$.ajax({
@@ -140,16 +144,16 @@
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
+	    	<button id="writeBtn" onclick="return false;">글 쓰기</button>
             <div id="navi">
-                <a href="#"><img src='/img/prev.png' id='prev_img' width='20px'></a>
-                <a>1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <a href="#"><img src='/img/next.png' id='next_img' width='20px'></a>
+                <span><img src='' id='prev_img' width='20px'></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span><img src='' id='next_img' width='20px'></span>
             </div>
-            <button id="writeBtn" onclick="return false;">글 쓰기</button>
         </div>
 	</div>
 	

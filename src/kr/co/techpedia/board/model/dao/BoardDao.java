@@ -13,20 +13,37 @@ import kr.co.techpedia.board.model.vo.Notice;
 
 public class BoardDao {
 	
-	public ArrayList<TechSharePost> getTechShareList(Connection conn, int memberNo) {
+	public ArrayList<TechSharePost> getTechShareList(Connection conn, int memberNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSharePost> techSharePostL = new ArrayList<>();
 		
-		String query = "SELECT TECH_SHR.*, "
-						+ "MEMBER_NAME "
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+//		String query_old = "SELECT TECH_SHR.*, "
+//						+ "MEMBER_NAME "
+//						+ "FROM TECH_SHR "
+//						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER) "
+//						+ "WHERE SHR_WRITER=?";
+		
+		String query = "SELECT * FROM "
+						+ "(SELECT TECH_SHR.*, "
+							+ "MEMBER_NAME AS WRITER_NAME, "
+							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
 						+ "FROM TECH_SHR "
 						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER) "
-						+ "WHERE SHR_WRITER=?";
+						+ "WHERE SHR_WRITER=?"
+						+ ") "
+						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -35,7 +52,7 @@ public class BoardDao {
 				post.setShrTitle(rset.getString("SHR_TITLE"));
 				//post.setShrContent(rset.getString("SHR_CONTENT"));
 				//post.setShrWriter(rset.getInt("SHR_WRITER"));
-				//post.setShrWriterName(rset.getString("MEMBER_NAME"));
+				//post.setShrWriterName(rset.getString("WRITER_NAME"));
 				post.setShrDate(rset.getDate("SHR_DATE").toString());
 				//post.setShrCnt(rset.getInt("SHR_CNT"));
 				
@@ -54,24 +71,45 @@ public class BoardDao {
 		return techSharePostL;
 	}
 
-	public ArrayList<TechSupportPost> getTechSpptListByCopNo(Connection conn, int memberNo) {
+	public ArrayList<TechSupportPost> getTechSpptListByCompMemNo(Connection conn, int memberNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
 		
-		String query = "SELECT TECH_SPPT.*, "
-						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
-						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
-						+ "STAT_NAME "
-						+ "FROM TECH_SPPT "
-						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
-						+ "JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
-						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
-						+ "WHERE SPPT_WRITER=?";
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+//		String query_old = "SELECT TECH_SPPT.*, "
+//						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+//						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+//						+ "STAT_NAME "
+//						+ "FROM TECH_SPPT "
+//						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+//						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+//						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+//						+ "WHERE SPPT_WRITER=?";
+		
+		String query = "SELECT * FROM "
+						+ "(SELECT TECH_SPPT.*, "
+							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+							+ "STAT_NAME, "
+							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+							+ "FROM TECH_SPPT "
+							+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+							+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+							+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+							+ "WHERE SPPT_WRITER=?"
+						+ ") "
+						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -105,24 +143,45 @@ public class BoardDao {
 		return techSupportPostL;
 	}
 
-	public ArrayList<TechSupportPost> getTechSpptListByEngNo(Connection conn, int memberNo) {
+	public ArrayList<TechSupportPost> getTechSpptListByEngNo(Connection conn, int memberNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
 		
-		String query = "SELECT TECH_SPPT.*, "
-						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
-						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
-						+ "STAT_NAME "
-						+ "FROM TECH_SPPT "
-						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
-						+ "JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
-						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
-						+ "WHERE SPPT_ENG=?";
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+//		String query_old = "SELECT TECH_SPPT.*, "
+//						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+//						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+//						+ "STAT_NAME "
+//						+ "FROM TECH_SPPT "
+//						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+//						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+//						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+//						+ "WHERE SPPT_ENG=?";
+		
+		String query = "SELECT * FROM "
+						+ "(SELECT TECH_SPPT.*, "
+							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+							+ "STAT_NAME, "
+							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+							+ "FROM TECH_SPPT "
+							+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+							+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+							+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+							+ "WHERE SPPT_ENG=?"
+						+ ") "
+						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -211,25 +270,48 @@ public class BoardDao {
 		return techSharePostL;
 	}
 
-	public ArrayList<TechSupportPost> techSupportBoardListByCompNo(Connection conn, int compNo) {
+	public ArrayList<TechSupportPost> techSupportBoardListByCompNo(Connection conn, int compNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
 		
-		String query = "SELECT TECH_SPPT.*, "
-							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
-							+ "COMP_NO AS WRITER_COMPANY, "
-							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
-							+ "STAT_NAME FROM TECH_SPPT "
-							+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
-							+ "JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
-							+ "JOIN COMPANY_L ON(M1.COMP_NO = COMPANY_L.COMP_NO) "
-							+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
-							+ "WHERE COMP_NO=?";
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+//		String query_old = "SELECT TECH_SPPT.*, "
+//							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+//							+ "COMP_NO AS WRITER_COMPANY, "
+//							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+//							+ "STAT_NAME FROM TECH_SPPT "
+//							+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+//							+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+//							+ "JOIN COMPANY_L ON(M1.COMP_NO = COMPANY_L.COMP_NO) "
+//							+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+//							+ "WHERE COMP_NO=?";
+		
+		String query = "SELECT * FROM "
+							+ "(SELECT TECH_SPPT.*, "
+								+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+								+ "COMP_NO AS WRITER_COMPANY, "
+								+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+								+ "STAT_NAME, "
+								+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+								+ "FROM TECH_SPPT "
+								+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+								+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+								+ "JOIN COMPANY_L ON(M1.COMP_NO = COMPANY_L.COMP_NO) "
+								+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+								+ "WHERE COMP_NO=?"
+								+ ") "
+							+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, compNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -263,22 +345,42 @@ public class BoardDao {
 		return techSupportPostL;
 	}
 
-	public ArrayList<TechSupportPost> techSupportBoardList(Connection conn) {
+	public ArrayList<TechSupportPost> techSupportBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<TechSupportPost> techSupportPostL = new ArrayList<>();
+
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
 		
-		String query = "SELECT TECH_SPPT.*, "
-						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
-						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
-						+ "STAT_NAME "
-						+ "FROM TECH_SPPT "
-						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
-						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
-						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) ";
+//		String query_old = "SELECT TECH_SPPT.*, "
+//						+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+//						+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+//						+ "STAT_NAME "
+//						+ "FROM TECH_SPPT "
+//						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+//						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+//						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) ";
+		
+		String query = "SELECT * FROM "
+							+ "(SELECT TECH_SPPT.*, "
+								+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+								+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+								+ "STAT_NAME, "
+								+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+								+ "FROM TECH_SPPT "
+								+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+								+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+								+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+								+ ") "
+							+ "WHERE R_NUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -363,7 +465,14 @@ public class BoardDao {
 		return noticeList;
 	}
 
-	public String getPageNavi(Connection conn, int currPg, int recordCountPerPage, int naviCountPerPage, String board) {
+	public String getPageNavi(Connection conn, 
+									int currPg, 
+									int recordCountPerPage, 
+									int naviCountPerPage, 
+									String board,
+									int compNo, 
+									int memberNo) {
+		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -372,11 +481,35 @@ public class BoardDao {
 		
 		String query = "";
 		if(board.equals("Notice")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM NOTICE";
-		else if(board.equals("TechSpp")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT";
-		else if(board.equals("TechSh")) query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SHR";
+		else if(board.equals("TechSh") && memberNo==-1) query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SHR";
+		else if(board.equals("TechSpp") && compNo!=-1) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT "
+						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+						+ "JOIN COMPANY_L ON(M1.COMP_NO = COMPANY_L.COMP_NO) "
+						+ "WHERE M1.COMP_NO=?";
+		}
+		else if(board.equals("TechSpp") && compNo==-1) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT";
+		}
+		else if(board.equals("myTechShare") && memberNo!=-1) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SHR WHERE SHR_WRITER=?";
+		}
+		else if(board.equals("myTechSppt-C") && memberNo!=-1) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT WHERE SPPT_WRITER=?";
+		}
+		else if(board.equals("myTechSppt-E") && memberNo!=-1) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TECH_SPPT WHERE SPPT_ENG=?";
+		}
+		//System.out.println(query);////////////////
+		
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			if(board.equals("TechSpp") && compNo!=-1) pstmt.setInt(1, compNo);
+			if(( board.equals("myTechShare") 
+					|| board.equals("myTechSppt-C") 
+					|| board.equals("myTechSppt-E") )
+					&& memberNo!=-1) pstmt.setInt(1, memberNo);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -425,9 +558,16 @@ public class BoardDao {
 		
 		// 시작페이지가 1이면 false
 		// 시작페이지가 1이 아니라면 true
+		
+		//if( board.equals("myTechSppt-C") || board.equals("myTechSppt-E") ) board = "myTechSppt";
+		//String link = "/views/main/mainpage.jsp?board="+board+"&";
+		
 		if(needPrev==true) {
 			//sb.append("<a id='prev_a' href='/views/board/noticeList.jsp?currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
-			sb.append("<a id='prev_a' href='/views/main/mainpage.jsp?board="+board+"&currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+			if( board.equals("myTechShare") || board.equals("myTechSppt") )
+				sb.append("<span id='prev_a'><img src='/img/prev.png' id='prev_img' width='20px' onclick='move("+(startNavi-1)+");'></span>");
+			//else sb.append("<a id='prev_a' href='"+link+"currPg="+(startNavi-1)+"'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
+			else sb.append("<span id='prev_a'><img src='/img/prev.png' id='prev_img' width='20px' onclick='move("+(startNavi-1)+");'></span>");
 		}
 		else {
 			sb.append("<a id='prev_a'><img src='/img/prev.png' id='prev_img' width='20px'></a>");
@@ -436,21 +576,32 @@ public class BoardDao {
 		for(int i=startNavi; i<=endNavi; i++) {
 			if(i==currPg) {
 				//sb.append("<a class='page_link' href='/views/board/noticeList.jsp?currPg="+i+"'><B>"+i+"</B></a>");
-				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board="+board+"&currPg="+i+"'><B>"+i+"</B></a>");
+				if( board.equals("myTechShare") || board.equals("myTechSppt") )
+					sb.append("<span class='page_link' onclick='move("+i+");'><B>"+i+"</B></span>");
+				//else sb.append("<a class='page_link' href='"+link+"currPg="+i+"'><B>"+i+"</B></a>");
+				else sb.append("<span class='page_link' onclick='move("+i+");'><B>"+i+"</B></span>");
 			}
 			else {
 				//sb.append("<a class='page_link' href='/views/board/noticeList.jsp?currPg="+i+"'>"+i+"</a>");
-				sb.append("<a class='page_link' href='/views/main/mainpage.jsp?board="+board+"&currPg="+i+"'>"+i+"</a>");
+				if( board.equals("myTechShare") || board.equals("myTechSppt") )
+					sb.append("<span class='page_link' onclick='move("+i+");'>"+i+"</span>");
+				//else sb.append("<a class='page_link' href='"+link+"currPg="+i+"'>"+i+"</a>");
+				else sb.append("<span class='page_link' onclick='move("+i+");'>"+i+"</span>");
 			}
 		}
 		
 		if(needNext) {
 			//sb.append("<a id='next_a' href='/views/board/noticeList.jsp?currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
-			sb.append("<a id='next_a' href='/views/main/mainpage.jsp?board="+board+"&currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
+			if( board.equals("myTechShare") || board.equals("myTechSppt") )
+				sb.append("<span id='prev_a'><img src='/img/next.png' id='next_img' width='20px' onclick='move("+(endNavi+1)+");'></span>");
+			//else sb.append("<a id='next_a' href='"+link+"currPg="+(endNavi+1)+"'><img src='/img/next.png' id='next_img' width='20px'></a>");
+			else sb.append("<span id='prev_a'><img src='/img/next.png' id='next_img' width='20px' onclick='move("+(endNavi+1)+");'></span>");
 		}
 		else {
 			sb.append("<a id='next_a'><img src='/img/next.png' id='next_img' width='20px'></a>");
 		}
+		
+		//System.out.println(sb.toString());/////////////////
 		
 		return sb.toString();
 	}

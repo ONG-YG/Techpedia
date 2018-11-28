@@ -13,7 +13,6 @@ body{
     border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
      */
-    min-width: 920px;
     text-shadow: none;
 }
 
@@ -35,7 +34,7 @@ body{
 	box-sizing: border-box;
 	margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 #myTechSppt #techSppt-tb{
 /*    border-color: transparent;*/
@@ -62,8 +61,8 @@ body{
 #myTechSppt #techSppt-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
-    height: 45px;
-    font-size: 14px;
+    height: 34px;
+    font-size: 13px;
     font-weight: 550;
     color: rgb(70,70,70);
 }
@@ -87,4 +86,50 @@ body{
 #myTechSppt #techSppt-tb th:nth-child(6){
     width: 60px;
 }
+
+
+#myTechSppt #bottomSpace{
+/*    border: 1px solid; border-color: red;*/
+    height: auto; width: auto;
+}
+#myTechSppt #bottomSpace #navi{
+/*    border: 1px solid; border-color: aqua;*/
+    height: auto; width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#myTechSppt #bottomSpace #navi a,
+#myTechSppt #bottomSpace #navi span{
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: middle;
+    text-decoration: none;
+    color: rgb(70,70,70);
+    cursor: pointer;
+}
+#myTechSppt #bottomSpace #navi #prev_img,
+#myTechSppt #bottomSpace #navi #next_img{
+	vertical-align: -14.74%;
+}
+#myTechSppt #bottomSpace #writeBtn{
+/*    border: 1px solid; border-color: blue;*/
+    height: 35px; width: 60px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    margin-right: 60px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+    float: right;
+}
+
 

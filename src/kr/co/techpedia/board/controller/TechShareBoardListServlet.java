@@ -1,7 +1,6 @@
 package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,6 @@ import com.google.gson.Gson;
 
 import kr.co.techpedia.board.model.service.BoardService;
 import kr.co.techpedia.board.model.vo.BoardPageData;
-import kr.co.techpedia.board.model.vo.TechSharePost;
 
 /**
  * Servlet implementation class GetTechShareTotListServlet

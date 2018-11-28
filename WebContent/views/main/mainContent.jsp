@@ -49,6 +49,12 @@
 			if(pg=='null') {
 				$('#mainView').load("/views/main/main_notice.jsp");
 			}
+			else if(pg=='myTechSppt') {
+				$('#mainView').load("/views/mypage/myTechSppt_content.jsp?currPg="+cp);
+			}
+			else if(pg=='myTechShare') {
+				$('#mainView').load("/views/mypage/myTechShare_content.jsp?currPg="+cp);
+			}
 			else if(pg=='Notice') {
 				$('#mainView').load("/views/board/noticeList_content.jsp?currPg="+cp);
 			}
@@ -68,10 +74,10 @@
 		    	$('#mainView').load("/views/mypage/myInfoMgr_content.jsp");
 		    });
 		    $('#progTechSppt').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechSppt_content.jsp?currPg="+cp);
+		    	$('#mainView').load("/views/mypage/myTechSppt_content.jsp");
 		    });
 		    $('#myTechShr').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechShare_content.jsp?currPg="+cp);
+		    	$('#mainView').load("/views/mypage/myTechShare_content.jsp");
 		    });
 		    
 		    

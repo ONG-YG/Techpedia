@@ -19,12 +19,19 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				String cp = request.getParameter("currPg");
+
+				int currPg = 1;
+				if (cp!=null) {
+					currPg = Integer.parseInt(cp);
+				}
 				
 				//System.out.println("\nmyTechShare memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var currPg = <%=currPg%>;
 				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
 			</script>
 	<%
@@ -53,12 +60,20 @@
 	    	
 	    });//$(document).ready END
         
-        
+	    function move(pageNo){
+	    	currPg = pageNo;
+	    	getTechShareList();
+	    }
+	    
+        function delPost(postNo){
+	    	alert();//////////
+	    }
+	    
         function getTechShareList(){
 			
            	$.ajax({
    				url : "/getTechShareList.do",
-   				data : {memberNo: memberNo},
+   				data : {memberNo: memberNo, currPg: currPg},
    				type : "post",
    				success : function(data){
    					//console.log("정상 처리 완료");
@@ -67,10 +82,10 @@
    					
    					if(data) {
    						techShPostList = [];
-						for(var i=0; i<data.length; i++) {
-							var post = [data[i].postNo,
-										data[i].shrTitle,
-										data[i].shrDate];
+						for(var i=0; i<data.techSharePostL.length; i++) {
+							var post = [data.techSharePostL[i].postNo,
+										data.techSharePostL[i].shrTitle,
+										data.techSharePostL[i].shrDate];
 							techShPostList.push(post);
 						}
 						
@@ -85,12 +100,13 @@
 											+"<button id='rewrite-btn'>수정</button> "
 										+"</td> "
 										+"<td> "
-											+"<button id='delete-btn'>삭제</button> "
+											+"<button id='delete-btn' onclick='delPost("+techShPostList[i][0]+");'>삭제</button> "
 										+"</td> "
 									+"</tr> ";
 						}
 						//$('#techShare-tb').html(postL);
 						$('#techShare-tb tbody').html(postL);
+						$('#navi').html(data.pageNavi);
    					}
    					else {
    						alert("작성한 기술 공유 게시물이 존재하지 않습니다.");
@@ -134,6 +150,17 @@
 	            
 		    </table>
 	    </div>
+		<div id="bottomSpace">
+            <div id="navi">
+                <span><img src='' id='prev_img' width='20px'></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span><img src='' id='next_img' width='20px'></span>
+            </div>
+        </div>
 	</div>
 	
 </body>

@@ -62,6 +62,10 @@
     	
     });//$(document).ready END
     
+    function move(pageNo){
+    	currPg = pageNo;
+    	techSpptBoardList();
+    }
     
     function techSpptBoardList(){
 		
@@ -76,36 +80,37 @@
 					
 					if(data) {
 						techSpPostList = [];
-					for(var i=0; i<data.length; i++) {
-						var engName = data[i].spptEngName;
-						
-						if (engName==null) {
-							engName = '(배정되지 않음)';
+						for(var i=0; i<data.techSupportPostL.length; i++) {
+							var engName = data.techSupportPostL[i].spptEngName;
+							
+							if (engName==null) {
+								engName = '(배정되지 않음)';
+							}
+							var post = [data.techSupportPostL[i].postNo,
+										data.techSupportPostL[i].spptStatName,
+										data.techSupportPostL[i].spptTitle,
+										data.techSupportPostL[i].spptWriterName,
+										engName,
+										data.techSupportPostL[i].spptDate,
+										data.techSupportPostL[i].spptCnt];
+							techSpPostList.push(post);
 						}
-						var post = [data[i].postNo,
-									data[i].spptStatName,
-									data[i].spptTitle,
-									data[i].spptWriterName,
-									engName,
-									data[i].spptDate,
-									data[i].spptCnt];
-						techSpPostList.push(post);
-					}
-					
-					//var postL = $('#techSppt-tb').html();
-					var postL = '';
-					for(var i=0; i<techSpPostList.length; i++) {
-						postL += " <tr> "
-									+"<td>"+techSpPostList[i][0]+"</td> "
-									+"<td>"+techSpPostList[i][1]+"</td> "
-									+"<td>"+techSpPostList[i][2]+"</td> "
-									+"<td>"+techSpPostList[i][3]+"</td> "
-									+"<td>"+techSpPostList[i][4]+"</td> "
-									+"<td>"+techSpPostList[i][5]+"</td> "
-									+"<td>"+techSpPostList[i][6]+"</td> "
-								+"</tr> ";
-					}
-					$('#techSppt-tb tbody').html(postL);
+						
+						//var postL = $('#techSppt-tb').html();
+						var postL = '';
+						for(var i=0; i<techSpPostList.length; i++) {
+							postL += " <tr> "
+										+"<td>"+techSpPostList[i][0]+"</td> "
+										+"<td>"+techSpPostList[i][1]+"</td> "
+										+"<td>"+techSpPostList[i][2]+"</td> "
+										+"<td>"+techSpPostList[i][3]+"</td> "
+										+"<td>"+techSpPostList[i][4]+"</td> "
+										+"<td>"+techSpPostList[i][5]+"</td> "
+										+"<td>"+techSpPostList[i][6]+"</td> "
+									+"</tr> ";
+						}
+						$('#techSppt-tb tbody').html(postL);
+						$('#navi').html(data.pageNavi);
 					}
 					else {
 						//alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
@@ -152,17 +157,17 @@
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
+	    	<button id="writeBtn" onclick="return false;">글 쓰기</button>
             <div id="navi">
-                <a href="#"><img src='/img/prev.png' id='prev_img' width='20px'></a>
-                <a>1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <a href="#"><img src='/img/next.png' id='next_img' width='20px'></a>
+                <span><img src='' id='prev_img' width='20px'></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span><img src='' id='next_img' width='20px'></span>
             </div>
-            <button id="writeBtn" onclick="return false;">글 쓰기</button>
-        </div>s
+        </div>
 	</div>
 	
 </body>

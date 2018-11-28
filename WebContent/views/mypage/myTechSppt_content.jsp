@@ -19,12 +19,19 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				String cp = request.getParameter("currPg");
+
+				int currPg = 1;
+				if (cp!=null) {
+					currPg = Integer.parseInt(cp);
+				}
 				
 				//System.out.println("\nmyTechSppt memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var currPg = <%=currPg%>;
 				
 				if(memberTypeCD=='COP') {
 					$('#charger').html("담당 엔지니어");
@@ -52,7 +59,7 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/myTechSppt.css" rel="stylesheet" type="text/css">
+	<link href="/css/myTechSppt.css?ver=1" rel="stylesheet" type="text/css">
 	
 	<script>
 	$(document).ready(function(){
@@ -61,12 +68,16 @@
     	
     });//$(document).ready END
     
+    function move(pageNo){
+    	currPg = pageNo;
+    	getTechSpptList();
+    }
     
     function getTechSpptList(){
 		
        	$.ajax({
 				url : "/getTechSpptList.do",
-				data : {memberNo: memberNo, memberTypeCD: memberTypeCD},
+				data : {memberNo: memberNo, memberTypeCD: memberTypeCD, currPg: currPg},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");
@@ -75,19 +86,19 @@
 					
 					if(data) {
 						techSpPostList = [];
-					for(var i=0; i<data.length; i++) {
+					for(var i=0; i<data.techSupportPostL.length; i++) {
 						var charger = null;
 						if(memberTypeCD=='COP') {
-							charger = data[i].spptEngName;
+							charger = data.techSupportPostL[i].spptEngName;
 						}else {
-							charger = data[i].spptWriterName;
+							charger = data.techSupportPostL[i].spptWriterName;
 						}
-						var post = [data[i].postNo,
-									data[i].spptTitle,
+						var post = [data.techSupportPostL[i].postNo,
+									data.techSupportPostL[i].spptTitle,
 									charger,
-									data[i].spptDate,
-									data[i].spptStatName,
-									data[i].spptEngck];
+									data.techSupportPostL[i].spptDate,
+									data.techSupportPostL[i].spptStatName,
+									data.techSupportPostL[i].spptEngck];
 						techSpPostList.push(post);
 					}
 					
@@ -105,6 +116,7 @@
 								
 					}
 					$('#techSppt-tb tbody').html(postL);
+					$('#navi').html(data.pageNavi);
 					}
 					else {
 						alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
@@ -149,6 +161,17 @@
 	            
 		    </table>
 	    </div>
+	    <div id="bottomSpace">
+            <div id="navi">
+                <span><img src='' id='prev_img' width='20px'></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span><img src='' id='next_img' width='20px'></span>
+            </div>
+        </div>
 	</div>
 	
 </body>
