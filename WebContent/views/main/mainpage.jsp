@@ -15,7 +15,18 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	</script>
-    
+    <%
+	String writeStart = request.getParameter("writeStart");
+	System.out.println("?? "+writeStart);//////////
+	
+	if(writeStart==null) {
+		//writeStart = "false";
+		writeStart = "true";/////////////////////////
+	}
+    %>
+    <script>
+    	writeStart = <%=writeStart%>;
+    </script>
 </head>
 <body>
     

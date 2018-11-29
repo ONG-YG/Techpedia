@@ -4,18 +4,21 @@ div{
 /*    border: 5px dashed; border-color: white;*/
 }
 body{
+	/*
     background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
     background-position: topcenter;
     background-color: black;
-    
+    */
 }
-#techSharePostDiv{
+#techShWrite{
+	/*
     background-color: rgb(255,255,255,0.86);
     border: 2px dashed; border-color: gainsboro;
     height: 630px; width: 1020px;
+    */
 }
 
-#techSharePostDiv>span{
+#techShWrite>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -28,10 +31,10 @@ body{
 
 
 
-#techSharePostDiv #notice-tb *{
+#techShWrite #techSh-tb *{
     box-sizing: border-box;
 }
-#techSharePostDiv #notice-tb{
+#techShWrite #techSh-tb{
 /*    border-color: transparent;*/
     margin-left: auto;
     margin-right: auto;
@@ -42,7 +45,7 @@ body{
     text-shadow: -1px -1px 2px white,
                 1px 1px 5px rgb(197,206,215);
 }
-#techSharePostDiv #notice-tb th{
+#techShWrite #techSh-tb th{
     width: 120px;
     color: darkblue;
     font-size: 14px;
@@ -54,37 +57,37 @@ body{
     text-align: right;
     padding-right: 20px;
 }
-#techSharePostDiv #notice-tb td{
+#techShWrite #techSh-tb td{
 /*    border: 1px dashed; border-color: blue;*/
     width: 580px;
     text-align: left;
     padding-left: 15px;
 }
-#techSharePostDiv #notice-tb tr:first-child th,
-#techSharePostDiv #notice-tb tr:first-child td{
+#techShWrite #techSh-tb tr:first-child th,
+#techShWrite #techSh-tb tr:first-child td{
     height: 50px;
     vertical-align: middle;
 }
-#techSharePostDiv #notice-tb tr:nth-child(2) th,
-#techSharePostDiv #notice-tb tr:nth-child(2) td{
+#techShWrite #techSh-tb tr:nth-child(2) th,
+#techShWrite #techSh-tb tr:nth-child(2) td{
     height: 300px;
     vertical-align: top;
     padding-top: 20px;
 }
-#techSharePostDiv #notice-tb input,
-#techSharePostDiv #notice-tb textarea{
+#techShWrite #techSh-tb input,
+#techShWrite #techSh-tb textarea{
     width: 450px;
     border: 1px solid; border-color: dimgray;
     border-radius: 4px;
 }
-#techSharePostDiv #notice-tb input{
+#techShWrite #techSh-tb input{
     height: 25px;
 }
-#techSharePostDiv #notice-tb textarea{
+#techShWrite #techSh-tb textarea{
     height: 100%;
 }
-#techSharePostDiv #notice-tb tr:nth-child(3) th,
-#techSharePostDiv #notice-tb tr:nth-child(3) td{
+#techShWrite #techSh-tb tr:nth-child(3) th,
+#techShWrite #techSh-tb tr:nth-child(3) td{
     padding: 0px;
     height: 55px;
     text-align: right;
@@ -93,7 +96,7 @@ body{
 
 
 
-#techSharePostDiv #notice-tb #register{
+#techShWrite #techSh-tb #register{
 /*    border: 1px solid; border-color: blue;*/
     height: 35px; width: 60px;
     font-size: 12px;

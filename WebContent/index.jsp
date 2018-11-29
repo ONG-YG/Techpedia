@@ -9,7 +9,7 @@
 		//System.out.println("\nindex page session : "+session);/////////////////////////
 		if(session!=null) {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			System.out.println("\nindex page session check\n"+memSession);///////////////////
+			//System.out.println("\nindex page session check\n"+memSession);///////////////////
 			if(memSession!=null) {
 	%>
 			<script>

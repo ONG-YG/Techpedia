@@ -26,7 +26,8 @@
 				if (cp!=null) {
 					currPg = Integer.parseInt(cp);
 				}
-				
+				memSession.setCurrBoard("TechSh");
+				session.setAttribute("memSession", memSession);
 				//System.out.println("\nTechShareBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
@@ -63,6 +64,10 @@
 	    function move(pageNo){
 	    	currPg = pageNo;
 	    	techShareBoardList();
+	    }
+	    
+	    function writePost(){
+	    	location.href="/writePost.do";
 	    }
 	    
         function techShareBoardList(){
@@ -144,7 +149,7 @@
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
-	    	<button id="writeBtn" onclick="return false;">글 쓰기</button>
+	    	<button id="writeBtn" onclick="writePost();">글 쓰기</button>
             <div id="navi">
                 <span><img src='' id='prev_img' width='20px'></span>
                 <span></span>

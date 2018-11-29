@@ -18,6 +18,7 @@
 				String pg = request.getParameter("board");
 				String cp = request.getParameter("currPg");//////////
 				//System.out.println("cp(from mainContent.jsp) : "+cp);//////////////
+				System.out.println("content");//////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
@@ -63,6 +64,15 @@
 			}
 			else if(pg=='TechSh') {
 				$('#mainView').load("/views/board/techSharePostList_content.jsp?currPg="+cp);
+			}
+			else if(pg=='NoticeW') {
+				$('#mainView').load("/views/board/noticeWrite.jsp");
+			}
+			else if(pg=='TechSppW') {
+				$('#mainView').load("/views/board/techSupportPostWrite.jsp");
+			}
+			else if(pg=='TechShW') {
+				$('#mainView').load("/views/board/techSharePostWrite.jsp");
 			}
 			
 		    $('.menu span').click(function(){

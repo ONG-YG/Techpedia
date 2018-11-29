@@ -27,7 +27,8 @@
 				if (cp!=null) {
 					currPg = Integer.parseInt(cp);
 				}
-				
+				memSession.setCurrBoard("TechSpp");
+				session.setAttribute("memSession", memSession);
 				//System.out.println("\nTechSupportBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
@@ -59,12 +60,20 @@
 	$(document).ready(function(){
     	
 		techSpptBoardList();
+		
+		if(memberTypeCD=='COP') {
+    		$('#writeBtn').css('display','block');
+    	}
     	
     });//$(document).ready END
     
     function move(pageNo){
     	currPg = pageNo;
     	techSpptBoardList();
+    }
+
+    function writePost(){
+    	location.href="/writePost.do";
     }
     
     function techSpptBoardList(){
@@ -157,7 +166,7 @@
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
-	    	<button id="writeBtn" onclick="return false;">글 쓰기</button>
+	    	<button id="writeBtn" onclick="writePost();">글 쓰기</button>
             <div id="navi">
                 <span><img src='' id='prev_img' width='20px'></span>
                 <span></span>

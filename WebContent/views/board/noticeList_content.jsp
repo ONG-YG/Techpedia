@@ -26,7 +26,8 @@
 				if (cp!=null) {
 					currPg = Integer.parseInt(cp);
 				}
-				
+				memSession.setCurrBoard("Notice");
+				session.setAttribute("memSession", memSession);
 				//System.out.println("\nNoticeBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
@@ -57,11 +58,19 @@
 	    	
 	    	noticeBoardList();
 	    	
+	    	if(memberTypeCD!='COP') {
+	    		$('#writeBtn').css('display','block');
+	    	}
+	    	
 	    });//$(document).ready END
         
 	    function move(pageNo){
 	    	currPg = pageNo;
 	    	noticeBoardList();
+	    }
+
+	    function writePost(){
+	    	location.href="/writePost.do";
 	    }
 	    
         function noticeBoardList(){
@@ -142,7 +151,7 @@
 		    </table>
 	    </div>
 	    <div id="bottomSpace">
-	    	<button id="writeBtn" onclick="return false;">글 쓰기</button>
+	    	<button id="writeBtn" onclick="writePost();">글 쓰기</button>
             <div id="navi">
                 <span><img src='' id='prev_img' width='20px'></span>
                 <span></span>
