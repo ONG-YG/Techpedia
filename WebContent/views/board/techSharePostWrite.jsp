@@ -71,7 +71,7 @@
                 <td><input type="text"></td>
 	        </tr>
             <tr>
-	            <th id="techShTitle">내용</th>
+	            <th id="techShContent">내용</th>
                 <td><textarea></textarea></td>
 	        </tr>
             <tr>

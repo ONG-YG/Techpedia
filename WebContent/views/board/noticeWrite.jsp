@@ -46,15 +46,34 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/noticeWrite.css" rel="stylesheet" type="text/css">
+	<link href="/css/noticeWrite.css?ver=1" rel="stylesheet" type="text/css">
     
 	<script>
         
 	    $(document).ready(function(){
-	    	//
+	    	
+	    	$('#fileInput').click(function(){
+	    		if(event.currentTarget==this) {
+	    			return false;
+	    		}
+	    	});
+	    	$('#fileInput').change(function(){
+	    		var filepath = $('#fileInput').val();
+	    		var filename = filepath.replace("C:\\fakepath\\","");
+	    		$('#fileInput_span').text(filename);
+	    		//console.log(filepath);///////////
+	    		//console.log(filename);///////////
+	    	});
             
 	    });//$(document).ready END
 	    
+	    function chooseFile(){
+	    	$('#fileInput').click();
+	    	return false;
+	    }
+	    function resetUpload(){
+	    	$('#fileInput_span').text("선택된 파일 없음");
+	    }
 	    
     </script>
 </head>
@@ -63,22 +82,52 @@
 	<div id="noticeWrite">
 	    
 	    <span>공지사항 작성</span>
+	    <form action="/noticeWrite.do" method="post" enctype="multipart/form-data">
 	    
-	    <table id="notice-tb">
-	        <tr>
-	            <th id="noticeTitle">제목</th>
-                <td><input type="text"></td>
-	        </tr>
-            <tr>
-	            <th id="noticeTitle">내용</th>
-                <td><textarea></textarea></td>
-	        </tr>
-            <tr>
-                <th></th>
-                <td><button id="register">등록</button></td>
-            </tr>
-	    </table>
+		    <table id="notice-tb">
+		    
+		    	<tr id="noticeGrade_tr">
+		            <th id="noticeGrade">등급</th>
+	                <td>
+		                <select name="noticeGrade" id="noticeGradeSelect">
+		                    <option value="none">선택</option>
+		                    
+		                    <option value="EMC">긴급</option>
+		                    <option value="NM">일반</option>
+		                    <option value="IMP">중요</option>
+		                    
+		                </select>
+	                </td>
+		        </tr>
+		        <tr id="noticeTitle_tr">
+		            <th id="noticeTitle">제목</th>
+	                <td><input type="text" id="titleInput"></td>
+		        </tr>
+	            <tr id="noticeContent_tr">
+		            <th id="noticeContent">내용</th>
+	                <td><textarea></textarea></td>
+		        </tr>
+		        <tr id="fileUpload_tr">
+		            <th id="noticeFile">파일첨부</th>
+	                <td id="fileUpload_td">
+	                	
+							<button id="fileInput_btn" onclick="return chooseFile();">파일선택</button>
+							<div id="fileInput_div">
+								<span id="fileInput_span">선택된 파일 없음</span>
+								<input type="file" name="upfile" id="fileInput"/>
+							</div>
+							<input type="submit" value="파일첨부" class="upload_btn"/>
+							<input type="reset" value="취소" class="upload_btn" onclick="resetUpload();"/>
+						
+	                </td>
+		        </tr>
+	            <tr id="register_tr">
+	                <th></th>
+	                <td><button id="register_btn">등록</button></td>
+	            </tr>
+		    </table>
 	    
+	    </form>
 	</div>
 	
 </body>

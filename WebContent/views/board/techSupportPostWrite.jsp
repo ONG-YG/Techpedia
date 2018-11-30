@@ -70,7 +70,7 @@
                 <td><input type="text"></td>
 	        </tr>
             <tr>
-	            <th id="techSppTitle">내용</th>
+	            <th id="techSppContent">내용</th>
                 <td><textarea></textarea></td>
 	        </tr>
             <tr>
