@@ -74,6 +74,12 @@
 			else if(pg=='TechShW') {
 				$('#mainView').load("/views/board/techSharePostWrite.jsp");
 			}
+			else if(pg=='TechSppAW') {
+				$('#mainView').load("/views/board/techSupportAnswerWrite.jsp");
+			}
+			else {
+				$('#mainView').load("/views/main/main_notice.jsp");
+			}
 			
 		    $('.menu span').click(function(){
 		    	$(this).parent().siblings().children('ul').removeClass('showMenu');
@@ -101,8 +107,8 @@
 		    	location.href="/views/main/mainpage.jsp?board=TechSh";
 		    });
 		    
-		    
 		});
+		
 		
 		function checkMemType() {
 			if(memberTypeCD=='HP_AD') {
@@ -165,6 +171,6 @@
 <%-- 		<jsp:include page="/views/main/main_notice.jsp"></jsp:include> --%>
 			
 	</div>
-
+	
 </body>
 </html>

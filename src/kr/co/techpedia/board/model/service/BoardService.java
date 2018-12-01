@@ -9,6 +9,8 @@ import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
 import kr.co.techpedia.board.model.vo.BoardPageData;
 import kr.co.techpedia.board.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.NoticeGrade;
+import kr.co.techpedia.board.model.vo.SupportState;
 
 public class BoardService {
 	
@@ -198,5 +200,103 @@ public class BoardService {
 		JDBCTemplate.close(conn);
 		
 		return pd;
+	}
+
+	public ArrayList<NoticeGrade> getNoticeGrdList() {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<NoticeGrade> noticeGradeList = new BoardDao().getNoticeGrdList(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return noticeGradeList;
+	}
+
+	public int insertNotice(int memberNo, String noticeGrade, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int postNo = new BoardDao().getNoticePostNo(conn);
+		
+		if(postNo!=0) {
+			int insertResult = new BoardDao().insertNoticeContent(conn, postNo, memberNo, noticeGrade, title, content);
+			int uploadResult = 1;
+			if(fileName!=null) {
+				uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "NTC");
+			}
+			
+			if(insertResult>0 && uploadResult>0) {
+				JDBCTemplate.commit(conn);
+				result = 1;
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<SupportState> getSupportStateList(String superviser) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<SupportState> supportStateList = new BoardDao().getSupportStateList(conn, superviser);
+		
+		JDBCTemplate.close(conn);
+		
+		return supportStateList;
+	}
+
+	public int insertTechSupport(int memberNo, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int postNo = new BoardDao().getTechSpptPostNo(conn);
+		
+		if(postNo!=0) {
+			int insertResult = new BoardDao().insertTechSupport(conn, postNo, memberNo, title, content);
+			int uploadResult = 1;
+			if(fileName!=null) {
+				uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "SPPT");
+			}
+			
+			if(insertResult>0 && uploadResult>0) {
+				JDBCTemplate.commit(conn);
+				result = 1;
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int insertTechShare(int memberNo, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int postNo = new BoardDao().getTechSharePostNo(conn);
+		
+		if(postNo!=0) {
+			int insertResult = new BoardDao().insertTechShare(conn, postNo, memberNo, title, content);
+			int uploadResult = 1;
+			if(fileName!=null) {
+				uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "SHR");
+			}
+			
+			if(insertResult>0 && uploadResult>0) {
+				JDBCTemplate.commit(conn);
+				result = 1;
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 }

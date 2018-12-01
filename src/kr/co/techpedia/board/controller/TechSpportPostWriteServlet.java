@@ -1,7 +1,6 @@
 package kr.co.techpedia.board.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,16 +15,16 @@ import kr.co.techpedia.board.model.service.BoardService;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class NoticeWriteServlet
+ * Servlet implementation class TechSpportPostWriteServlet
  */
-@WebServlet(name = "noticeWrite", urlPatterns = { "/noticeWrite.do" })
-public class NoticeWriteServlet extends HttpServlet {
+@WebServlet(name = "TechSpportPostWrite", urlPatterns = { "/techSpportPostWrite.do" })
+public class TechSpportPostWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteServlet() {
+    public TechSpportPostWriteServlet() {
         super();
     }
 
@@ -41,8 +40,8 @@ public class NoticeWriteServlet extends HttpServlet {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
 			
 			if(memSession!=null
-					&& !memSession.getMemberTypeCD().equals("COP")
-					&& memSession.getCurrBoard().equals("Notice")) {
+					&& memSession.getMemberTypeCD().equals("COP")
+					&& memSession.getCurrBoard().equals("TechSpp")) {
 				
 				int memberNo = memSession.getMemberNo();
 				
@@ -78,12 +77,11 @@ public class NoticeWriteServlet extends HttpServlet {
 				//File file = new File(fullFilePath); // import java.io.File
 				//long fileSize = file.length(); // 파일의 사이즈를 가져옴
 				
-				String noticeGrade = multi.getParameter("noticeGrade");
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 				
 				
-				int result = new BoardService().insertNotice(memberNo, noticeGrade, title, content, fileName);
+				int result = new BoardService().insertTechSupport(memberNo, title, content, fileName);
 				
 				if(result>0) {
 					//작성글 등록 완료 페이지로 리다이렉트
@@ -103,7 +101,6 @@ public class NoticeWriteServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.sendRedirect("/views/board/writeError.jsp");
 		}
-		
 	}
 
 	/**

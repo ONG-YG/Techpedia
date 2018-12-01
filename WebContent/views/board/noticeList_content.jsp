@@ -99,7 +99,7 @@
 						for(var i=0; i<noticeList.length; i++) {
 							postL += " <tr> "
 										+"<td>"+noticeList[i][0]+"</td> "
-										+"<td>"+noticeList[i][1]+"</td> "
+										+"<td><a class='title_a' href='#'>"+noticeList[i][1]+"</a></td> "
 										+"<td>"+noticeList[i][2]+"</td> "
 										+"<td>"+noticeList[i][3]+"</td> "
 										+"<td>"+noticeList[i][4]+"</td> "

@@ -10,6 +10,8 @@ import kr.co.techpedia.board.model.vo.TechSharePost;
 import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
 import kr.co.techpedia.board.model.vo.Notice;
+import kr.co.techpedia.board.model.vo.NoticeGrade;
+import kr.co.techpedia.board.model.vo.SupportState;
 
 public class BoardDao {
 	
@@ -70,7 +72,7 @@ public class BoardDao {
 		
 		return techSharePostL;
 	}
-
+	
 	public ArrayList<TechSupportPost> getTechSpptListByCompMemNo(Connection conn, int memberNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -142,7 +144,7 @@ public class BoardDao {
 		
 		return techSupportPostL;
 	}
-
+	
 	public ArrayList<TechSupportPost> getTechSpptListByEngNo(Connection conn, int memberNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -214,7 +216,7 @@ public class BoardDao {
 		
 		return techSupportPostL;
 	}
-
+	
 	public ArrayList<TechSharePost> techShareBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -269,7 +271,7 @@ public class BoardDao {
 		
 		return techSharePostL;
 	}
-
+	
 	public ArrayList<TechSupportPost> techSupportBoardListByCompNo(Connection conn, int compNo, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -344,7 +346,7 @@ public class BoardDao {
 		
 		return techSupportPostL;
 	}
-
+	
 	public ArrayList<TechSupportPost> techSupportBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -413,7 +415,7 @@ public class BoardDao {
 		
 		return techSupportPostL;
 	}
-
+	
 	public ArrayList<Notice> noticeBoardList(Connection conn, int currPg, int recordCountPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -464,7 +466,7 @@ public class BoardDao {
 		
 		return noticeList;
 	}
-
+	
 	public String getPageNavi(Connection conn, 
 									int currPg, 
 									int recordCountPerPage, 
@@ -605,6 +607,263 @@ public class BoardDao {
 		
 		return sb.toString();
 	}
+	
+	public ArrayList<NoticeGrade> getNoticeGrdList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<NoticeGrade> noticeGradeList = new ArrayList<>();
+		
+		String query = "SELECT * FROM NTC_GRD_L";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				NoticeGrade noticeGrd = new NoticeGrade();
+				noticeGrd.setNtcGradeCD(rset.getString("NTC_GRADECD"));
+				noticeGrd.setNgrdName(rset.getString("NGRD_NAME"));
+				noticeGradeList.add(noticeGrd);
+				//System.out.println("dao noticeGrd check\n"+noticeGrd);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return noticeGradeList;
+	}
+	
+	public int getNoticePostNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int postNo = 0;
+		
+		String query = "SELECT SEQ_NTC_POSTNO.NEXTVAL AS POSTNO FROM DUAL";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				postNo = rset.getInt("POSTNO");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return postNo;
+	}
+	
+	public int insertNoticeContent(Connection conn, int postNo, int memberNo, String noticeGrade, String title, String content) {
+		PreparedStatement pstmt = null;
+		int insertResult = 0;
+		
+		String query = "INSERT INTO NOTICE VALUES (?,"
+													+ "?,"
+													+ "?,"
+													+ "?," 
+													+ "SYSDATE," 
+													+ "'N',"
+													+ "0,"
+													+ "?" 
+													+ ")";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, memberNo);
+			pstmt.setString(5, noticeGrade);
+			insertResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return insertResult;
+	}
+	
+	public int uploadFile(Connection conn, String fileName, int postNo, String boardCode) {
+		PreparedStatement pstmt = null;
+		int uploadResult = 0;
+		
+		String query = "INSERT INTO ATTCH_FILE VALUES (SEQ_ATT.NEXTVAL,"
+													+ "?,"
+													+ "?,"
+													+ "?"
+													+ ")";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, fileName);
+			pstmt.setInt(2, postNo);
+			pstmt.setString(3, boardCode);
+			uploadResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return uploadResult;
+	}
+	
+	public ArrayList<SupportState> getSupportStateList(Connection conn, String superviser) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<SupportState> supportStateList = new ArrayList<>();
+		
+		String query = "SELECT * FROM SPPT_STAT WHERE STAT_SUPERVISER=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, superviser);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SupportState supportState = new SupportState();
+				supportState.setSpptStatCD(rset.getString("SPPT_STATCD"));
+				supportState.setStatName(rset.getString("STAT_NAME"));
+				//supportState.setStatSuperviser(rset.getString("STAT_SUPERVISER"));
+				
+				supportStateList.add(supportState);
+				//System.out.println("dao supportState check\n"+supportState);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return supportStateList;
+	}
+	
+	public int getTechSpptPostNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int postNo = 0;
+		
+		String query = "SELECT SEQ_SPPT_POSTNO.NEXTVAL AS POSTNO FROM DUAL";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				postNo = rset.getInt("POSTNO");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return postNo;
+	}
+	
+	public int insertTechSupport(Connection conn, int postNo, int memberNo, String title, String content) {
+		PreparedStatement pstmt = null;
+		int insertResult = 0;
+		
+		String query = "INSERT INTO TECH_SPPT VALUES (?,"
+													+ "?,"
+													+ "?,"
+													+ "?,"
+													+ "NULL,"
+													+ "SYSDATE,"
+													+ "'NEW',"
+													+ "0,"
+													+ "'N'"
+													+ ")";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, memberNo);
+			insertResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return insertResult;
+	}
+	
+	public int getTechSharePostNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int postNo = 0;
+		
+		String query = "SELECT SEQ_SHR_POSTNO.NEXTVAL AS POSTNO FROM DUAL";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				postNo = rset.getInt("POSTNO");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return postNo;
+	}
+	
+	public int insertTechShare(Connection conn, int postNo, int memberNo, String title, String content) {
+		PreparedStatement pstmt = null;
+		int insertResult = 0;
+		
+		String query = "INSERT INTO TECH_SHR VALUES (?,"
+													+ "?,"
+													+ "?,"
+													+ "?,"
+													+ "SYSDATE,"
+													+ "0"
+													+ ")";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, memberNo);
+			insertResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return insertResult;
+	}
+	
+	
 	
 	
 }

@@ -113,8 +113,8 @@
             else {
             	var id = $('#idInput').val();
             	var pw = $('#pwInput').val();
-            	console.log(id);
-            	console.log(pw);
+            	//console.log(id);
+            	//console.log(pw);
             	
             	$.ajax({
     				url : "/login.do",
@@ -122,7 +122,7 @@
     				type : "post",
     				success : function(data){
     					//console.log("정상 처리 완료");
-    					console.log(data);
+    					//console.log(data);
     					//alert("success");
     					if(data) {
     						location.href = "/views/main/mainpage.jsp";

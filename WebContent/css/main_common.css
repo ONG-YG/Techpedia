@@ -22,7 +22,8 @@ body, #wrapper{
 
 #content{
 /*    border: 5px dashed; border-color: white;*/
-    height: 70%; width: 1320px;
+    height: auto; width: 1320px;
+    min-height: 630px;
     box-sizing: border-box;
 /*
     color: white;
@@ -30,14 +31,6 @@ body, #wrapper{
 */
     margin-left: auto;
     margin-right: auto;
-}
-
-
-#mainView{
-/*    border: 5px dashed; border-color: white;*/
-    height: 100%; width: 1020px;
-    box-sizing: border-box;
-    background-color: rgb(255,255,255,0.86);
-    float: left;
+    display: flex;
 }
 

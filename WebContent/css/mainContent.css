@@ -3,11 +3,13 @@
 div{
 /*    border: 5px dashed; border-color: white;*/
 }
-
+#sidebar, #mainView{
+/* 	min-height: 630px; */
+}
 
 #sidebar{
 /*    border: 5px dashed; border-color: white;*/
-    height: 100%; width: 200px;
+    min-height: inherit; width: 200px;
     box-sizing: border-box;
     color: white;
     text-shadow: 3px 3px 5px #16293A;
@@ -86,7 +88,7 @@ div{
 
 #mainView{
 /*    border: 5px dashed; border-color: white;*/
-    height: 100%; width: 1020px;
+    min-height: inherit; width: 1020px;
     box-sizing: border-box;
     background-color: rgb(255,255,255,0.86);
     float: left;

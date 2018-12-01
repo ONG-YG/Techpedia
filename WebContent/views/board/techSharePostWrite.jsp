@@ -19,14 +19,15 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
-				System.out.println("view page");////////////
+				String currBoard = memSession.getCurrBoard();
 				//System.out.println("\nTechShareBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var currBoard = '<%=currBoard%>';
 				
-				if(!writeStart) {
+				if(!writeStart || currBoard!='TechSh') {
 					location.href="/views/board/writeError.jsp";
 				}
 			</script>
@@ -52,10 +53,35 @@
 	<script>
         
 	    $(document).ready(function(){
-	    	//
+	    	
+	    	$('#fileInput').click(function(){
+	    		if(event.currentTarget==this) {
+	    			return false;
+	    		}
+	    	});
+	    	$('#fileInput').change(function(){
+	    		var filepath = $('#fileInput').val();
+	    		var filename = filepath.replace("C:\\fakepath\\","");
+	    		$('#fileInput_span').text(filename);
+	    		//console.log(filepath);///////////
+	    		//console.log(filename);///////////
+	    	});
             
 	    });//$(document).ready END
 	    
+	    
+	    function chooseFile(){
+	    	$('#fileInput').click();
+	    	
+	    	return false;
+	    }//function END
+	    
+	    function resetUpload(){
+	    	$('#fileInput_span').text("선택된 파일 없음");
+	    	$('#fileInput').val('');
+	    	
+	    	return false;
+	    }//function END
 	    
     </script>
 </head>
@@ -64,22 +90,41 @@
 	<div id="techShWrite">
 	    
 	    <span>기술 공유 게시물 작성</span>
+	    <form action="/techSharePostWrite.do" method="post" enctype="multipart/form-data">
 	    
-	    <table id="techSh-tb">
-	        <tr>
-	            <th id="techShTitle">제목</th>
-                <td><input type="text"></td>
-	        </tr>
-            <tr>
-	            <th id="techShContent">내용</th>
-                <td><textarea></textarea></td>
-	        </tr>
-            <tr>
-                <th></th>
-                <td><button id="register">등록</button></td>
-            </tr>
-	    </table>
-	    
+		    <table id="techSh-tb">
+		        <tr id="techShTitle_tr">
+		            <th id="techShTitle">제목</th>
+	                <td><input type="text" name="title" id="titleInput"></td>
+		        </tr>
+	            <tr id="techShContent_tr">
+		            <th id="techShContent">내용</th>
+	                <td><textarea name="content"></textarea></td>
+		        </tr>
+		        <tr id="fileUpload_tr">
+		            <th id="techShFile">파일첨부</th>
+	                <td id="fileUpload_td">
+							<button id="fileInput_btn" onclick="return chooseFile();">파일선택</button>
+							<div id="fileInput_div">
+								<span id="fileInput_span">선택된 파일 없음</span>
+								<input type="file" name="upfile" id="fileInput"/>
+							</div>
+							<!-- <input type="submit" value="파일첨부" class="upload_btn"/> -->
+							<!-- <input type="reset" value="취소" class="upload_btn" onclick="resetUpload();"/> -->
+							<button class="upload_btn" onclick="return resetUpload();">취소</button>
+	                </td>
+		        </tr>
+		        <tr id="fileCondition_tr">
+		        	<th></th>
+		        	<td>첨부파일의 최대 크기는 10MB이며, [txt, doc, hwp, jpg, png, zip] 형식만 업로드 가능합니다.</td>
+		        </tr>
+	            <tr id="register_tr">
+	                <th></th>
+	                <td><button id="register_btn">등록</button></td>
+	            </tr>
+		    </table>
+	    	
+	    </form>
 	</div>
 	
 </body>

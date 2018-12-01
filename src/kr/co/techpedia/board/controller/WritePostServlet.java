@@ -33,54 +33,60 @@ public class WritePostServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		HttpSession session = request.getSession(false);
-		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
 		
-		boolean chk = true;
-		String writeStart = "false";
-		
-		if(memSession!=null) {
-			String memberTypeCD = memSession.getMemberTypeCD();
-			String currBoard = memSession.getCurrBoard();
+		try {
+			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
 			
-			if(currBoard.equals("Notice")) {
-				if(!memberTypeCD.equals("COP")) {
-					//글작성가능
-					chk = false;
-					//writeStart = "true";
-				}
-			}
-			else if(currBoard.equals("TechSpp")) {
-				if(memberTypeCD.equals("COP")) {
-					//글작성가능
-					chk = false;
-					//writeStart = "true";
-				}
-			}
-			else if(currBoard.equals("TechSh")) {
-				System.out.println("we are here");////////////
-				//모두 글 작성 가능
-				chk = false;
-//				writeStart = "true";
-//				
-//				RequestDispatcher view = request.getRequestDispatcher("views/main/mainpage.jsp?board=TechShW");
-//				request.setAttribute("writeStart", writeStart);
-//				view.forward(request, response);
-			}
+			boolean chk = true;
+			String writeStart = "false";
 			
-			if(chk==false) {
-				writeStart = "true";
+			if(memSession!=null) {
+				String memberTypeCD = memSession.getMemberTypeCD();
+				String currBoard = memSession.getCurrBoard();
 				
-				RequestDispatcher view = request.getRequestDispatcher("views/main/mainpage.jsp?board="+currBoard+"W");
-				request.setAttribute("writeStart", writeStart);
-				view.forward(request, response);
+				if(currBoard.equals("Notice")) {
+					if(!memberTypeCD.equals("COP")) {
+						//글작성가능
+						chk = false;
+						//writeStart = "true";
+					}
+				}
+				else if(currBoard.equals("TechSpp")) {
+					if(memberTypeCD.equals("COP")) {
+						//글작성가능
+						chk = false;
+						//writeStart = "true";
+					}
+				}
+				else if(currBoard.equals("TechSh")) {
+					System.out.println("we are here");////////////
+					//모두 글 작성 가능
+					chk = false;
+//					writeStart = "true";
+//					
+//					RequestDispatcher view = request.getRequestDispatcher("views/main/mainpage.jsp?board=TechShW");
+//					request.setAttribute("writeStart", writeStart);
+//					view.forward(request, response);
+				}
+				
+				if(chk==false) {
+					writeStart = "true";
+					
+					RequestDispatcher view = request.getRequestDispatcher("views/main/mainpage.jsp?board="+currBoard+"W");
+					request.setAttribute("writeStart", writeStart);
+					view.forward(request, response);
+				}
 			}
-		}
-		
-		if(chk==true) {
+			
+			if(chk==true) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
 			//에러 response sendredirect 로 error페이지로 이동 거기서
 			//mainpage로 이동하고 alert로 비정상적 접근이라고 띄워주기
 			response.sendRedirect("/views/board/writeError.jsp");
 		}
+		
 		
 	}
 

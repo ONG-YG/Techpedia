@@ -86,6 +86,13 @@ body{
 }
 
 
+#myTechShare #techShare-tb .title_a{
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(70,70,70);
+}
+
+
 #myTechShare #techShare-tb #rewrite-btn,
 #myTechShare #techShare-tb #delete-btn{
 /*    border: 1px solid; border-color: blue;*/

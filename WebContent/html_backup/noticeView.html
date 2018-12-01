@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- ------------------------------------------------------------ -->
+	<script
+      type="text/javascript"
+        src="/resources/jquery-3.3.1.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+	<!-- ------------------------------------------------------------ -->
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="/css/noticeView.css" rel="stylesheet" type="text/css">
+    
+	<script>
+        
+	    $(document).ready(function(){
+	    	
+	    	//getNoticeGradeList();
+	    	
+	    });//$(document).ready END
+	    
+	    /* 
+	    function getNoticeGradeList() {
+	    	$.ajax({
+				url : "/getNoticeGrdList.do",
+				//data : {},
+				//type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data==false) {
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/index.jsp";
+					}
+					else {
+						noticeGrdList = [];
+						for(var i=0; i<data.length; i++) {
+							var noticeGrade = [data[i].ntcGradeCD,
+											data[i].ngrdName];
+							noticeGrdList.push(noticeGrade);
+						}
+						
+						var noticeGrdList_sel = "<option value='none'>선택</option>";
+						for(var i=0; i<noticeGrdList.length; i++) {
+							noticeGrdList_sel += "<option value='"+noticeGrdList[i][0]+"'>"
+											+noticeGrdList[i][1]+"</option>";
+						}
+						$('#noticeGradeSelect').html(noticeGrdList_sel);
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/index.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+	    }//function END
+	     */
+    </script>
+</head>
+<body>
+	
+	<div id="noticeWrite">
+	    
+	    <span>공지사항</span>
+	    
+		    <table id="notice-tb">
+		    
+		    	<tr id="noticeGrade_tr">
+		            <th id="noticeGrade">등급</th>
+	                <td>
+		                <span id="noticeGrade_span">
+							공지사항 등급
+		                </span>
+	                </td>
+		        </tr>
+		        <tr id="noticeTitle_tr">
+		            <th id="noticeTitle">제목</th>
+	                <td id="noticeTitle_td">공지사항 제목!!!</td>
+		        </tr>
+	            <tr id="noticeContent_tr">
+		            <th id="noticeContent">내용</th>
+	                <td id="noticeContent_td">
+                        <textarea id="noticeContent_txt">여기에 공지글 작성
+                        엔터치면 엔터도 반영됨
+                        ㄴㅇㄻㄴㅇㄹ
+                        탭도 반영됨</textarea>
+                    </td>
+		        </tr>
+		        <tr id="fileDownload_tr">
+		            <th id="noticeFile">첨부파일</th>
+	                <td id="fileDownload_td">
+						첨부파일 다운로드 링크
+	                </td>
+		        </tr>
+		        
+		    </table>
+	    	
+	</div>
+	
+</body>
+</html>

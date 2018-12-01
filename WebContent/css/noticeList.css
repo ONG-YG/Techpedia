@@ -85,6 +85,11 @@ body{
     width: 90px;
 }
 
+#noticeBoard #notice-tb .title_a{
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(70,70,70);
+}
 
 #noticeBoard #bottomSpace{
 /*    border: 1px solid; border-color: red;*/

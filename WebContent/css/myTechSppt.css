@@ -88,6 +88,13 @@ body{
 }
 
 
+#myTechSppt #techSppt-tb .title_a{
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(70,70,70);
+}
+
+
 #myTechSppt #bottomSpace{
 /*    border: 1px solid; border-color: red;*/
     height: auto; width: auto;

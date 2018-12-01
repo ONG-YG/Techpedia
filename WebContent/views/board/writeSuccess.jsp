@@ -9,8 +9,8 @@
 <body>
 
 	<script>
-		location.href="/index.jsp";
-		alert("비정상적 접근입니다.");
+		location.href="/views/main/mainpage.jsp";
+		alert("성공적으로 글을 등록하였습니다.");
 	</script>
 
 </body>
