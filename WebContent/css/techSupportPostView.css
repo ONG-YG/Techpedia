@@ -10,14 +10,14 @@ body{
     background-color: black;
 */ 
 }
-#noticeWrite{
+#techSppWrite{
 /*
     background-color: rgb(255,255,255,0.86);
     border: 2px dashed; border-color: gainsboro;
 */
 }
 
-#noticeWrite>span{
+#techSppWrite>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -30,10 +30,10 @@ body{
 
 
 
-#noticeWrite #notice-tb *{
+#techSppWrite #techSpp-tb *{
     box-sizing: border-box;
 }
-#noticeWrite #notice-tb{
+#techSppWrite #techSpp-tb{
 /*    border-color: transparent;*/
     margin-left: auto;
     margin-right: auto;
@@ -44,7 +44,7 @@ body{
     text-shadow: -1px -1px 2px white,
                 1px 1px 5px rgb(197,206,215);
 }
-#noticeWrite #notice-tb th{
+#techSppWrite #techSpp-tb th{
     width: 120px;
     color: darkblue;
     font-size: 14px;
@@ -56,7 +56,7 @@ body{
     text-align: right;
     padding-right: 20px;
 }
-#noticeWrite #notice-tb td{
+#techSppWrite #techSpp-tb td{
 /*    border: 1px dashed; border-color: blue;*/
     width: 580px;
     text-align: left;
@@ -65,74 +65,69 @@ body{
     color: darkslategrey;
     text-shadow: none;
 }
-#noticeWrite #notice-tb #noticeGrade_tr th,
-#noticeWrite #notice-tb #noticeGrade_tr td{
+
+
+#techSppWrite #techSpp-tb #techSppState_tr th,
+#techSppWrite #techSpp-tb #techSppState_tr td{
     height: 30px;
     vertical-align: middle;
 }
-#noticeWrite #notice-tb #noticeGrade_span{
+#techSppWrite #techSpp-tb #techSppState_span{
 	font-weight: 600;
 }
-#noticeWrite #notice-tb .EMC{
-	color: red;
-}
-#noticeWrite #notice-tb .IMP{
-	color: salmon;
-}
-#noticeWrite #notice-tb .NM{
-	color: cornflowerblue;
-}
-#noticeWrite #notice-tb #noticeTitle_tr th,
-#noticeWrite #notice-tb #noticeTitle_tr td{
+
+
+#techSppWrite #techSpp-tb #techSppTitle_tr th,
+#techSppWrite #techSpp-tb #techSppTitle_tr td{
     height: 30px;
     vertical-align: middle;
     padding-bottom: 5px;
 }
-#noticeWrite #notice-tb #noticeTitle_tr td{
+#techSppWrite #techSpp-tb #techSppTitle_tr td{
     font-weight: 600;
 }
 
-#noticeWriter_tr *{
+#techSppWriter_tr *{
 	border-top: 1px solid;
 	border-color: dimgray;
 	padding-top: 5px;
 }
-#noticeCnt_tr *{
+#techSppCnt_tr *{
 	border-bottom: 1px solid;
 	border-color: dimgray;
 }
-#noticeWriter_tr *,
-#noticeDate_tr *,
-#noticeCnt_tr *{
+#techSppWriter_tr *,
+#techSppDate_tr *,
+#techSppCnt_tr *{
 	color: darkslategrey !important;
 	font-size: 13px !important;
 }
-#noticeWriter_tr th,
-#noticeDate_tr th,
-#noticeCnt_tr th{
+#techSppWriter_tr th,
+#techSppDate_tr th,
+#techSppCnt_tr th{
 	border-left: 1px solid;
 	border-color: dimgray;
 }
-#noticeWriter_tr td,
-#noticeDate_tr td,
-#noticeCnt_tr td{
+#techSppWriter_tr td,
+#techSppDate_tr td,
+#techSppCnt_tr td{
 	border-right: 1px solid;
 	border-color: dimgray;
 }
-#noticeWrite #notice-tb #noticeWriter_tr th,
-#noticeWrite #notice-tb #noticeWriter_tr td{
+#techSppWrite #techSpp-tb #techSppWriter_tr th,
+#techSppWrite #techSpp-tb #techSppWriter_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 0px;
 }
-#noticeWrite #notice-tb #noticeDate_tr th,
-#noticeWrite #notice-tb #noticeDate_tr td{
+#techSppWrite #techSpp-tb #techSppDate_tr th,
+#techSppWrite #techSpp-tb #techSppDate_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 0px;
 }
-#noticeWrite #notice-tb #noticeCnt_tr th,
-#noticeWrite #notice-tb #noticeCnt_tr td{
+#techSppWrite #techSpp-tb #techSppCnt_tr th,
+#techSppWrite #techSpp-tb #techSppCnt_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 5px;
@@ -143,13 +138,13 @@ body{
 
 
 
-#noticeWrite #notice-tb #noticeContent_tr th,
-#noticeWrite #notice-tb #noticeContent_tr td{
+#techSppWrite #techSpp-tb #techSppContent_tr th,
+#techSppWrite #techSpp-tb #techSppContent_tr td{
     vertical-align: top;
     padding-top: 10px;
 }
 
-#noticeWrite #notice-tb #noticeContent_txt{
+#techSppWrite #techSpp-tb #techSppContent_txt{
     height: 300px; width: 450px;
     border: 1px solid; border-color: dimgray;
     border-radius: 4px;
@@ -157,17 +152,17 @@ body{
     resize: none;
 }
 
-#noticeWrite #notice-tb #fileDownload_tr,
-#noticeWrite #notice-tb #fileDownload_td{
+#techSppWrite #techSpp-tb #fileDownload_tr,
+#techSppWrite #techSpp-tb #fileDownload_td{
 	vertical-align: middle;
 	padding: 0px;
 	height: 40px;
 }
-#noticeWrite #notice-tb #fileDownload_tr th,
-#noticeWrite #notice-tb #fileDownload_td{
+#techSppWrite #techSpp-tb #fileDownload_tr th,
+#techSppWrite #techSpp-tb #fileDownload_td{
 	padding-top: 5px;
 }
-#noticeWrite #notice-tb #fileDownload_td{
+#techSppWrite #techSpp-tb #fileDownload_td{
 	text-align: left;
 	padding-left: 15px;
 }
@@ -334,7 +329,8 @@ body{
 
 .rewriteCmm,
 .deleteCmm,
-.reInsert{
+.reInsert,
+.answerSelect{
 /*    border: 1px solid; border-color: blue;*/
     height: 22px; width: 40px;
     font-size: 12px;
@@ -354,4 +350,19 @@ body{
     
 	float: right;
 	margin-left: 5px;
+}
+.answerSelect{
+	width: 65px;
+}
+
+
+.selectedAns{
+	border: 1px solid; border-color: white;
+	border-radius: 6px;
+	height: 22px; width: 40px;
+	background-color: coral;
+	color: white;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 5px;
 }

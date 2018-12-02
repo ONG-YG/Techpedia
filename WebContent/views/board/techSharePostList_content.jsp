@@ -97,7 +97,10 @@
 						for(var i=0; i<techShPostList.length; i++) {
 							postL += " <tr> "
 										+"<td>"+techShPostList[i][0]+"</td> "
-										+"<td>"+techShPostList[i][1]+"</td> "
+										+"<td>"
+										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechShR&currPg="+currPg+"&postNo="+techShPostList[i][0]+"'>"
+											+techShPostList[i][1] +"</a>"
+										+"</td> "
 										+"<td>"+techShPostList[i][2]+"</td> "
 										+"<td>"+techShPostList[i][3]+"</td> "
 										+"<td>"+techShPostList[i][4]+"</td> "

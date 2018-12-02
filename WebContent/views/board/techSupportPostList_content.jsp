@@ -108,10 +108,19 @@
 						//var postL = $('#techSppt-tb').html();
 						var postL = '';
 						for(var i=0; i<techSpPostList.length; i++) {
+							
+							var newPost = "<span></span>";
+							if (techSpPostList[i][4]=='(배정되지 않음)') {
+								newPost = "<span class='newPost'>new</span>";
+							}
+							
 							postL += " <tr> "
 										+"<td>"+techSpPostList[i][0]+"</td> "
 										+"<td>"+techSpPostList[i][1]+"</td> "
-										+"<td>"+techSpPostList[i][2]+"</td> "
+										+"<td>"
+										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+techSpPostList[i][0]+"'>"
+											+techSpPostList[i][2] +"</a>"+newPost
+										+"</td> "
 										+"<td>"+techSpPostList[i][3]+"</td> "
 										+"<td>"+techSpPostList[i][4]+"</td> "
 										+"<td>"+techSpPostList[i][5]+"</td> "

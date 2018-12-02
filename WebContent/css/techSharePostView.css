@@ -10,14 +10,14 @@ body{
     background-color: black;
 */ 
 }
-#noticeWrite{
+#techShWrite{
 /*
     background-color: rgb(255,255,255,0.86);
     border: 2px dashed; border-color: gainsboro;
 */
 }
 
-#noticeWrite>span{
+#techShWrite>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -30,10 +30,10 @@ body{
 
 
 
-#noticeWrite #notice-tb *{
+#techShWrite #techSh-tb *{
     box-sizing: border-box;
 }
-#noticeWrite #notice-tb{
+#techShWrite #techSh-tb{
 /*    border-color: transparent;*/
     margin-left: auto;
     margin-right: auto;
@@ -44,7 +44,7 @@ body{
     text-shadow: -1px -1px 2px white,
                 1px 1px 5px rgb(197,206,215);
 }
-#noticeWrite #notice-tb th{
+#techShWrite #techSh-tb th{
     width: 120px;
     color: darkblue;
     font-size: 14px;
@@ -56,7 +56,7 @@ body{
     text-align: right;
     padding-right: 20px;
 }
-#noticeWrite #notice-tb td{
+#techShWrite #techSh-tb td{
 /*    border: 1px dashed; border-color: blue;*/
     width: 580px;
     text-align: left;
@@ -65,74 +65,58 @@ body{
     color: darkslategrey;
     text-shadow: none;
 }
-#noticeWrite #notice-tb #noticeGrade_tr th,
-#noticeWrite #notice-tb #noticeGrade_tr td{
-    height: 30px;
-    vertical-align: middle;
-}
-#noticeWrite #notice-tb #noticeGrade_span{
-	font-weight: 600;
-}
-#noticeWrite #notice-tb .EMC{
-	color: red;
-}
-#noticeWrite #notice-tb .IMP{
-	color: salmon;
-}
-#noticeWrite #notice-tb .NM{
-	color: cornflowerblue;
-}
-#noticeWrite #notice-tb #noticeTitle_tr th,
-#noticeWrite #notice-tb #noticeTitle_tr td{
+
+#techShWrite #techSh-tb #techShTitle_tr th,
+#techShWrite #techSh-tb #techShTitle_tr td{
     height: 30px;
     vertical-align: middle;
     padding-bottom: 5px;
 }
-#noticeWrite #notice-tb #noticeTitle_tr td{
+#techShWrite #techSh-tb #techShTitle_tr td{
     font-weight: 600;
 }
 
-#noticeWriter_tr *{
+#techShWriter_tr *{
 	border-top: 1px solid;
 	border-color: dimgray;
 	padding-top: 5px;
 }
-#noticeCnt_tr *{
+#techShCnt_tr *{
 	border-bottom: 1px solid;
 	border-color: dimgray;
 }
-#noticeWriter_tr *,
-#noticeDate_tr *,
-#noticeCnt_tr *{
+#techShWriter_tr *,
+#techShDate_tr *,
+#techShCnt_tr *{
 	color: darkslategrey !important;
 	font-size: 13px !important;
 }
-#noticeWriter_tr th,
-#noticeDate_tr th,
-#noticeCnt_tr th{
+#techShWriter_tr th,
+#techShDate_tr th,
+#techShCnt_tr th{
 	border-left: 1px solid;
 	border-color: dimgray;
 }
-#noticeWriter_tr td,
-#noticeDate_tr td,
-#noticeCnt_tr td{
+#techShWriter_tr td,
+#techShDate_tr td,
+#techShCnt_tr td{
 	border-right: 1px solid;
 	border-color: dimgray;
 }
-#noticeWrite #notice-tb #noticeWriter_tr th,
-#noticeWrite #notice-tb #noticeWriter_tr td{
+#techShWrite #techSh-tb #techShWriter_tr th,
+#techShWrite #techSh-tb #techShWriter_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 0px;
 }
-#noticeWrite #notice-tb #noticeDate_tr th,
-#noticeWrite #notice-tb #noticeDate_tr td{
+#techShWrite #techSh-tb #techShDate_tr th,
+#techShWrite #techSh-tb #techShDate_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 0px;
 }
-#noticeWrite #notice-tb #noticeCnt_tr th,
-#noticeWrite #notice-tb #noticeCnt_tr td{
+#techShWrite #techSh-tb #techShCnt_tr th,
+#techShWrite #techSh-tb #techShCnt_tr td{
     height: 20px;
     vertical-align: middle;
     padding-bottom: 5px;
@@ -143,13 +127,13 @@ body{
 
 
 
-#noticeWrite #notice-tb #noticeContent_tr th,
-#noticeWrite #notice-tb #noticeContent_tr td{
+#techShWrite #techSh-tb #techShContent_tr th,
+#techShWrite #techSh-tb #techShContent_tr td{
     vertical-align: top;
     padding-top: 10px;
 }
 
-#noticeWrite #notice-tb #noticeContent_txt{
+#techShWrite #techSh-tb #techShContent_txt{
     height: 300px; width: 450px;
     border: 1px solid; border-color: dimgray;
     border-radius: 4px;
@@ -157,17 +141,17 @@ body{
     resize: none;
 }
 
-#noticeWrite #notice-tb #fileDownload_tr,
-#noticeWrite #notice-tb #fileDownload_td{
+#techShWrite #techSh-tb #fileDownload_tr,
+#techShWrite #techSh-tb #fileDownload_td{
 	vertical-align: middle;
 	padding: 0px;
 	height: 40px;
 }
-#noticeWrite #notice-tb #fileDownload_tr th,
-#noticeWrite #notice-tb #fileDownload_td{
+#techShWrite #techSh-tb #fileDownload_tr th,
+#techShWrite #techSh-tb #fileDownload_td{
 	padding-top: 5px;
 }
-#noticeWrite #notice-tb #fileDownload_td{
+#techShWrite #techSh-tb #fileDownload_td{
 	text-align: left;
 	padding-left: 15px;
 }
@@ -334,7 +318,8 @@ body{
 
 .rewriteCmm,
 .deleteCmm,
-.reInsert{
+.reInsert,
+.answerSelect{
 /*    border: 1px solid; border-color: blue;*/
     height: 22px; width: 40px;
     font-size: 12px;
@@ -354,4 +339,19 @@ body{
     
 	float: right;
 	margin-left: 5px;
+}
+.answerSelect{
+	width: 65px;
+}
+
+
+.selectedAns{
+	border: 1px solid; border-color: white;
+	border-radius: 6px;
+	height: 22px; width: 40px;
+	background-color: coral;
+	color: white;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 5px;
 }

@@ -16,8 +16,8 @@
 				//System.out.println("\nmainContent memSession check 2\n"+memSession);////////////////////////
 				
 				String pg = request.getParameter("board");
-				String cp = request.getParameter("currPg");//////////
-				//System.out.println("cp(from mainContent.jsp) : "+cp);//////////////
+				String cp = request.getParameter("currPg");
+				String postNo = request.getParameter("postNo");
 				System.out.println("content");//////////
 	%>
 			<script>
@@ -26,6 +26,7 @@
 				var pg = '<%=pg%>';
 				var cp = '<%=cp%>';
 				if(cp=='null') { cp = 1; }
+				var postNo = '<%=postNo%>';
 			</script>
 	<%
 			}else {
@@ -76,6 +77,21 @@
 			}
 			else if(pg=='TechSppAW') {
 				$('#mainView').load("/views/board/techSupportAnswerWrite.jsp");
+			}
+			else if(pg=='NoticeR') {
+				$('#mainView').load("/views/board/noticeView.jsp?currPg="+cp+"&postNo="+postNo);
+			}
+			else if(pg=='TechShR') {
+				$('#mainView').load("/views/board/techSharePostView.jsp?currPg="+cp+"&postNo="+postNo);
+			}
+			else if(pg=='TechSppR') {
+				$('#mainView').load("/views/board/techSupportPostView.jsp?currPg="+cp+"&postNo="+postNo);
+			}
+			else if(pg=='NoticeRW') {
+				$('#mainView').load("/views/board/noticeReWrite.jsp?postNo="+postNo);
+			}
+			else if(pg=='TechShRW') {
+				$('#mainView').load("/views/board/techSharePostReWrite.jsp?postNo="+postNo);
 			}
 			else {
 				$('#mainView').load("/views/main/main_notice.jsp");

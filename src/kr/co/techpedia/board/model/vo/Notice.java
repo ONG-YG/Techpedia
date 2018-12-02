@@ -10,13 +10,15 @@ public class Notice {
 	private String ntcDate;
 	private char ntcMainview;
 	private int ntcCnt;
+	private String ntcGradeCD;
+	private String ngrdName;
 	
 	
 	public Notice() {
 		super();
 	}
-	public Notice(int postNo, String ntcTitle, String ntcContent, int ntcWriterNo, String ntcWriterName,
-			String ntcDate, char ntcMainview, int ntcCnt) {
+	public Notice(int postNo, String ntcTitle, String ntcContent, int ntcWriterNo, String ntcWriterName, String ntcDate,
+			char ntcMainview, int ntcCnt, String ntcGradeCD, String ngrdName) {
 		super();
 		this.postNo = postNo;
 		this.ntcTitle = ntcTitle;
@@ -26,7 +28,10 @@ public class Notice {
 		this.ntcDate = ntcDate;
 		this.ntcMainview = ntcMainview;
 		this.ntcCnt = ntcCnt;
+		this.ntcGradeCD = ntcGradeCD;
+		this.ngrdName = ngrdName;
 	}
+
 
 
 
@@ -78,6 +83,18 @@ public class Notice {
 	public void setNtcCnt(int ntcCnt) {
 		this.ntcCnt = ntcCnt;
 	}
+	public String getNtcGradeCD() {
+		return ntcGradeCD;
+	}
+	public void setNtcGradeCD(String ntcGradeCD) {
+		this.ntcGradeCD = ntcGradeCD;
+	}
+	public String getNgrdName() {
+		return ngrdName;
+	}
+	public void setNgrdName(String ngrdName) {
+		this.ngrdName = ngrdName;
+	}
 	
 	
 	
@@ -92,6 +109,7 @@ public class Notice {
 							+"ntcDate : "+ntcDate+"\n"
 							+"ntcMainview : "+ntcMainview+"\n"
 							+"ntcCnt : "+ntcCnt+"\n"
+							+"ngrdName : "+ngrdName+"\n"
 							+"-----------------------------------------------\n";
 		
 		return noticeInfo;

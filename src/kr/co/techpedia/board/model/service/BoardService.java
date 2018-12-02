@@ -8,6 +8,7 @@ import kr.co.techpedia.board.model.vo.TechSharePost;
 import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
 import kr.co.techpedia.board.model.vo.BoardPageData;
+import kr.co.techpedia.board.model.vo.Comment;
 import kr.co.techpedia.board.model.vo.Notice;
 import kr.co.techpedia.board.model.vo.NoticeGrade;
 import kr.co.techpedia.board.model.vo.SupportState;
@@ -293,6 +294,116 @@ public class BoardService {
 			}else {
 				JDBCTemplate.rollback(conn);
 			}
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public Notice getOneNotice(int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		Notice post = new BoardDao().getOneNotice(conn, postNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return post;
+	}
+
+	public int addReadCnt(String tableName, String columName, int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().addReadCnt(conn, tableName, columName, postNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<Comment> getCommentList(String boardCD, int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Comment> commentList = new BoardDao().getCommentList(conn, boardCD, postNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return commentList;
+	}
+
+	public int insertComment(String comment, int memberNo, int postNo, String boardCD) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().insertComment(conn, comment, memberNo, postNo, boardCD);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int deleteComment(int cmmNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().deleteComment(conn, cmmNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int updateComment(int cmmNo, String commentRe) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().updateComment(conn, cmmNo, commentRe);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public TechSharePost getOneTechSharePost(int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		TechSharePost post = new BoardDao().getOneTechSharePost(conn, postNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return post;
+	}
+
+	public int checkAnswerComment(int cmmNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().checkAnswerComment(conn, cmmNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
 		}
 		
 		JDBCTemplate.close(conn);

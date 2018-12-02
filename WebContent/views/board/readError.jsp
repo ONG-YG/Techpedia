@@ -10,8 +10,7 @@
 
 	<script>
 		location.href="/index.jsp";
-		alert("글 등록 중 오류가 발생했습니다."
-				+ "문제가 지속될 경우 관리자에게 문의해주세요.");
+		alert("비정상적 접근입니다.");
 	</script>
 
 </body>

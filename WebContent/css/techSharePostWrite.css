@@ -97,6 +97,7 @@ body{
 }
 #techShWrite #techSh-tb textarea{
     height: 100%;
+    resize: none;
 }
 #techShWrite #techSh-tb #fileUpload_tr,
 #techShWrite #techSh-tb #fileUpload_td{

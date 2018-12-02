@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import kr.co.techpedia.board.model.vo.TechSharePost;
 import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.common.JDBCTemplate;
+import kr.co.techpedia.board.model.vo.Comment;
 import kr.co.techpedia.board.model.vo.Notice;
 import kr.co.techpedia.board.model.vo.NoticeGrade;
 import kr.co.techpedia.board.model.vo.SupportState;
@@ -429,9 +430,11 @@ public class BoardDao {
 		String query = "SELECT * FROM "
 						+ "(SELECT NOTICE.*, "
 							+ "MEMBER_NAME AS WRITER_NAME, "
+							+ "NGRD_NAME, "
 							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
 						+ "FROM NOTICE "
-						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER)"
+						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER) "
+						+ "JOIN NTC_GRD_L ON(NOTICE.NTC_GRADECD = NTC_GRD_L.NTC_GRADECD)"
 						+ ") "
 						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
@@ -451,6 +454,8 @@ public class BoardDao {
 				post.setNtcDate(rset.getDate("NTC_DATE").toString());
 				//post.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
 				post.setNtcCnt(rset.getInt("NTC_CNT"));
+				post.setNtcGradeCD(rset.getString("NTC_GRADECD"));
+				post.setNgrdName(rset.getString("NGRD_NAME"));
 				
 				noticeList.add(post);
 				
@@ -861,6 +866,239 @@ public class BoardDao {
 		}
 		
 		return insertResult;
+	}
+
+	public Notice getOneNotice(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice post = null;
+			
+		String query = "SELECT NOTICE.*, "
+							+ "MEMBER_NAME AS WRITER_NAME, "
+							+ "NGRD_NAME "
+						+ "FROM NOTICE "
+						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER) "
+						+ "JOIN NTC_GRD_L ON(NOTICE.NTC_GRADECD = NTC_GRD_L.NTC_GRADECD) "
+						+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				post = new Notice();
+				post.setPostNo(rset.getInt("POST_NO"));
+				post.setNtcTitle(rset.getString("NTC_TITLE"));
+				post.setNtcContent(rset.getString("NTC_CONTENT"));
+				post.setNtcWriterNo(rset.getInt("NTC_WRITER"));
+				post.setNtcWriterName(rset.getString("WRITER_NAME"));
+				post.setNtcDate(rset.getDate("NTC_DATE").toString());
+				//post.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
+				post.setNtcCnt(rset.getInt("NTC_CNT"));
+				post.setNtcGradeCD(rset.getString("NTC_GRADECD"));
+				post.setNgrdName(rset.getString("NGRD_NAME"));
+				
+				//System.out.println("dao notice check\n"+post);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return post;
+	}
+
+	public int addReadCnt(Connection conn, String tableName, String columName, int postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE "+tableName+" SET "+columName+"="+columName+"+1 WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			//pstmt.setString(1, tableName);
+			//pstmt.setString(2, columName);
+			//pstmt.setString(3, columName);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Comment> getCommentList(Connection conn, String boardCD, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Comment> commentList = new ArrayList<>();
+		
+		String query = "SELECT COMMENTS.*, "
+							+ "MEMBER_NAME AS WRITER_NAME "
+							+ "FROM COMMENTS "
+							+ "JOIN TP_MEMBER ON (COMMENTS.CMM_WRITER = TP_MEMBER.MEMBER_NO) "
+							+ "WHERE BRD_CODE=? AND POST_NO=? "
+							+ "ORDER BY CMM_DATE DESC";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Comment comment = new Comment();
+				comment.setCmmNo(rset.getInt("CMM_NO"));
+				comment.setCmmContent(rset.getString("CMM_CONTENT"));
+				comment.setCmmWriterNo(rset.getInt("CMM_WRITER"));
+				comment.setCmmWriterName(rset.getString("WRITER_NAME"));
+				comment.setCmmDate(rset.getString("CMM_DATE"));
+				comment.setCmmParent(rset.getInt("CMM_PARENT"));
+				comment.setBrdCode(rset.getString("BRD_CODE"));
+				comment.setAnsSelected(rset.getString("ANS_SELECTED").charAt(0));
+				
+				commentList.add(comment);
+				//System.out.println("dao comment check\n"+comment);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return commentList;
+	}
+
+	public int insertComment(Connection conn, String comment, int memberNo, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO COMMENTS VALUES(SEQ_CMMNO.NEXTVAL, ?, ?, SYSDATE, NULL, ?, ?, 'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, comment);
+			pstmt.setInt(2, memberNo);
+			pstmt.setInt(3, postNo);
+			pstmt.setString(4, boardCD);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteComment(Connection conn, int cmmNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM COMMENTS WHERE CMM_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cmmNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateComment(Connection conn, int cmmNo, String commentRe) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE COMMENTS SET CMM_CONTENT=? WHERE CMM_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, commentRe);
+			pstmt.setInt(2, cmmNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public TechSharePost getOneTechSharePost(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		TechSharePost post = null;
+			
+		String query = "SELECT TECH_SHR.*, "
+							+ "MEMBER_NAME AS WRITER_NAME "
+						+ "FROM TECH_SHR "
+						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER) "
+						+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				post = new TechSharePost();
+				post.setPostNo(rset.getInt("POST_NO"));
+				post.setShrTitle(rset.getString("SHR_TITLE"));
+				post.setShrContent(rset.getString("SHR_CONTENT"));
+				post.setShrWriter(rset.getInt("SHR_WRITER"));
+				post.setShrWriterName(rset.getString("WRITER_NAME"));
+				post.setShrDate(rset.getDate("SHR_DATE").toString());
+				post.setShrCnt(rset.getInt("SHR_CNT"));
+				
+				//System.out.println("dao TechSharePost check\n"+post);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return post;
+	}
+
+	public int checkAnswerComment(Connection conn, int cmmNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE COMMENTS SET ANS_SELECTED='Y' WHERE CMM_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cmmNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	

@@ -61,25 +61,25 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/noticeView.css" rel="stylesheet" type="text/css">
+	<link href="/css/techSharePostView.css" rel="stylesheet" type="text/css">
     
 	<script>
         
 	    $(document).ready(function(){
 	    	
 	    	if(postNo!=-1) {
-	    		getNoticePost();
+	    		getTechShPost();
 	    	}
 	    	
 	    	
 	    });//$(document).ready END
 	    
 	    function goBoard() {
-	    	location.href="/views/main/mainpage.jsp?board=Notice&currPg="+currPg;
+	    	location.href="/views/main/mainpage.jsp?board=TechSh&currPg="+currPg;
 	    }//function END
 	    
 	    function rewrite() {
-	    	location.href="/views/main/mainpage.jsp?board=NoticeRW&postNo="+postNo;
+	    	location.href="/views/main/mainpage.jsp?board=TechShRW&postNo="+postNo;
 	    }//function END
 	    
 	    function deletePost() {
@@ -98,7 +98,7 @@
 	    	else {
 	    		$.ajax({
 					url : "/writeComment.do",
-					data : {boardCD: "NTC", postNo: postNo, comment: comment},
+					data : {boardCD: "SHR", postNo: postNo, comment: comment},
 					type : "post",
 					success : function(data){
 						//console.log("정상 처리 완료");
@@ -130,9 +130,9 @@
 	    }//function END
 	    
 	    
-	    function getNoticePost() {
+	    function getTechShPost() {
 	    	$.ajax({
-				url : "/noticeRead.do",
+				url : "/techSharePostRead.do",
 				data : {postNo: postNo},
 				type : "post",
 				success : function(data){
@@ -145,16 +145,15 @@
 						location.href="/views/board/readFail.jsp";
 					}
 					else {
-						$('#noticeGrade_span').addClass(data.ntcGradeCD);
-						$('#noticeGrade_span').html(data.ngrdName);
-						$('#noticeTitle_td').html(data.ntcTitle);
-						$('#noticeContent_txt').html(data.ntcContent);
-						$('#noticeWriter_td').html(data.ntcWriterName);
-						$('#noticeDate_td').html(data.ntcDate);
-						$('#noticeCnt_td').html(data.ntcCnt+1);
+						shrWriter = data.shrWriter;
+						$('#techShTitle_td').html(data.shrTitle);
+						$('#techShContent_txt').html(data.shrContent);
+						$('#techShWriter_td').html(data.shrWriterName);
+						$('#techShDate_td').html(data.shrDate);
+						$('#techShCnt_td').html(data.shrCnt+1);
 						//$('#fileDownload_td').html();//첨부파일
 						
-						if(memberNo==data.ntcWriterNo) {
+						if(memberNo==data.shrWriter) {
 							$('#rewrite_btn').css('display','block');
 							$('#rewrite_btn').attr('onclick','rewrite();');
 							$('#delete_btn').css('display','block');
@@ -180,7 +179,7 @@
 	    function getComments(){
 	    	$.ajax({
 				url : "/getComments.do",
-				data : {board: "NTC", postNo: postNo},
+				data : {board: "SHR", postNo: postNo},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");
@@ -192,20 +191,33 @@
 					}
 					else {
 						var comments = '';
+						var selectedAns = 'N';
+						
 						for(var i=0; i<data.length; i++) {
 							var buttons = "";
 							if(data[i].cmmWriterNo==memberNo) {
 								buttons = "<button class='deleteCmm' onclick='delCmm("+data[i].cmmNo+");'>삭제</button>"
 											+"<button class='rewriteCmm' onclick='reWriteCmm("+data[i].cmmNo+");'>수정</button>";
 							}
+							else if(memberNo==shrWriter) {
+								buttons += "<button class='answerSelect' onclick='ansSel("+data[i].cmmNo+");'>답변채택</button>";
+							}
+							
+							var selectedCmm = "";
+							if(data[i].ansSelected=='Y') {
+								selectedAns='Y';
+								selectedCmm = "<span class='selectedAns'>채택</span>";
+							}
 							comments += "<tr id='cmm_"+data[i].cmmNo+"'>"
-										+ "<td class='cmmWriter'>"+data[i].cmmWriterName+"</td>"
+										+ "<td class='cmmWriter'>"+selectedCmm+data[i].cmmWriterName+"</td>"
 										+ "<td class='cmmContent'><textarea readonly>"+data[i].cmmContent+"</textarea>"+buttons+"</td>"
 										+ "<td class='cmmDate'>"+data[i].cmmDate+"</td>"
 									+ "</tr>";
-							
 						}
+						
 						$('#commentView_tb tbody').html(comments);
+						
+						if(selectedAns=='Y') $('.answerSelect').remove();
 					}
 				},
 				error : function(){
@@ -276,6 +288,8 @@
 	    	
 	    	var commentRe = $(td_selector+' textarea').val();
 	    	
+	    	alert(commentRe);////////////////
+	    	
 	    	$.ajax({
 				url : "/updateComment.do",
 				data : {cmmNo: cmmNo, commentRe: commentRe},
@@ -317,46 +331,76 @@
 	    	
 	    }//function END
 	    
+	    function ansSel(cmmNo){
+	    	var chk = confirm("한번 채택답변으로 설정하면 취소할 수 없습니다.\n"
+	    				+"채택답변으로 설정하시겠습니까?");
+	    	if(chk) {
+	    		$.ajax({
+					url : "/selectAnswerCmm.do",
+					data : {cmmNo: cmmNo},
+					type : "post",
+					success : function(data){
+						//console.log("정상 처리 완료");
+						//alert("success");
+						//console.log(data);
+						if(data==false) {
+							alert("오류가 발생했습니다.\n"
+									+"문제가 지속될 경우 관리자에게 문의해주세요.");
+							location.href="/index.jsp";
+						}
+						else {
+							alert("성공적으로 답변 채택을 완료하었습니다.");
+							getComments();
+						}
+					},
+					error : function(){
+						//console.log("ajax 통신 에러");
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/index.jsp";
+					},
+					complete : function(){
+						//alert("complete");
+					}
+				});
+	    	}
+	    	
+	    }//function END
+	    
     </script>
 </head>
 <body>
 	
-	<div id="noticeWrite">
+	<div id="techShWrite">
 	    
 	    <span>공지사항</span>
 	    
-		    <table id="notice-tb">
-		    
-		    	<tr id="noticeGrade_tr">
-		            <th id="noticeGrade">등급</th>
-	                <td>
-		                <span id="noticeGrade_span"></span>
-	                </td>
+		    <table id="techSh-tb">
+		    	
+		        <tr id="techShTitle_tr">
+		            <th id="techShTitle">제목</th>
+	                <td id="techShTitle_td"></td>
 		        </tr>
-		        <tr id="noticeTitle_tr">
-		            <th id="noticeTitle">제목</th>
-	                <td id="noticeTitle_td"></td>
+		        <tr id="techShWriter_tr">
+		            <th id="techShWriter">작성자</th>
+	                <td id="techShWriter_td"></td>
 		        </tr>
-		        <tr id="noticeWriter_tr">
-		            <th id="noticeWriter">작성자</th>
-	                <td id="noticeWriter_td"></td>
+		        <tr id="techShDate_tr">
+		            <th id="techShDate">작성일</th>
+	                <td id="techShDate_td"></td>
 		        </tr>
-		        <tr id="noticeDate_tr">
-		            <th id="noticeDate">작성일</th>
-	                <td id="noticeDate_td"></td>
+		        <tr id="techShCnt_tr">
+		            <th id="techShCnt">조회수</th>
+	                <td id="techShCnt_td"></td>
 		        </tr>
-		        <tr id="noticeCnt_tr">
-		            <th id="noticeCnt">조회수</th>
-	                <td id="noticeCnt_td"></td>
-		        </tr>
-	            <tr id="noticeContent_tr">
-		            <th id="noticeContent">내용</th>
-	                <td id="noticeContent_td">
-                        <textarea id="noticeContent_txt" readonly></textarea>
+	            <tr id="techShContent_tr">
+		            <th id="techShContent">내용</th>
+	                <td id="techShContent_td">
+                        <textarea id="techShContent_txt" readonly></textarea>
                     </td>
 		        </tr>
 		        <tr id="fileDownload_tr">
-		            <th id="noticeFile">첨부파일</th>
+		            <th id="techShFile">첨부파일</th>
 	                <td id="fileDownload_td">
 						첨부파일 다운로드 링크
 	                </td>

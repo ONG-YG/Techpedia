@@ -73,15 +73,18 @@ body{
     width: 80px;
 }
 #noticeBoard #notice-tb th:nth-child(2){
-    width: 480px;
+    width: 80px;
 }
 #noticeBoard #notice-tb th:nth-child(3){
-    width: 110px;
+    width: 400px;
 }
 #noticeBoard #notice-tb th:nth-child(4){
-    width: 140px;
+    width: 110px;
 }
 #noticeBoard #notice-tb th:nth-child(5){
+    width: 140px;
+}
+#noticeBoard #notice-tb th:nth-child(6){
     width: 90px;
 }
 
@@ -89,6 +92,15 @@ body{
 	text-decoration: none;
 	cursor: pointer;
 	color: rgb(70,70,70);
+}
+#noticeBoard #notice-tb .EMC{
+	color: red;
+}
+#noticeBoard #notice-tb .IMP{
+	color: salmon;
+}
+#noticeBoard #notice-tb .NM{
+	color: cornflowerblue;
 }
 
 #noticeBoard #bottomSpace{

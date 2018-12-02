@@ -51,7 +51,7 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/noticeList.css?ver=1" rel="stylesheet" type="text/css">
+	<link href="/css/noticeList.css" rel="stylesheet" type="text/css">
 	
 	<script>
 	    $(document).ready(function(){
@@ -87,22 +87,30 @@
    						noticeList = [];
 						for(var i=0; i<data.noticeList.length; i++) {
 							var post = [data.noticeList[i].postNo,
+										data.noticeList[i].ngrdName,
 										data.noticeList[i].ntcTitle,
 										data.noticeList[i].ntcWriterName,
 										data.noticeList[i].ntcDate,
-										data.noticeList[i].ntcCnt];
+										data.noticeList[i].ntcCnt,
+										data.noticeList[i].ntcGradeCD];
 							noticeList.push(post);
 						}
 						
 						//var postL = $('#notice-tb tbody').html();
 						var postL = '';
 						for(var i=0; i<noticeList.length; i++) {
+							var grade = noticeList[i][1];
+							var tdTag = "<td class='"+noticeList[i][6]+"'>";
 							postL += " <tr> "
 										+"<td>"+noticeList[i][0]+"</td> "
-										+"<td><a class='title_a' href='#'>"+noticeList[i][1]+"</a></td> "
-										+"<td>"+noticeList[i][2]+"</td> "
+										+ tdTag +noticeList[i][1]+"</td> "
+										+"<td>"
+											+"<a class='title_a' href='/views/main/mainpage.jsp?board=NoticeR&currPg="+currPg+"&postNo="+noticeList[i][0]+"'>"
+											+ noticeList[i][2] +"</a>"
+										+ "</td> "
 										+"<td>"+noticeList[i][3]+"</td> "
 										+"<td>"+noticeList[i][4]+"</td> "
+										+"<td>"+noticeList[i][5]+"</td> "
 									+"</tr> ";
 						}
 						$('#notice-tb tbody').html(postL);
@@ -138,6 +146,7 @@
 		    	<thead>
 			        <tr>
 		                <th>번호</th>
+		                <th>구분</th>
 		                <th>제목</th>
 		                <th>작성자</th>
 		                <th>작성일</th>

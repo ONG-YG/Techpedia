@@ -97,6 +97,7 @@ body{
 }
 #techSppWrite #techSpp-tb textarea{
     height: 100%;
+    resize: none;
 }
 #techSppWrite #techSpp-tb #fileUpload_tr,
 #techSppWrite #techSpp-tb #fileUpload_td{
