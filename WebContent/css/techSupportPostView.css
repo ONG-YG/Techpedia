@@ -87,28 +87,31 @@ body{
     font-weight: 600;
 }
 
-#techSppWriter_tr *{
+#techSppWrite #techSpp-tb #techSppWriter_tr *{
 	border-top: 1px solid;
 	border-color: dimgray;
 	padding-top: 5px;
 }
-#techSppCnt_tr *{
+#techSppWrite #techSpp-tb #techSppCnt_tr *{
 	border-bottom: 1px solid;
 	border-color: dimgray;
 }
-#techSppWriter_tr *,
-#techSppDate_tr *,
-#techSppCnt_tr *{
-	color: darkslategrey !important;
-	font-size: 13px !important;
+#techSppWrite #techSpp-tb #techSppWriter_tr *,
+#techSppWrite #techSpp-tb #techSppEngineer_tr *,
+#techSppWrite #techSpp-tb #techSppDate_tr *,
+#techSppWrite #techSpp-tb #techSppCnt_tr *{
+	color: darkslategrey;
+	font-size: 13px;
 }
 #techSppWriter_tr th,
+#techSppEngineer_tr th,
 #techSppDate_tr th,
 #techSppCnt_tr th{
 	border-left: 1px solid;
 	border-color: dimgray;
 }
 #techSppWriter_tr td,
+#techSppEngineer_tr td,
 #techSppDate_tr td,
 #techSppCnt_tr td{
 	border-right: 1px solid;
@@ -202,167 +205,17 @@ body{
 
 
 
-#commentWrite_tb *{
-    box-sizing: border-box;
-}
-#commentWrite_tb{
-/*    border-color: transparent;*/
-    margin-left: auto;
-    margin-right: auto;
-    height: auto; width: 700px;
-    margin-top: 10px;
-    border-spacing: 0px;
-    text-align: center;
-}
-#commentWrite_tb th,
-#commentWrite_tb td{
-    height: 60px;
-}
-#commentWrite_tb th{
-    width: 120px;
-    color: darkslategrey;
-    font-size: 14px;
-    font-weight: 900;
-    text-shadow: -1px 0 2px rgb(230,230,230),
-                0 1px 2px rgb(230,230,230),
-                1px 0 2px rgb(230,230,230),
-                0 -1px 2px rgb(230,230,230);
-    text-align: right;
-    padding-right: 20px;
-}
-#commentWrite_tb #cmmWrite_td{
-/*    border: 1px dashed; border-color: blue;*/
-    width: 465px;
-    text-align: left;
-    padding-left: 15px;
-    padding-right: 0px;
-    font-size: 15px;
-    color: darkslategrey;
-    text-shadow: none;
-}
-#commentWrite_tb #cmmWrite_td textarea{
-    height: 100%; width: 100%;
-    resize: none;
-}
-#commentWrite_tb #cmmWrite_btn_td{
-    width: 115px;
-    padding-left: 10px;
-    text-align: left;
-}
-#commentWrite_tb #cmmWrite_btn_td button{
-    height: 100%; width: 70px;
-    /*    border: 1px solid; border-color: blue;*/
-    font-size: 12px;
-    font-weight: 900;
-    color: black;
-    text-align: center;
-    margin: 0px;
-    
-/*    background-color: gainsboro;*/
-    background-color: rgb(0,0,65);
-    border: 0.5px solid; border-color: aliceblue;
-    border-radius: 7px;
-/*    color: dimgray;*/
-    color: white;
-    cursor: pointer;
-}
 
-#commentView_tb *{
-    box-sizing: border-box;
-}
-#commentView_tb{
-/*    border-color: transparent;*/
-    margin-left: auto;
-    margin-right: auto;
-    height: auto; width: 700px;
-    margin-top: 10px;
-    border-spacing: 0px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-#commentView_tb th{
-    height: 40px;
-    width: 120px;
-    color: darkslategrey;
-    font-size: 14px;
-    font-weight: 900;
-    text-align: center;
-}
-
-#commentView_tb tbody tr:first-child td{
-    border-top: 2px solid;
-    border-color: darkgray;
-}
-#commentView_tb tbody td{
-    text-align: center;
-    border-bottom: 1px solid;
-    border-color: darkgray;
-    padding-top: 10px;
-    padding-bottom: 5px;
-}
-#commentView_tb tbody td,
-#commentView_tb .cmmContent textarea{
-    font-size: 14px;
-    font-family: '맑은고딕';
-}
-#commentView_tb .cmmContent{
-/*    border: 1px dashed; border-color: blue;*/
-    width: 465px;
-    text-align: left;
-    padding-left: 15px;
-    padding-right: 0px;
-    color: darkslategrey;
-    text-shadow: none;
-}
-#commentView_tb .cmmContent textarea{
-    border: none;
-    /* border: 1px dashed red; */
-    height: 50px; width: 100%;
-    resize: none;
-    background-color: transparent;
-    vertical-align: middle;
-    word-break: break-all;
-}
-
-
-
-
-.rewriteCmm,
-.deleteCmm,
-.reInsert,
-.answerSelect{
-/*    border: 1px solid; border-color: blue;*/
-    height: 22px; width: 40px;
-    font-size: 12px;
-    font-weight: 900;
-    color: black;
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    
-/*    background-color: gainsboro;*/
-    background-color: rgb(0,0,65);
-    border: 0.5px solid; border-color: aliceblue;
-    border-radius: 7px;
-/*    color: dimgray;*/
-    color: white;
-    cursor: pointer;
-    
-	float: right;
-	margin-left: 5px;
-}
-.answerSelect{
-	width: 65px;
-}
-
-
-.selectedAns{
+#techSppWrite #techSpp-tb #engCheck_span{
 	border: 1px solid; border-color: white;
 	border-radius: 6px;
 	height: 22px; width: 40px;
-	background-color: coral;
-	color: white;
+	background-color: aquamarine;
+	color: slategrey;
+/*	color: coral;*/
+	font-size: 11px !important;
+	padding:  1px;
 	padding-left: 5px;
 	padding-right: 5px;
-	margin-right: 5px;
+	margin-left: 7px;
 }

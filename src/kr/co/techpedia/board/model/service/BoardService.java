@@ -410,4 +410,50 @@ public class BoardService {
 		
 		return result;
 	}
+
+	public TechSupportPost getOneTechSupportPost(int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		TechSupportPost post = new BoardDao().getOneTechSupportPost(conn, postNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return post;
+	}
+
+	public int autoEngineerUpdate() {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().autoEngineerUpdate(conn);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int checkEngAuto() {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().checkEngAuto(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int checkEngCK(int memberNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().checkEngCK(conn, memberNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 }

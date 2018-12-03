@@ -8,20 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import kr.co.techpedia.board.model.service.BoardService;
+import kr.co.techpedia.board.model.vo.TechSupportPost;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class SelectAnswerCmmServlet
+ * Servlet implementation class TechSupportPostReadServlet
  */
-@WebServlet(name = "SelectAnswerCmm", urlPatterns = { "/selectAnswerCmm.do" })
-public class SelectAnswerCmmServlet extends HttpServlet {
+@WebServlet(name = "TechSupportPostRead", urlPatterns = { "/techSupportPostRead.do" })
+public class TechSupportPostReadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAnswerCmmServlet() {
+    public TechSupportPostReadServlet() {
         super();
     }
 
@@ -31,30 +34,34 @@ public class SelectAnswerCmmServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(false);
+		int postNo = Integer.parseInt( request.getParameter("postNo") );
 		
 		try {
+			HttpSession session = request.getSession(false);
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			
 			if(memSession!=null) {
 				
-				int cmmNo = Integer.parseInt(request.getParameter("cmmNo"));
+				TechSupportPost post = new BoardService().getOneTechSupportPost(postNo);
 				
-				int result = new BoardService().checkAnswerComment(cmmNo);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("utf-8");
 				
-				if(result>0) {
-					response.getWriter().print(true);
-				}else {
+				if(post!=null) {
+					int result = new BoardService().addReadCnt("TECH_SPPT", "SPPT_CNT", postNo);
+					if(result>0) new Gson().toJson(post, response.getWriter());
+					else throw new Exception();
+				}
+				else {
 					throw new Exception();
 				}
 				
 			}else {
-				//세션정보가 불완전할 경우 비정상적 접근임을 알리는 페이지로 리다이렉트
-				response.sendRedirect("/views/board/writeError.jsp");
+				throw new Exception();
 			}
 			
 		} catch (Exception e) {
 			response.getWriter().print(false);
+			//response.sendRedirect("/views/board/readFail.jsp");
 		}
 	}
 

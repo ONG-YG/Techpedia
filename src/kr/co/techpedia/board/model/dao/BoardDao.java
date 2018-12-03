@@ -327,7 +327,7 @@ public class BoardDao {
 				//post.setSpptEng(rset.getInt(rset.getString("SPPT_ENG")));
 				post.setSpptEngName(rset.getString("SPPT_ENGNAME"));
 				post.setSpptDate(rset.getString("SPPT_DATE").toString());
-				//Spost.setSpptDate(rset.getDate("SPPT_DATE").toString());
+				//post.setSpptDate(rset.getDate("SPPT_DATE").toString());
 				//post.setSpptStatcd(rset.getString("SPPT_STATCD"));
 				post.setSpptStatName(rset.getString("STAT_NAME"));
 				post.setSpptCnt(rset.getInt("SPPT_CNT"));
@@ -452,7 +452,7 @@ public class BoardDao {
 				//post.setNtcWriterNo(rset.getInt("NTC_WRITER"));
 				post.setNtcWriterName(rset.getString("WRITER_NAME"));
 				post.setNtcDate(rset.getDate("NTC_DATE").toString());
-				//post.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
+				post.setNtcMainview(rset.getString("NTC_MAINVIEW").charAt(0));
 				post.setNtcCnt(rset.getInt("NTC_CNT"));
 				post.setNtcGradeCD(rset.getString("NTC_GRADECD"));
 				post.setNgrdName(rset.getString("NGRD_NAME"));
@@ -1100,8 +1100,131 @@ public class BoardDao {
 		
 		return result;
 	}
-	
-	
+
+	public TechSupportPost getOneTechSupportPost(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		TechSupportPost post = null;
+			
+		String query = "SELECT TECH_SPPT.*, "
+							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
+							+ "STAT_NAME, "
+							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+						+ "FROM TECH_SPPT "
+						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
+						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
+						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+						+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				post = new TechSupportPost();
+				post.setPostNo(rset.getInt("POST_NO"));
+				post.setSpptTitle(rset.getString("SPPT_TITLE"));
+				post.setSpptContent(rset.getString("SPPT_CONTENT"));
+				post.setSpptWriter(rset.getInt("SPPT_WRITER"));
+				post.setSpptWriterName(rset.getString("SPPT_WRITERNAME"));
+				if(rset.getString("SPPT_ENG")!=null) {
+					post.setSpptEng(rset.getInt("SPPT_ENG"));
+				}else {
+					post.setSpptEng(-1);
+				}
+				post.setSpptEngName(rset.getString("SPPT_ENGNAME"));
+				post.setSpptDate(rset.getString("SPPT_DATE").toString());
+				//post.setSpptDate(rset.getDate("SPPT_DATE").toString());
+				post.setSpptStatcd(rset.getString("SPPT_STATCD"));
+				post.setSpptStatName(rset.getString("STAT_NAME"));
+				post.setSpptCnt(rset.getInt("SPPT_CNT"));
+				post.setSpptEngck(rset.getString("SPPT_ENGCK").charAt(0));
+				
+				//System.out.println("dao TechSupportPost check\n"+post);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return post;
+	}
+
+	public int autoEngineerUpdate(Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TECH_SPPT "
+						+ "SET SPPT_ENG=100001 , "
+						+ "SPPT_STATCD='ENG_AUTO' "
+						+ "WHERE SPPT_DATE<SYSDATE-1 AND SPPT_ENG IS NULL";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int checkEngAuto(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "SELECT * FROM TECH_SPPT WHERE SPPT_STATCD='ENG_AUTO'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int checkEngCK(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "SELECT * FROM TECH_SPPT WHERE SPPT_ENG=? AND SPPT_ENGCK='N'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 }

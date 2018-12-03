@@ -1,4 +1,4 @@
-package kr.co.techpedia.board.controller;
+package kr.co.techpedia.admin.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.co.techpedia.board.model.service.BoardService;
+import kr.co.techpedia.admin.model.service.AdminService;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class SelectAnswerCmmServlet
+ * Servlet implementation class UpdateNoticeMainViewServlet
  */
-@WebServlet(name = "SelectAnswerCmm", urlPatterns = { "/selectAnswerCmm.do" })
-public class SelectAnswerCmmServlet extends HttpServlet {
+@WebServlet(name = "UpdateNoticeMainView", urlPatterns = { "/updateNoticeMainView.do" })
+public class UpdateNoticeMainViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAnswerCmmServlet() {
+    public UpdateNoticeMainViewServlet() {
         super();
     }
 
@@ -38,9 +38,9 @@ public class SelectAnswerCmmServlet extends HttpServlet {
 			
 			if(memSession!=null) {
 				
-				int cmmNo = Integer.parseInt(request.getParameter("cmmNo"));
+				int postNo = Integer.parseInt(request.getParameter("postNo"));
 				
-				int result = new BoardService().checkAnswerComment(cmmNo);
+				int result = new AdminService().updateNoticeMainView(postNo);
 				
 				if(result>0) {
 					response.getWriter().print(true);
@@ -56,6 +56,7 @@ public class SelectAnswerCmmServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.getWriter().print(false);
 		}
+		
 	}
 
 	/**

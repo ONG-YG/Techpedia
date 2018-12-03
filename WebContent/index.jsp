@@ -122,10 +122,12 @@
     				type : "post",
     				success : function(data){
     					//console.log("정상 처리 완료");
-    					//console.log(data);
+    					//console.log(data);//////////
     					//alert("success");
     					if(data) {
-    						location.href = "/views/main/mainpage.jsp";
+    						location.href = "/views/main/mainpage.jsp"
+		    										+"?auto="+data[0]
+		    										+"&newTechspp="+data[1];
     					}
     					else {
     						alert("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.");

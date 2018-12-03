@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+/*
+body{
+    border: 3px dashed; border-color: gray;
+    background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
+    background-position: topcenter;
+    background-color: black;
+}
+*/
+#noticeBoard{
+/*
+	border: 5px dashed; border-color: gainsboro;
+    background-color: rgb(255,255,255,0.86);
+    height: 630px; width: 1020px;
+*/
+    text-shadow: none;
+}
+
+#noticeBoard>span{
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 900;
+    color: darkblue;
+    text-shadow: 3px 3px 5px darkgray;
+    
+}
+
+#noticeBoard #tableDiv{
+	height: 410px; width: 910px;
+	box-sizing: border-box;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+#noticeBoard #notice-tb{
+/*    border-color: transparent;*/
+    border-spacing: 0px;
+    /*
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    */
+    height: auto; width: 900px;
+    text-align: center;
+}
+
+#noticeBoard #notice-tb tr:first-child th{
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-color: gray;
+    padding: 0px;
+    height: 30px;
+    font-size: 14.5px;
+    color: rgb(105,105,105);
+    text-shadow: -1px -1px 2px transparent,
+                1px 1px 2px rgb(220,220,220);
+}
+#noticeBoard #notice-tb tr td{
+    border-bottom: 1px solid;
+    border-color: gray;
+    height: 34px;
+    font-size: 13px;
+    font-weight: 550;
+    color: rgb(70,70,70);
+}
+
+
+#noticeBoard #notice-tb th:nth-child(1){
+    width: 80px;
+}
+#noticeBoard #notice-tb th:nth-child(2){
+    width: 80px;
+}
+#noticeBoard #notice-tb th:nth-child(3){
+    width: 400px;
+}
+#noticeBoard #notice-tb th:nth-child(4){
+    width: 110px;
+}
+#noticeBoard #notice-tb th:nth-child(5){
+    width: 140px;
+}
+#noticeBoard #notice-tb th:nth-child(6){
+    width: 90px;
+}
+
+#noticeBoard #notice-tb .title_a{
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(70,70,70);
+}
+#noticeBoard #notice-tb .EMC{
+	color: red;
+}
+#noticeBoard #notice-tb .IMP{
+	color: salmon;
+}
+#noticeBoard #notice-tb .NM{
+	color: cornflowerblue;
+}
+
+#noticeBoard #bottomSpace{
+/*    border: 1px solid; border-color: red;*/
+    height: auto; width: auto;
+}
+#noticeBoard #bottomSpace #navi{
+/*    border: 1px solid; border-color: aqua;*/
+    height: auto; width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#noticeBoard #bottomSpace #navi a,
+#noticeBoard #bottomSpace #navi span{
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: middle;
+    text-decoration: none;
+    color: rgb(70,70,70);
+    cursor: pointer;
+}
+#noticeBoard #bottomSpace #navi #prev_img,
+#noticeBoard #bottomSpace #navi #next_img{
+	vertical-align: -14.74%;
+}
+
+
+
+#noticeBoard #notice-tb .chkMainView_btn{
+/*    border: 1px solid; border-color: blue;*/
+    height: 22.5px; width: 40px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+}
+
+#noticeBoard #notice-tb .checked_btn{
+/*    border: 1px solid; border-color: blue;*/
+    height: 22.5px; width: 40px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    
+    background-color: gainsboro;
+/*    background-color: rgb(0,0,65);*/
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+    color: dimgray;
+/*    color: white;*/
+    cursor: pointer;
+}
+
+
+

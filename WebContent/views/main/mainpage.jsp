@@ -23,6 +23,37 @@
 		//writeStart = "false";
 		writeStart = "true";/////////////////////////
 	}
+	
+	String auto = request.getParameter("auto");
+	String newTechspp = request.getParameter("newTechspp");
+	session = request.getSession(false);
+	if(auto!=null && session!=null) {
+		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
+		if(memSession!=null){
+			String memberTypeCD = memSession.getMemberTypeCD();
+			if(!auto.equals("0") 
+					&& ( memberTypeCD.equals("HP_AD")
+							|| memberTypeCD.equals("MNFE_AD"))) {
+				%>
+				<script>
+					alert("담당 엔지니어가 자동 배정된 기술지원 게시물이 존재합니다.");
+					location.href = "/views/main/mainpage.jsp";
+				</script>
+				<%
+			}
+			if(!newTechspp.equals("0") 
+					&& ( memberTypeCD.equals("MNFE_AD")
+							|| memberTypeCD.equals("MNFE"))) {
+				%>
+				<script>
+					alert("확인하지 않은 기술지원 게시물이 존재합니다.");
+					location.href = "/views/main/mainpage.jsp";
+				</script>
+				<%
+			}
+		}
+	}
+	
     %>
     <script>
     	writeStart = <%=writeStart%>;

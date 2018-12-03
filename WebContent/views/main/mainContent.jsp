@@ -123,6 +123,20 @@
 		    	location.href="/views/main/mainpage.jsp?board=TechSh";
 		    });
 		    
+		    $('#techSpptEngAssign').click(function() {
+		    	$('#mainView').load("/views/admin/mgrTechSppt_content.jsp?currPg="+cp);
+		    });
+		    $('#mainNoticeSet').click(function() {
+		    	$('#mainView').load("/views/admin/mgrNotice_content.jsp?currPg="+cp);
+		    });
+		    /* 
+		    else if(pg=='adminSppt') {
+				$('#mainView').load("/views/admin/mgrTechSppt_content.jsp?currPg="+cp);
+			}
+			else if(pg=='adminNotice') {
+				$('#mainView').load("/views/admin/mgrNotice_content.jsp?currPg="+cp);
+			}
+		     */
 		});
 		
 		

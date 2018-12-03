@@ -101,22 +101,35 @@
 						location.href="/views/board/readFail.jsp";
 					}
 					else {
-						shrWriter = data.shrWriter;
-						$('#techSppTitle_td').html(data.shrTitle);
-						$('#techSppContent_txt').html(data.shrContent);
-						$('#techSppWriter_td').html(data.shrWriterName);
-						$('#techSppDate_td').html(data.shrDate);
-						$('#techSppCnt_td').html(data.shrCnt+1);
+						spptWriter = data.spptWriter;
+						spptEng = data.spptEng;
+						var engName = data.spptEngName;
+						if(engName==null) engName = '(배정되지 않음)';
+						
+						$('#techSppTitle_td').html(data.spptTitle);
+						$('#techSppContent_txt').html(data.spptContent);
+						$('#techSppWriter_td').html(data.spptWriterName);
+						$('#engName_span').html(engName);
+						$('#engCheck_span').html(data.spptEngck);
+						$('#techSppDate_td').html(data.spptDate);
+						$('#techSppCnt_td').html(data.spptCnt+1);
 						//$('#fileDownload_td').html();//첨부파일
 						
-						if(memberNo==data.shrWriter) {
+						if(data.spptEngck=='N') {
+							$('#engCheck_span').css('color','coral');
+						}
+						if(data.spptEngName==null) $('#engCheck_span').remove();
+						
+						if(memberNo==data.spptWriter) {
+							/* 
 							$('#rewrite_btn').css('display','block');
 							$('#rewrite_btn').attr('onclick','rewrite();');
 							$('#delete_btn').css('display','block');
 							$('#delete_btn').attr('onclick','deletePost();');
+							 */
 						}
 						
-						getComments();
+						//getComments();////////////////////////////////
 						
 					}
 				},
@@ -158,8 +171,11 @@
 	                <td id="techSppWriter_td"></td>
 		        </tr>
 		        <tr id="techSppEngineer_tr">
-		            <th id="techSppEngineer">협력사 담당자</th>
-	                <td id="techSppEngineer_td"></td>
+		            <th id="techSppEngineer">담당 엔지니어</th>
+	                <td id="techSppEngineer_td">
+		                <span id="engName_span"></span>
+		                <span id="engCheck_span"></span>
+	                </td>
 		        </tr>
 		        <tr id="techSppDate_tr">
 		            <th id="techSppDate">작성일</th>
@@ -189,27 +205,6 @@
 	                </td>
 	            </tr>
 		    </table>
-	    	<table id="commentWrite_tb">
-                <thead>
-                    <tr>
-                        <th>댓글 작성</th>
-                        <td id="cmmWrite_td"><textarea id="cmmWrite_txt"></textarea></td>
-                        <td id="cmmWrite_btn_td"><button onclick="writeCmm();">등록</button></td>
-                    </tr>
-                </thead>
-            </table>
-            <table id="commentView_tb">
-                    <thead>
-                    <tr>
-                        <th>작성자</th>
-                        <th>댓글내용</th>
-                        <th>작성시간</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
 	</div>
 	
 </body>
