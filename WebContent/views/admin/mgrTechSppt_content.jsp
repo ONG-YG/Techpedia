@@ -12,35 +12,30 @@
 	</script>
 	<%
 		session = request.getSession(false);
-		//System.out.println("\nmyTechSppt session : "+session);/////////////////////////
+		//System.out.println("\nTechSupportBoard session : "+session);/////////////////////////
 		if(session!=null) {
 			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			//System.out.println("\nmyTechSppt memSession check 1\n"+memSession);////////////////////////
+			//System.out.println("\nTechSupportBoard memSession check 1\n"+memSession);////////////////////////
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				int compNo = memSession.getCompNo();
 				String cp = request.getParameter("currPg");
-
+				//System.out.println("cp : "+cp);//////////////
+				
 				int currPg = 1;
 				if (cp!=null) {
 					currPg = Integer.parseInt(cp);
 				}
-				
-				//System.out.println("\nmyTechSppt memSession check 2\n"+memSession);////////////////////////
+				memSession.setCurrBoard("TechSpp");
+				session.setAttribute("memSession", memSession);
+				//System.out.println("\nTechSupportBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var compNo = <%=compNo%>;
 				var currPg = <%=currPg%>;
-				
-				if(memberTypeCD=='COP') {
-					$('#charger').html("담당 엔지니어");
-				}
-				else {
-					$('#charger').html("협력사 담당자");
-				}
-				
-				//alert("memberTypeCD : "+memberTypeCD);/////////////////////////
 			</script>
 	<%
 			}else {			
@@ -59,25 +54,30 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/myTechSppt.css?ver=1" rel="stylesheet" type="text/css">
+	<link href="/css/mgrTechSppt_content.css" rel="stylesheet" type="text/css">
 	
 	<script>
 	$(document).ready(function(){
     	
-		getTechSpptList();
+		techSpptBoardList();
+		
     	
     });//$(document).ready END
     
     function move(pageNo){
     	currPg = pageNo;
-    	getTechSpptList();
+    	techSpptBoardList();
+    }
+
+    function writePost(){
+    	location.href="/writePost.do";
     }
     
-    function getTechSpptList(){
+    function techSpptBoardList(){
 		
        	$.ajax({
-				url : "/getTechSpptList.do",
-				data : {memberNo: memberNo, memberTypeCD: memberTypeCD, currPg: currPg},
+				url : "/techSupportBoardList.do",
+				data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");
@@ -86,40 +86,47 @@
 					
 					if(data) {
 						techSpPostList = [];
-					for(var i=0; i<data.techSupportPostL.length; i++) {
-						var charger = null;
-						if(memberTypeCD=='COP') {
-							charger = data.techSupportPostL[i].spptEngName;
-						}else {
-							charger = data.techSupportPostL[i].spptWriterName;
+						for(var i=0; i<data.techSupportPostL.length; i++) {
+							var engName = data.techSupportPostL[i].spptEngName;
+							
+							if (engName==null) {
+								engName = '(배정되지 않음)';
+							}
+							var post = [data.techSupportPostL[i].postNo,
+										data.techSupportPostL[i].spptStatName,
+										data.techSupportPostL[i].spptTitle,
+										data.techSupportPostL[i].spptWriterName,
+										engName,
+										data.techSupportPostL[i].spptDate,
+										data.techSupportPostL[i].spptCnt];
+							techSpPostList.push(post);
 						}
-						var post = [data.techSupportPostL[i].postNo,
-									data.techSupportPostL[i].spptTitle,
-									charger,
-									data.techSupportPostL[i].spptDate,
-									data.techSupportPostL[i].spptStatName,
-									data.techSupportPostL[i].spptEngck];
-						techSpPostList.push(post);
-					}
-					
-					//var postL = $('#techSppt-tb').html();
-					var postL = '';
-					for(var i=0; i<techSpPostList.length; i++) {
-						postL += " <tr> "
-									+"<td>"+techSpPostList[i][0]+"</td> "
-									+"<td>"+techSpPostList[i][1]+"</td> "
-									+"<td>"+techSpPostList[i][2]+"</td> "
-									+"<td>"+techSpPostList[i][3]+"</td> "
-									+"<td>"+techSpPostList[i][4]+"</td> "
-									+"<td>"+techSpPostList[i][5]+"</td> "
-								+"</tr> ";
+						
+						//var postL = $('#techSppt-tb').html();
+						var postL = '';
+						for(var i=0; i<techSpPostList.length; i++) {
+							
+							var button = "<button class='assignEng_btn' "
+										+"onclick='assignEng();'>설정</button>";
 								
-					}
-					$('#techSppt-tb tbody').html(postL);
-					$('#navi').html(data.pageNavi);
+							postL += " <tr> "
+										+"<td>"+techSpPostList[i][0]+"</td> "
+										+"<td>"+techSpPostList[i][1]+"</td> "
+										+"<td>"
+										+"<a class='title_a' target='_blank' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+techSpPostList[i][0]+"'>"
+											+techSpPostList[i][2] +"</a>"
+										+"</td> "
+										+"<td>"+techSpPostList[i][3]+"</td> "
+										+"<td>"+techSpPostList[i][4]+"</td> "
+										+"<td>"+techSpPostList[i][5]+"</td> "
+										+"<td>"+button+"</td> "
+									+"</tr> ";
+						}
+						$('#techSppt-tb tbody').html(postL);
+						$('#navi').html(data.pageNavi);
 					}
 					else {
-						alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
+						//alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
 						//location.href = "/views/main/mainpage.jsp";
 					} 
 				},
@@ -134,26 +141,58 @@
 				}
 			});
     }//function END
-         
+    
+    function assignEng(){
+    	/* 
+       	$.ajax({
+			url : "/assignTechSppEng.do",
+			data : {postNo: postNo},
+			type : "post",
+			success : function(data){
+				//console.log("정상 처리 완료");
+				//alert("success");
+				//console.log(data);////////////////////
+				if(data) {
+					alert("성공적으로 기술 지원 담당 엔지니어 배정을 완료했습니다.");
+					techSpptBoardList();
+				}
+				else {
+					alert("처리 도중 오류가 발생했습니다.");
+				} 
+			},
+			error : function(){
+				//console.log("ajax 통신 에러");
+				alert("처리 도중 오류가 발생했습니다.");
+			},
+			complete : function(){
+				//alert("complete");
+			}
+		});
+       	 */
+       	
+    }//function END
+    
+    
     </script>
 </head>
 <body>
 	
-	<div id="myTechSppt">
+	<div id="TechSpptBoard">
 	    
-	    <span>나의 기술 지원 현황</span>
+	    <span>기술 지원 담당 엔지니어 배정</span>
 	    
 	    <div id="tableDiv">
 		    <table id="techSppt-tb">
 		    	<thead>
 			        <tr>
 		                <th>번호</th>
-		                <th>제목</th>
-		                <th id="charger">담당자</th>
-		                <th>작성일</th>
 		                <th>진행현황</th>
-		                <th>엔지니어 확인</th>
-			        </tr>  
+		                <th>제목</th>
+		                <th>협력사 담당자</th>
+		                <th>담당 엔지니어</th>
+		                <th>작성일</th>
+		                <th>배정</th>
+			        </tr>
 	            </thead>
 	            
 	            <tbody>

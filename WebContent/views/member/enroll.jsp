@@ -6,7 +6,7 @@
 <head>
 	<%
 		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-		System.out.println("enroll page session check\n"+memSession);/////////////////
+		//System.out.println("enroll page session check\n"+memSession);/////////////////
 		if(memSession!=null) {
 	%>
 		<script>
