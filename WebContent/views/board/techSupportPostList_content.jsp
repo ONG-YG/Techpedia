@@ -131,8 +131,15 @@
 						$('#navi').html(data.pageNavi);
 					}
 					else {
-						//alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
-						//location.href = "/views/main/mainpage.jsp";
+						var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span><img src='' id='next_img' width='20px'></span>";
+						$('#techSppt-tb tbody').html('');
+						$('#navi').html(emptyPageNavi);
 					} 
 				},
 				error : function(){

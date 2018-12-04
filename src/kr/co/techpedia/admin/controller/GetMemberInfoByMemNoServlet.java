@@ -1,4 +1,4 @@
-package kr.co.techpedia.member.controller;
+package kr.co.techpedia.admin.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -13,16 +13,16 @@ import kr.co.techpedia.member.model.service.MemberService;
 import kr.co.techpedia.member.model.vo.TpMember;
 
 /**
- * Servlet implementation class GetMemberInfoServlet
+ * Servlet implementation class GetMemberInfoByMemNoServlet
  */
-@WebServlet(name = "GetMemberInfo", urlPatterns = { "/getMemberInfo.do" })
-public class GetMemberInfoServlet extends HttpServlet {
+@WebServlet(name = "GetMemberInfoByMemNo", urlPatterns = { "/getMemberInfoByMemNo.do" })
+public class GetMemberInfoByMemNoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetMemberInfoServlet() {
+    public GetMemberInfoByMemNoServlet() {
         super();
     }
 
@@ -30,18 +30,20 @@ public class GetMemberInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("utf-8");
 		int memberNo = Integer.parseInt( request.getParameter("memberNo") );
 		
+		//TpMember memberInfo = new AdminService().getMemberInfoByMemNo(memberNo);
 		TpMember memberInfo = new MemberService().getMemberInfo(memberNo);
+		
 		
 		//System.out.println("after select\n"+memberInfo);/////////////////
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
-		if(memberInfo!=null && memberInfo.getMemberActive()=='Y') {
+		if(memberInfo!=null) {
 			new Gson().toJson(memberInfo, response.getWriter());
 		}
 		else {

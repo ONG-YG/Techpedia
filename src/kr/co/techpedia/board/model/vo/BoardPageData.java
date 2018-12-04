@@ -2,10 +2,13 @@ package kr.co.techpedia.board.model.vo;
 
 import java.util.ArrayList;
 
+import kr.co.techpedia.member.model.vo.TpMember;
+
 public class BoardPageData {
 	private ArrayList<Notice> noticeList;
 	private ArrayList<TechSharePost> techSharePostL;
 	private ArrayList<TechSupportPost> techSupportPostL;
+	private ArrayList<TpMember> enrollMemberL;
 	private String pageNavi;
 	
 	
@@ -13,14 +16,14 @@ public class BoardPageData {
 		super();
 	}
 	public BoardPageData(ArrayList<Notice> noticeList, ArrayList<TechSharePost> techSharePostL,
-			ArrayList<TechSupportPost> techSupportPostL, String pageNavi) {
+			ArrayList<TechSupportPost> techSupportPostL, ArrayList<TpMember> enrollMemberL, String pageNavi) {
 		super();
 		this.noticeList = noticeList;
 		this.techSharePostL = techSharePostL;
 		this.techSupportPostL = techSupportPostL;
+		this.enrollMemberL = enrollMemberL;
 		this.pageNavi = pageNavi;
 	}
-	
 	
 	
 	public ArrayList<Notice> getNoticeList() {
@@ -47,6 +50,13 @@ public class BoardPageData {
 	public void setPageNavi(String pageNavi) {
 		this.pageNavi = pageNavi;
 	}
+	public ArrayList<TpMember> getEnrollMemberL() {
+		return enrollMemberL;
+	}
+	public void setEnrollMemberL(ArrayList<TpMember> enrollMemberL) {
+		this.enrollMemberL = enrollMemberL;
+	}
+	
 	
 	
 	@Override

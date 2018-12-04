@@ -373,7 +373,7 @@
 	
 	<div id="techShWrite">
 	    
-	    <span>공지사항</span>
+	    <span>기술 공유 게시물</span>
 	    
 		    <table id="techSh-tb">
 		    	

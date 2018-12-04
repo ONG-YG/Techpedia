@@ -48,7 +48,7 @@ public class MemberDao {
 		return loginMember;
 	}
 	
-	public TpMember getMemberInfo(Connection conn, String memberId) {
+	public TpMember getMemberInfo(Connection conn, int memberNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		TpMember memberInfo = null;
@@ -67,13 +67,13 @@ public class MemberDao {
 							+ "FROM TP_MEMBER "
 							+ "JOIN MEM_TYPE ON(MEM_TYPE.MEMBER_TYPECD = TP_MEMBER.MEMBER_TYPECD) "
 							+ "JOIN COMPANY_L ON(COMPANY_L.COMP_NO = TP_MEMBER.COMP_NO) "
-							+ "WHERE MEMBER_ID=?";
+							+ "WHERE MEMBER_NO=?";
 		// Active 여부는 Servlet에서 직접 memberActive 값 확인
 		// 관리자 페이지에서 Active 여부 상관없이 멤버 정보 가져올 수 있도록 메소드 작성
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memberId);
+			pstmt.setInt(1, memberNo);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {

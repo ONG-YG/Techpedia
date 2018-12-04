@@ -1,23 +1,23 @@
 @charset "UTF-8";
 
-/* 
+/*
 body{
     border: 3px dashed; border-color: gray;
     background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
     background-position: topcenter;
-   background-color: black;
+    background-color: black;
 }
- */
-#TechSpptBoard{
-	/* 
-    border: 5px dashed; border-color: gainsboro;
+*/
+#enrollApprove{
+/*
+	border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
-     */
     height: 630px; width: 1020px;
+*/
     text-shadow: none;
 }
 
-#TechSpptBoard>span{
+#enrollApprove>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -29,14 +29,14 @@ body{
     
 }
 
-#TechSpptBoard #tableDiv{
+#enrollApprove #tableDiv{
 	height: 410px; width: 910px;
 	box-sizing: border-box;
 	margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
 }
-#TechSpptBoard #techSppt-tb{
+#enrollApprove #enrollApprove-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
     /*
@@ -47,7 +47,8 @@ body{
     height: auto; width: 900px;
     text-align: center;
 }
-#TechSpptBoard #techSppt-tb tr:first-child th{
+
+#enrollApprove #enrollApprove-tb tr:first-child th{
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-color: gray;
@@ -58,7 +59,7 @@ body{
     text-shadow: -1px -1px 2px transparent,
                 1px 1px 2px rgb(220,220,220);
 }
-#TechSpptBoard #techSppt-tb tr td{
+#enrollApprove #enrollApprove-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
     height: 34px;
@@ -66,55 +67,58 @@ body{
     font-weight: 550;
     color: rgb(70,70,70);
 }
-#TechSpptBoard #techSppt-tb .newPost{
-	color: red;
-	font-size: 12px;
-	margin-left: 10px;
-}
 
-#TechSpptBoard #techSppt-tb th:nth-child(1){
-    width: 90px;
+
+#enrollApprove #enrollApprove-tb th:nth-child(1){
+    width: 180px;
 }
-#TechSpptBoard #techSppt-tb th:nth-child(2){
-    width: 90px;
+#enrollApprove #enrollApprove-tb th:nth-child(2){
+    width: 220px;
 }
-#TechSpptBoard #techSppt-tb th:nth-child(3){
-    width: 360px;
-}
-#TechSpptBoard #techSppt-tb th:nth-child(4){
-    width: 105px;
-}
-#TechSpptBoard #techSppt-tb th:nth-child(5){
-    width: 105px;
-}
-#TechSpptBoard #techSppt-tb th:nth-child(6){
+#enrollApprove #enrollApprove-tb th:nth-child(3){
     width: 100px;
 }
-#TechSpptBoard #techSppt-tb th:nth-child(7){
-    width: 50px;
+#enrollApprove #enrollApprove-tb th:nth-child(4){
+    width: 120px;
+}
+#enrollApprove #enrollApprove-tb th:nth-child(5){
+    width: 100px;
+}
+#enrollApprove #enrollApprove-tb th:nth-child(6){
+    width: 90px;
+}
+#enrollApprove #enrollApprove-tb th:nth-child(7){
+    width: 90px;
 }
 
-
-#TechSpptBoard #techSppt-tb .title_a{
+#enrollApprove #enrollApprove-tb .title_a{
 	text-decoration: none;
 	cursor: pointer;
 	color: rgb(70,70,70);
 }
+#enrollApprove #enrollApprove-tb .EMC{
+	color: red;
+}
+#enrollApprove #enrollApprove-tb .IMP{
+	color: salmon;
+}
+#enrollApprove #enrollApprove-tb .NM{
+	color: cornflowerblue;
+}
 
-
-#TechSpptBoard #bottomSpace{
+#enrollApprove #bottomSpace{
 /*    border: 1px solid; border-color: red;*/
     height: auto; width: auto;
 }
-#TechSpptBoard #bottomSpace #navi{
+#enrollApprove #bottomSpace #navi{
 /*    border: 1px solid; border-color: aqua;*/
     height: auto; width: 50%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
-#TechSpptBoard #bottomSpace #navi a,
-#TechSpptBoard #bottomSpace #navi span{
+#enrollApprove #bottomSpace #navi a,
+#enrollApprove #bottomSpace #navi span{
     margin-left: 5px;
     margin-right: 5px;
     vertical-align: middle;
@@ -122,33 +126,14 @@ body{
     color: rgb(70,70,70);
     cursor: pointer;
 }
-#TechSpptBoard #bottomSpace #navi #prev_img,
-#TechSpptBoard #bottomSpace #navi #next_img{
+#enrollApprove #bottomSpace #navi #prev_img,
+#enrollApprove #bottomSpace #navi #next_img{
 	vertical-align: -14.74%;
 }
-#TechSpptBoard #bottomSpace #writeBtn{
-/*    border: 1px solid; border-color: blue;*/
-    height: 35px; width: 60px;
-    font-size: 12px;
-    font-weight: 900;
-    color: black;
-    text-align: center;
-    margin-top: 0px;
-    margin-right: 60px;
-    
-/*    background-color: gainsboro;*/
-    background-color: rgb(0,0,65);
-    border: 0.5px solid; border-color: aliceblue;
-    border-radius: 7px;
-/*    color: dimgray;*/
-    color: white;
-    cursor: pointer;
-    float: right;
-    display: none;
-}
 
 
-#TechSpptBoard #techSppt-tb .assignEng_btn{
+
+#enrollApprove #enrollApprove-tb .detail_btn{
 /*    border: 1px solid; border-color: blue;*/
     height: 22.5px; width: 40px;
     font-size: 12px;
@@ -165,3 +150,21 @@ body{
     color: white;
     cursor: pointer;
 }
+#enrollApprove #enrollApprove-tb .approve_btn{
+/*    border: 1px solid; border-color: blue;*/
+    height: 22.5px; width: 40px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 0px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+}
+

@@ -103,13 +103,19 @@
 		    });
 		    
 		    $('#memberInfoMgr').click(function() {
-		    	$('#mainView').load("/views/mypage/myInfoMgr_content.jsp");
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/mypage/myInfoMgr_content.jsp");
+		    	}
 		    });
 		    $('#progTechSppt').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechSppt_content.jsp");
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/mypage/myTechSppt_content.jsp");
+		    	}
 		    });
 		    $('#myTechShr').click(function() {
-		    	$('#mainView').load("/views/mypage/myTechShare_content.jsp");
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/mypage/myTechShare_content.jsp");
+		    	}
 		    });
 		    
 		    
@@ -123,20 +129,27 @@
 		    	location.href="/views/main/mainpage.jsp?board=TechSh";
 		    });
 		    
+		    $('#joinApprove').click(function() {
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/admin/mgrEnrollMember_content.jsp?currPg="+cp);
+		    	}
+		    });
 		    $('#techSpptEngAssign').click(function() {
-		    	$('#mainView').load("/views/admin/mgrTechSppt_content.jsp?currPg="+cp);
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/admin/mgrTechSppt_content.jsp?currPg="+cp);
+		    	}
 		    });
 		    $('#mainNoticeSet').click(function() {
-		    	$('#mainView').load("/views/admin/mgrNotice_content.jsp?currPg="+cp);
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/admin/mgrNotice_content.jsp?currPg="+cp);
+		    	}
 		    });
-		    /* 
-		    else if(pg=='adminSppt') {
-				$('#mainView').load("/views/admin/mgrTechSppt_content.jsp?currPg="+cp);
-			}
-			else if(pg=='adminNotice') {
-				$('#mainView').load("/views/admin/mgrNotice_content.jsp?currPg="+cp);
-			}
-		     */
+		    $('#totalMemberMgr').click(function() {
+		    	if($(this).parent().hasClass('showMenu')) {
+		    		$('#mainView').load("/views/admin/mgrTotalMember_content.jsp?currPg="+cp);
+		    	}
+		    });
+		    
 		});
 		
 		

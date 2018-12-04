@@ -152,7 +152,7 @@
 	
 	<div id="techSppWrite">
 	    
-	    <span>공지사항</span>
+	    <span>기술 지원 게시물</span>
 	    
 		    <table id="techSpp-tb">
 		    	

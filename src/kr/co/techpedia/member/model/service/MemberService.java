@@ -20,10 +20,10 @@ public class MemberService {
 		return loginMember;
 	}
 	
-	public TpMember getMemberInfo(String memberId) {
+	public TpMember getMemberInfo(int memberNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		TpMember memberInfo = new MemberDao().getMemberInfo(conn, memberId);
+		TpMember memberInfo = new MemberDao().getMemberInfo(conn, memberNo);
 		
 		JDBCTemplate.close(conn);		
 		

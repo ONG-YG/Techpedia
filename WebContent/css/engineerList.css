@@ -6,11 +6,11 @@ div{
 
 html{
 /*    border: 5px solid; border-color: red;*/
-    height: 95%; width: 98%;
-    min-height: 900px;
-    min-width: 620px;
+    height: 90%; width: 98%;
+    min-height: 250px;
+    min-width: 510px;
     background-image: url("../img/v5R405z.jpg");
-    background-position: topcenter;
+    background-position: 50% 20%;
     background-color: black;
     box-sizing: border-box;
 }
@@ -28,7 +28,7 @@ body{
     text-shadow: 3px 3px 5px #16293A;
     
 }
-#content #login-box{
+#content #engineerSelect_div{
 /*    border: 5px dashed; border-color: greenyellow;*/
     height: 100%; width: 100%;
     box-sizing: border-box;
@@ -36,15 +36,16 @@ body{
     align-items: flex-start;
     align-items: center;
 }
-#content #login-box div{
+#content #engineerSelect_div div{
     margin-left: auto;
     margin-right: auto;
 }
-#content #login-box div table{
-    margin-left: 70px;
-    margin-right: 0px;
+#content #engineerSelect_div div table{
+	margin-top: 22%;
+    margin-left: 0px;
+    margin-right: 50px;
 }
-#content #login-box div table th{
+#content #engineerSelect_div div table th{
     width: 110px;
     padding-left: 5px;
     padding-right: 5px;
@@ -54,25 +55,25 @@ body{
                 1px 0 5px #16293A,
                 0 -1px 5px #16293A;
 }
-#content #login-box div table select{
-    height: 25px; width: 170px;
+#content #engineerSelect_div div table select{
+    height: 25px; width: 200px;
     padding: 0px;
     padding-left: 5px;
 }
-#content #login-box div table td:nth-child(2){
-    height: 30px; width: 400px;
+#content #engineerSelect_div div table td:nth-child(2){
+    height: 30px; width: auto;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
-#content #login-box #enroll{
+#content #engineerSelect_div #assign{
 /*    border: 1px solid; border-color: red;*/
     text-align: center;
 }
-#content #login-box #enrollSubmit{
+#content #engineerSelect_div #assignSubmit{
 /*    border: 1px solid; border-color: blue;*/
-    height: 40px; width: 70px;
+    height: 33px; width: 52px;
     font-size: 12px;
     font-weight: 900;
     color: black;

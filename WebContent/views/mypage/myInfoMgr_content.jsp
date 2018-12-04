@@ -12,6 +12,7 @@
 	</script>
 	<%
 		MemberSession memSession = (MemberSession)session.getAttribute("memSession");
+		int memberNo = 0;
 		String memberId = "";
 		//System.out.println("myInfoMgr session check\n"+memSession);/////////////////
 		if(memSession==null) {
@@ -21,6 +22,7 @@
 		</script>
 	<%
 		}else {
+			memberNo = memSession.getMemberNo();
 			memberId = memSession.getMemberId();
 		}
 	%>
@@ -138,10 +140,10 @@
 	    
 	    
 	    function getMemberInfo() {
-	    	var memberId = '<%=memberId%>';
+	    	var memberNo = <%=memberNo%>;
 	    	$.ajax({
 				url : "/getMemberInfo.do",
-				data : {memberId: memberId},
+				data : {memberNo: memberNo},
 				type : "post",
 				success : function(data){
 					//console.log("정상 처리 완료");

@@ -1,27 +1,30 @@
 package kr.co.techpedia.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import kr.co.techpedia.admin.model.service.AdminService;
-import kr.co.techpedia.member.model.vo.MemberSession;
+import kr.co.techpedia.member.model.vo.TpMember;
 
 /**
- * Servlet implementation class UpdateNoticeMainViewServlet
+ * Servlet implementation class GetEngineerListServlet
  */
-@WebServlet(name = "UpdateNoticeMainView", urlPatterns = { "/updateNoticeMainView.do" })
-public class UpdateNoticeMainViewServlet extends HttpServlet {
+@WebServlet(name = "GetEngineerList", urlPatterns = { "/getEngineerList.do" })
+public class GetEngineerListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateNoticeMainViewServlet() {
+    public GetEngineerListServlet() {
         super();
     }
 
@@ -29,31 +32,18 @@ public class UpdateNoticeMainViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(false);
 		
-		try {
-			MemberSession memSession = (MemberSession)session.getAttribute("memSession");
-			
-			if(memSession!=null) {
-				
-				int postNo = Integer.parseInt(request.getParameter("postNo"));
-				
-				int result = new AdminService().updateNoticeMainView(postNo);
-				
-				if(result>0) {
-					response.getWriter().print(true);
-				}else {
-					throw new Exception();
-				}
-				
-			}else {
-				//세션정보가 불완전할 경우 비정상적 접근임을 알리는 페이지로 리다이렉트
-				response.sendRedirect("/views/admin/sessionNullError.jsp");
-			}
-			
-		} catch (Exception e) {
+		ArrayList<TpMember> engineerList = new AdminService().getEngineerList();
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		
+		if(!engineerList.isEmpty()) {
+			new Gson().toJson(engineerList, response.getWriter());
+		}
+		else {
 			response.getWriter().print(false);
 		}
 		

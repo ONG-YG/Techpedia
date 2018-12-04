@@ -36,6 +36,10 @@
 				var memberNo = <%=memberNo%>;
 				var compNo = <%=compNo%>;
 				var currPg = <%=currPg%>;
+				if(memberTypeCD!='HP_AD' && memberTypeCD!='MNFE_AD') {
+					alert("관리자만 사용가능한 기능입니다.");
+					location.href="/index.jsp";
+				}
 			</script>
 	<%
 			}else {			
@@ -59,24 +63,22 @@
 	<script>
 	$(document).ready(function(){
     	
-		techSpptBoardList();
+		if(memberTypeCD=='HP_AD' || memberTypeCD=='MNFE_AD') {
+			techSpptBoardList();
+		}
 		
-    	
+		
     });//$(document).ready END
     
     function move(pageNo){
     	currPg = pageNo;
     	techSpptBoardList();
     }
-
-    function writePost(){
-    	location.href="/writePost.do";
-    }
     
     function techSpptBoardList(){
 		
        	$.ajax({
-				url : "/techSupportBoardList.do",
+				url : "/engAutoList.do",
 				data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg},
 				type : "post",
 				success : function(data){
@@ -97,8 +99,7 @@
 										data.techSupportPostL[i].spptTitle,
 										data.techSupportPostL[i].spptWriterName,
 										engName,
-										data.techSupportPostL[i].spptDate,
-										data.techSupportPostL[i].spptCnt];
+										data.techSupportPostL[i].spptDate];
 							techSpPostList.push(post);
 						}
 						
@@ -107,7 +108,7 @@
 						for(var i=0; i<techSpPostList.length; i++) {
 							
 							var button = "<button class='assignEng_btn' "
-										+"onclick='assignEng();'>설정</button>";
+										+"onclick='assignEng("+techSpPostList[i][0]+");'>설정</button>";
 								
 							postL += " <tr> "
 										+"<td>"+techSpPostList[i][0]+"</td> "
@@ -126,7 +127,16 @@
 						$('#navi').html(data.pageNavi);
 					}
 					else {
-						//alert("담당 중인 기술 지원 게시물이 존재하지 않습니다.");
+						var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span><img src='' id='next_img' width='20px'></span>";
+						$('#techSppt-tb tbody').html('');
+						$('#navi').html(emptyPageNavi);
+						alert("엔지니어가 자동으로 배정된 기술 지원 게시글이 존재하지 않습니다.");
 						//location.href = "/views/main/mainpage.jsp";
 					} 
 				},
@@ -142,34 +152,9 @@
 			});
     }//function END
     
-    function assignEng(){
-    	/* 
-       	$.ajax({
-			url : "/assignTechSppEng.do",
-			data : {postNo: postNo},
-			type : "post",
-			success : function(data){
-				//console.log("정상 처리 완료");
-				//alert("success");
-				//console.log(data);////////////////////
-				if(data) {
-					alert("성공적으로 기술 지원 담당 엔지니어 배정을 완료했습니다.");
-					techSpptBoardList();
-				}
-				else {
-					alert("처리 도중 오류가 발생했습니다.");
-				} 
-			},
-			error : function(){
-				//console.log("ajax 통신 에러");
-				alert("처리 도중 오류가 발생했습니다.");
-			},
-			complete : function(){
-				//alert("complete");
-			}
-		});
-       	 */
-       	
+    function assignEng(postNo){
+    	window.open("/views/admin/engineerList.jsp?postNo="+postNo,
+    				"_blank", "width=520,height=300");
     }//function END
     
     

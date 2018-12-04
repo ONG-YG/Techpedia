@@ -38,19 +38,20 @@ public class AssignTechSppEngServlet extends HttpServlet {
 			
 			if(memSession!=null) {
 				
+				int engNo = Integer.parseInt(request.getParameter("engNo"));
 				int postNo = Integer.parseInt(request.getParameter("postNo"));
-				/*
-				int result = new AdminService().assignTechSppEng(postNo);
+				
+				int result = new AdminService().assignTechSppEng(engNo, postNo);
 				
 				if(result>0) {
 					response.getWriter().print(true);
 				}else {
 					throw new Exception();
 				}
-				*/
+				
 			}else {
 				//세션정보가 불완전할 경우 비정상적 접근임을 알리는 페이지로 리다이렉트
-				response.sendRedirect("/views/board/writeError.jsp");
+				response.sendRedirect("/views/admin/sessionNullError.jsp");
 			}
 			
 		} catch (Exception e) {

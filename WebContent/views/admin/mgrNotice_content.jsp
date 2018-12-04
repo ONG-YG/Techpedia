@@ -33,6 +33,10 @@
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var currPg = <%=currPg%>;
+				if(memberTypeCD!='HP_AD' && memberTypeCD!='MNFE_AD') {
+					alert("관리자만 사용가능한 기능입니다.");
+					location.href="/index.jsp";
+				}
 			</script>
 	<%
 			}else {			
@@ -56,7 +60,9 @@
 	<script>
 	    $(document).ready(function(){
 	    	
-	    	noticeBoardList();
+	    	if(memberTypeCD=='HP_AD' || memberTypeCD=='MNFE_AD') {
+	    		noticeBoardList();
+	    	}
 	    	
 	    	if(memberTypeCD!='COP') {
 	    		$('#writeBtn').css('display','block');
@@ -67,10 +73,6 @@
 	    function move(pageNo){
 	    	currPg = pageNo;
 	    	noticeBoardList();
-	    }
-
-	    function writePost(){
-	    	location.href="/writePost.do";
 	    }
 	    
         function noticeBoardList(){
@@ -93,7 +95,7 @@
 										data.noticeList[i].ntcDate,
 										data.noticeList[i].ntcCnt,
 										data.noticeList[i].ntcGradeCD,
-										data.noticeList[i].ntcMainview,];
+										data.noticeList[i].ntcMainview];
 							noticeList.push(post);
 						}
 						
@@ -124,7 +126,15 @@
 						$('#navi').html(data.pageNavi);
    					}
    					else {
-   						//alert("작성한 기술 공유 게시물이 존재하지 않습니다.");
+						var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span></span>"
+							                +"<span><img src='' id='next_img' width='20px'></span>";
+						$('#notice-tb tbody').html('');
+						$('#navi').html(emptyPageNavi);
 						//location.href = "/views/main/mainpage.jsp";
    					} 
    				},
