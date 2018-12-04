@@ -15,6 +15,7 @@ public class TpMember {
 	private String compName;
 	private String companyMemNo;
 	private char memberActive;
+	private int memberDelNo;
 	private String memberPhoto;
 	private String enrollDate;
 	private String approvalDate;
@@ -25,8 +26,8 @@ public class TpMember {
 	}
 	public TpMember(int memberNo, String memberId, String memberPw, String memberName, String memberPrivatePhone,
 			String memberCompanyPhone, String memberEmail, String memberTypeCD, String memberTypeName, int compNo,
-			String compName, String companyMemNo, char memberActive, String memberPhoto, String enrollDate,
-			String approvalDate) {
+			String compName, String companyMemNo, char memberActive, int memberDelNo, String memberPhoto,
+			String enrollDate, String approvalDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -41,6 +42,7 @@ public class TpMember {
 		this.compName = compName;
 		this.companyMemNo = companyMemNo;
 		this.memberActive = memberActive;
+		this.memberDelNo = memberDelNo;
 		this.memberPhoto = memberPhoto;
 		this.enrollDate = enrollDate;
 		this.approvalDate = approvalDate;
@@ -125,6 +127,12 @@ public class TpMember {
 	public void setMemberActive(char memberActive) {
 		this.memberActive = memberActive;
 	}
+	public int getMemberDelNo() {
+		return memberDelNo;
+	}
+	public void setMemberDelNo(int memberDelNo) {
+		this.memberDelNo = memberDelNo;
+	}
 	public String getMemberPhoto() {
 		return memberPhoto;
 	}
@@ -146,7 +154,6 @@ public class TpMember {
 	
 	
 	
-	
 	@Override
 	public String toString() {
 		String memberInfo = "-----------------------------------------------\n"
@@ -163,6 +170,7 @@ public class TpMember {
 							+"compName : "+compName+"\n"
 							+"companyMemNo : "+companyMemNo+"\n"
 							+"memberActive : "+memberActive+"\n"
+							+"memberDelNo : "+memberDelNo+"\n"
 							+"memberPhoto : "+memberPhoto+"\n"
 							+"enrollDate : "+enrollDate+"\n"
 							+"approvalDate : "+approvalDate+"\n"

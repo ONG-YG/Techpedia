@@ -32,8 +32,8 @@
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var currPg = <%=currPg%>;
-				if(memberTypeCD!='HP_AD' && memberTypeCD!='MNFE_AD') {
-					alert("관리자만 사용가능한 기능입니다.");
+				if(memberTypeCD!='HP_AD') {
+					alert("홈페이지 관리자만 사용가능한 기능입니다.");
 					location.href="/index.jsp";
 				}
 			</script>
@@ -59,20 +59,20 @@
 	<script>
 	    $(document).ready(function(){
 	    	
-	    	if(memberTypeCD=='HP_AD' || memberTypeCD=='MNFE_AD') {
-	    		enrollMemberList();
+	    	if(memberTypeCD=='HP_AD') {
+	    		totalMemberList();
 	    	}
 	    	
 	    });//$(document).ready END
         
 	    function move(pageNo){
 	    	currPg = pageNo;
-	    	enrollMemberList();
+	    	totalMemberList();
 	    }
 	    
-        function enrollMemberList(){
+        function totalMemberList(){
            	$.ajax({
-   				url : "/enrollMemberList.do",
+   				url : "/totalMemberList.do",
    				data : {currPg: currPg},
    				type : "post",
    				success : function(data){
@@ -82,23 +82,23 @@
    					
    					if(data) {
    						memberList = [];
-						for(var i=0; i<data.enrollMemberL.length; i++) {
-							var post = [data.enrollMemberL[i].memberTypeName,
-										data.enrollMemberL[i].compName,
-										data.enrollMemberL[i].companyMemNo,
-										data.enrollMemberL[i].memberName,
-										data.enrollMemberL[i].enrollDate,
-										data.enrollMemberL[i].memberNo];
+						for(var i=0; i<data.memberList.length; i++) {
+							var post = [data.memberList[i].memberTypeName,
+										data.memberList[i].compName,
+										data.memberList[i].companyMemNo,
+										data.memberList[i].memberName,
+										data.memberList[i].enrollDate,
+										data.memberList[i].memberNo];
 							memberList.push(post);
 						}
 						
-						//var postL = $('#enrollApprove-tb tbody').html();
+						//var postL = $('#totalMember-tb tbody').html();
 						var postL = '';
 						for(var i=0; i<memberList.length; i++) {
 							var detail_btn = "<button class='detail_btn' "
 											+"onclick='viewMemberInfo("+memberList[i][5]+");'>보기</button>";
-							var approve_btn = "<button class='approve_btn' "
-												+"onclick='setApprove("+memberList[i][5]+");'>설정</button>";
+							var delete_btn = "<button class='delete_btn' "
+												+"onclick='deleteMember("+memberList[i][5]+");'>설정</button>";
 							postL += " <tr> "
 										+"<td>"+memberList[i][0]+"</td> "
 										+"<td>"+memberList[i][1]+"</td> "
@@ -106,10 +106,10 @@
 										+"<td>"+memberList[i][3]+"</td> "
 										+"<td>"+memberList[i][4]+"</td> "
 										+"<td>"+detail_btn+"</td> "
-										+"<td>"+approve_btn+"</td> "
+										+"<td>"+delete_btn+"</td> "
 									+"</tr> ";
 						}
-						$('#enrollApprove-tb tbody').html(postL);
+						$('#totalMember-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);
    					}
    					else {
@@ -120,7 +120,7 @@
 							                +"<span></span>"
 							                +"<span></span>"
 							                +"<span><img src='' id='next_img' width='20px'></span>";
-						$('#enrollApprove-tb tbody').html('');
+						$('#totalMember-tb tbody').html('');
 						$('#navi').html(emptyPageNavi);
 						//location.href = "/views/main/mainpage.jsp";
    					} 
@@ -144,8 +144,8 @@
         	
         }//function END
         
-        function setApprove(memberNo){
-        	
+        function deleteMember(memberNo){
+        	/* 
            	$.ajax({
    				url : "/approveMemberJoin.do",
    				data : {memberNo: memberNo},
@@ -155,8 +155,8 @@
    					//alert("success");
    					//console.log(data);////////////////////
    					if(data) {
-   						alert("성공적으로 가입 승인 처리를 완료했습니다.");
-   						enrollMemberList();
+   						alert("성공적으로 탈퇴 처리를 완료했습니다.");
+   						totalMemberList();
    					}
    					else {
    						alert("처리 도중 오류가 발생했습니다.");
@@ -170,18 +170,18 @@
    					//alert("complete");
    				}
    			});
-        	
+        	 */
         }//function END
     </script>
 </head>
 <body>
 	
-	<div id="enrollApprove">
+	<div id="totalMember">
 	    
 	    <span>전체 회원 목록</span>
 	    
 	    <div id="tableDiv">
-		    <table id="enrollApprove-tb">
+		    <table id="totalMember-tb">
 		    	<thead>
 			        <tr>
 		                <th>회원구분</th>
@@ -190,7 +190,7 @@
 		                <th>신청자이름</th>
 		                <th>가입신청일</th>
 		                <th>상세정보</th>
-		                <th>승인/거절</th>
+		                <th>탈퇴</th>
 			        </tr>
 	            </thead>
 	            

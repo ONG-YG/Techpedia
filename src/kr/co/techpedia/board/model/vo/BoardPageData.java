@@ -8,7 +8,7 @@ public class BoardPageData {
 	private ArrayList<Notice> noticeList;
 	private ArrayList<TechSharePost> techSharePostL;
 	private ArrayList<TechSupportPost> techSupportPostL;
-	private ArrayList<TpMember> enrollMemberL;
+	private ArrayList<TpMember> memberList;
 	private String pageNavi;
 	
 	
@@ -16,12 +16,12 @@ public class BoardPageData {
 		super();
 	}
 	public BoardPageData(ArrayList<Notice> noticeList, ArrayList<TechSharePost> techSharePostL,
-			ArrayList<TechSupportPost> techSupportPostL, ArrayList<TpMember> enrollMemberL, String pageNavi) {
+			ArrayList<TechSupportPost> techSupportPostL, ArrayList<TpMember> memberList, String pageNavi) {
 		super();
 		this.noticeList = noticeList;
 		this.techSharePostL = techSharePostL;
 		this.techSupportPostL = techSupportPostL;
-		this.enrollMemberL = enrollMemberL;
+		this.memberList = memberList;
 		this.pageNavi = pageNavi;
 	}
 	
@@ -50,11 +50,11 @@ public class BoardPageData {
 	public void setPageNavi(String pageNavi) {
 		this.pageNavi = pageNavi;
 	}
-	public ArrayList<TpMember> getEnrollMemberL() {
-		return enrollMemberL;
+	public ArrayList<TpMember> getMemberList() {
+		return memberList;
 	}
-	public void setEnrollMemberL(ArrayList<TpMember> enrollMemberL) {
-		this.enrollMemberL = enrollMemberL;
+	public void setMemberList(ArrayList<TpMember> memberList) {
+		this.memberList = memberList;
 	}
 	
 	
@@ -65,6 +65,7 @@ public class BoardPageData {
 							+"noticeList \n"+noticeList+"\n\n"
 							+"techSharePostL \n"+techSharePostL+"\n\n"
 							+"techSupportPostL \n"+techSupportPostL+"\n\n"
+							+"memberList \n"+memberList+"\n\n"
 							+"pageNavi : "+pageNavi+"\n"
 							+"-----------------------------------------------\n";
 		

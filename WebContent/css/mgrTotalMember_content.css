@@ -8,7 +8,7 @@ body{
     background-color: black;
 }
 */
-#enrollApprove{
+#totalMember{
 /*
 	border: 5px dashed; border-color: gainsboro;
     background-color: rgb(255,255,255,0.86);
@@ -17,7 +17,7 @@ body{
     text-shadow: none;
 }
 
-#enrollApprove>span{
+#totalMember>span{
     display: block;
     text-align: center;
     margin-top: 40px;
@@ -29,14 +29,14 @@ body{
     
 }
 
-#enrollApprove #tableDiv{
+#totalMember #tableDiv{
 	height: 410px; width: 910px;
 	box-sizing: border-box;
 	margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
 }
-#enrollApprove #enrollApprove-tb{
+#totalMember #totalMember-tb{
 /*    border-color: transparent;*/
     border-spacing: 0px;
     /*
@@ -48,7 +48,7 @@ body{
     text-align: center;
 }
 
-#enrollApprove #enrollApprove-tb tr:first-child th{
+#totalMember #totalMember-tb tr:first-child th{
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-color: gray;
@@ -59,7 +59,7 @@ body{
     text-shadow: -1px -1px 2px transparent,
                 1px 1px 2px rgb(220,220,220);
 }
-#enrollApprove #enrollApprove-tb tr td{
+#totalMember #totalMember-tb tr td{
     border-bottom: 1px solid;
     border-color: gray;
     height: 34px;
@@ -69,56 +69,56 @@ body{
 }
 
 
-#enrollApprove #enrollApprove-tb th:nth-child(1){
+#totalMember #totalMember-tb th:nth-child(1){
     width: 180px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(2){
+#totalMember #totalMember-tb th:nth-child(2){
     width: 220px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(3){
+#totalMember #totalMember-tb th:nth-child(3){
     width: 100px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(4){
+#totalMember #totalMember-tb th:nth-child(4){
     width: 120px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(5){
+#totalMember #totalMember-tb th:nth-child(5){
     width: 100px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(6){
+#totalMember #totalMember-tb th:nth-child(6){
     width: 90px;
 }
-#enrollApprove #enrollApprove-tb th:nth-child(7){
+#totalMember #totalMember-tb th:nth-child(7){
     width: 90px;
 }
 
-#enrollApprove #enrollApprove-tb .title_a{
+#totalMember #totalMember-tb .title_a{
 	text-decoration: none;
 	cursor: pointer;
 	color: rgb(70,70,70);
 }
-#enrollApprove #enrollApprove-tb .EMC{
+#totalMember #totalMember-tb .EMC{
 	color: red;
 }
-#enrollApprove #enrollApprove-tb .IMP{
+#totalMember #totalMember-tb .IMP{
 	color: salmon;
 }
-#enrollApprove #enrollApprove-tb .NM{
+#totalMember #totalMember-tb .NM{
 	color: cornflowerblue;
 }
 
-#enrollApprove #bottomSpace{
+#totalMember #bottomSpace{
 /*    border: 1px solid; border-color: red;*/
     height: auto; width: auto;
 }
-#enrollApprove #bottomSpace #navi{
+#totalMember #bottomSpace #navi{
 /*    border: 1px solid; border-color: aqua;*/
     height: auto; width: 50%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
-#enrollApprove #bottomSpace #navi a,
-#enrollApprove #bottomSpace #navi span{
+#totalMember #bottomSpace #navi a,
+#totalMember #bottomSpace #navi span{
     margin-left: 5px;
     margin-right: 5px;
     vertical-align: middle;
@@ -126,14 +126,14 @@ body{
     color: rgb(70,70,70);
     cursor: pointer;
 }
-#enrollApprove #bottomSpace #navi #prev_img,
-#enrollApprove #bottomSpace #navi #next_img{
+#totalMember #bottomSpace #navi #prev_img,
+#totalMember #bottomSpace #navi #next_img{
 	vertical-align: -14.74%;
 }
 
 
 
-#enrollApprove #enrollApprove-tb .detail_btn{
+#totalMember #totalMember-tb .detail_btn{
 /*    border: 1px solid; border-color: blue;*/
     height: 22.5px; width: 40px;
     font-size: 12px;
@@ -150,7 +150,7 @@ body{
     color: white;
     cursor: pointer;
 }
-#enrollApprove #enrollApprove-tb .approve_btn{
+#totalMember #totalMember-tb .delete_btn{
 /*    border: 1px solid; border-color: blue;*/
     height: 22.5px; width: 40px;
     font-size: 12px;

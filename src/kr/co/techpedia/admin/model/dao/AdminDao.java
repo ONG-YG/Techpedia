@@ -180,6 +180,9 @@ public class AdminDao {
 		else if(board.equals("EnrollMember")) {
 			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TP_MEMBER WHERE MEMBER_ACTIVE='N' AND MEMBER_DELNO IS NULL";
 		}
+		else if(board.equals("totalMember")) {
+			query = "SELECT COUNT(*) AS TOTALCOUNT FROM TP_MEMBER";
+		}
 		
 		//System.out.println(query);////////////////
 		
@@ -367,6 +370,68 @@ public class AdminDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<TpMember> totalMemberList(Connection conn, int currPg, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<TpMember> totalMemberL = new ArrayList<>();
+		
+		//시작 게시물 계산
+		int start = currPg * recordCountPerPage - (recordCountPerPage-1);
+		//끝 게시물 계산
+		int end = currPg * recordCountPerPage;
+		
+		String query = "SELECT * FROM "
+							+ "(SELECT TP_MEMBER.*, "
+								+ "MEMBER_TYPENAME, "
+								+ "COMP_NAME, "
+								+ "ROW_NUMBER() OVER(ORDER BY ENROLL_DATE ASC) AS R_NUM "
+								+ "FROM TP_MEMBER "
+								+ "JOIN MEM_TYPE ON(MEM_TYPE.MEMBER_TYPECD = TP_MEMBER.MEMBER_TYPECD) "
+								+ "JOIN COMPANY_L ON(COMPANY_L.COMP_NO = TP_MEMBER.COMP_NO) "
+								+ ") "
+							+ "WHERE R_NUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				TpMember memberInfo = new TpMember();
+				
+				memberInfo.setMemberNo(rset.getInt("MEMBER_NO"));
+				//memberInfo.setMemberId(rset.getString("MEMBER_ID"));
+				//memberInfo.setMemberPw(rset.getString("MEMBER_PW"));
+				memberInfo.setMemberName(rset.getString("MEMBER_NAME"));
+				//memberInfo.setMemberPrivatePhone(rset.getString("MEMBER_P_PHONE"));
+				//memberInfo.setMemberCompanyPhone(rset.getString("MEMBER_C_PHONE"));
+				//memberInfo.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				//memberInfo.setMemberTypeCD(rset.getString("MEMBER_TYPECD"));
+				memberInfo.setMemberTypeName(rset.getString("MEMBER_TYPENAME"));
+				//memberInfo.setCompNo(rset.getInt("COMP_NO"));
+				memberInfo.setCompName(rset.getString("COMP_NAME"));
+				memberInfo.setCompanyMemNo(rset.getString("COMPANY_MEMNO"));
+				memberInfo.setMemberActive(rset.getString("MEMBER_ACTIVE").charAt(0));
+				memberInfo.setMemberDelNo(rset.getInt("MEMBER_DELNO"));
+				//memberInfo.setMemberPhoto(rset.getString("MEMBER_PHOTO"));
+				memberInfo.setEnrollDate(rset.getDate("ENROLL_DATE").toString());
+				
+				totalMemberL.add(memberInfo);
+				
+				//System.out.println("dao TpMember check\n"+post);//////////////
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return totalMemberL;
 	}
 	
 	

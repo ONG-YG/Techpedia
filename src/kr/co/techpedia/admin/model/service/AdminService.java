@@ -100,7 +100,7 @@ public class AdminService {
 		BoardPageData pd = null;
 		if(!enrollMemberL.isEmpty() && !pageNavi.isEmpty()) {
 			pd = new BoardPageData();
-			pd.setEnrollMemberL(enrollMemberL);
+			pd.setMemberList(enrollMemberL);
 			pd.setPageNavi(pageNavi);
 		}
 		
@@ -123,6 +123,32 @@ public class AdminService {
 		JDBCTemplate.close(conn);
 		
 		return result;
+	}
+
+	public BoardPageData totalMemberList(int currPg) {
+		Connection conn = JDBCTemplate.getConnection();
+
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<TpMember> totalMemberL
+			= new AdminDao().totalMemberList(conn, currPg, recordCountPerPage);
+		String pageNavi = new AdminDao().getPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"totalMember");
+		
+		BoardPageData pd = null;
+		if(!totalMemberL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setMemberList(totalMemberL);
+			pd.setPageNavi(pageNavi);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return pd;
 	}
 	
 }

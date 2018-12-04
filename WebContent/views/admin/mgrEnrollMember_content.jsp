@@ -82,13 +82,13 @@
    					
    					if(data) {
    						memberList = [];
-						for(var i=0; i<data.enrollMemberL.length; i++) {
-							var post = [data.enrollMemberL[i].memberTypeName,
-										data.enrollMemberL[i].compName,
-										data.enrollMemberL[i].companyMemNo,
-										data.enrollMemberL[i].memberName,
-										data.enrollMemberL[i].enrollDate,
-										data.enrollMemberL[i].memberNo];
+						for(var i=0; i<data.memberList.length; i++) {
+							var post = [data.memberList[i].memberTypeName,
+										data.memberList[i].compName,
+										data.memberList[i].companyMemNo,
+										data.memberList[i].memberName,
+										data.memberList[i].enrollDate,
+										data.memberList[i].memberNo];
 							memberList.push(post);
 						}
 						
