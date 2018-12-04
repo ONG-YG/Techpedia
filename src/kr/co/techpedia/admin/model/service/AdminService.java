@@ -150,5 +150,37 @@ public class AdminService {
 		
 		return pd;
 	}
+
+	public int rejectMemberJoin(int memberNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new AdminDao().rejectMemberJoin(conn, memberNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int setDeletedMember(int memberNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new AdminDao().setDeletedMember(conn, memberNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 	
 }

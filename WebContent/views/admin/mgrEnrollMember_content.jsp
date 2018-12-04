@@ -98,7 +98,9 @@
 							var detail_btn = "<button class='detail_btn' "
 											+"onclick='viewMemberInfo("+memberList[i][5]+");'>보기</button>";
 							var approve_btn = "<button class='approve_btn' "
-												+"onclick='setApprove("+memberList[i][5]+");'>설정</button>";
+												+"onclick='approve("+memberList[i][5]+");'>승인</button>";
+							var reject_btn = "<button class='reject_btn' "
+												+"onclick='reject("+memberList[i][5]+");'>거절</button>";
 							postL += " <tr> "
 										+"<td>"+memberList[i][0]+"</td> "
 										+"<td>"+memberList[i][1]+"</td> "
@@ -106,7 +108,7 @@
 										+"<td>"+memberList[i][3]+"</td> "
 										+"<td>"+memberList[i][4]+"</td> "
 										+"<td>"+detail_btn+"</td> "
-										+"<td>"+approve_btn+"</td> "
+										+"<td>"+approve_btn+reject_btn+"</td> "
 									+"</tr> ";
 						}
 						$('#enrollApprove-tb tbody').html(postL);
@@ -144,7 +146,7 @@
         	
         }//function END
         
-        function setApprove(memberNo){
+        function approve(memberNo){
         	
            	$.ajax({
    				url : "/approveMemberJoin.do",
@@ -172,6 +174,36 @@
    			});
         	
         }//function END
+        
+        function reject(memberNo){
+        	
+           	$.ajax({
+   				url : "/rejectMemberJoin.do",
+   				data : {memberNo: memberNo},
+   				type : "post",
+   				success : function(data){
+   					//console.log("정상 처리 완료");
+   					//alert("success");
+   					//console.log(data);////////////////////
+   					if(data) {
+   						alert("성공적으로 가입 거절 처리를 완료했습니다.");
+   						enrollMemberList();
+   					}
+   					else {
+   						alert("처리 도중 오류가 발생했습니다.");
+   					} 
+   				},
+   				error : function(){
+   					//console.log("ajax 통신 에러");
+   					alert("처리 도중 오류가 발생했습니다.");
+   				},
+   				complete : function(){
+   					//alert("complete");
+   				}
+   			});
+        	
+        }//function END
+        
     </script>
 </head>
 <body>

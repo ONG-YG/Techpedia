@@ -12,16 +12,16 @@ import kr.co.techpedia.admin.model.service.AdminService;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class UpdateNoticeMainViewServlet
+ * Servlet implementation class RejectMemberJoinServlet
  */
-@WebServlet(name = "UpdateNoticeMainView", urlPatterns = { "/updateNoticeMainView.do" })
-public class UpdateNoticeMainViewServlet extends HttpServlet {
+@WebServlet(name = "RejectMemberJoin", urlPatterns = { "/rejectMemberJoin.do" })
+public class RejectMemberJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateNoticeMainViewServlet() {
+    public RejectMemberJoinServlet() {
         super();
     }
 
@@ -38,9 +38,9 @@ public class UpdateNoticeMainViewServlet extends HttpServlet {
 			
 			if(memSession!=null) {
 				
-				int postNo = Integer.parseInt(request.getParameter("postNo"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 				
-				int result = new AdminService().updateNoticeMainView(postNo);
+				int result = new AdminService().rejectMemberJoin(memberNo);
 				
 				if(result>0) {
 					response.getWriter().print(true);

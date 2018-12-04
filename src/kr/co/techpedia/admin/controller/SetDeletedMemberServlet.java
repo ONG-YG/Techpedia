@@ -12,16 +12,16 @@ import kr.co.techpedia.admin.model.service.AdminService;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class UpdateNoticeMainViewServlet
+ * Servlet implementation class DeleteMemberServlet
  */
-@WebServlet(name = "UpdateNoticeMainView", urlPatterns = { "/updateNoticeMainView.do" })
-public class UpdateNoticeMainViewServlet extends HttpServlet {
+@WebServlet(name = "SetDeletedMember", urlPatterns = { "/setDeletedMember.do" })
+public class SetDeletedMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateNoticeMainViewServlet() {
+    public SetDeletedMemberServlet() {
         super();
     }
 
@@ -38,9 +38,9 @@ public class UpdateNoticeMainViewServlet extends HttpServlet {
 			
 			if(memSession!=null) {
 				
-				int postNo = Integer.parseInt(request.getParameter("postNo"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 				
-				int result = new AdminService().updateNoticeMainView(postNo);
+				int result = new AdminService().setDeletedMember(memberNo);
 				
 				if(result>0) {
 					response.getWriter().print(true);

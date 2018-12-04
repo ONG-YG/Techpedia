@@ -88,7 +88,9 @@
 										data.memberList[i].companyMemNo,
 										data.memberList[i].memberName,
 										data.memberList[i].enrollDate,
-										data.memberList[i].memberNo];
+										data.memberList[i].memberNo,
+										data.memberList[i].memberActive,
+										data.memberList[i].memberDelNo];
 							memberList.push(post);
 						}
 						
@@ -98,7 +100,12 @@
 							var detail_btn = "<button class='detail_btn' "
 											+"onclick='viewMemberInfo("+memberList[i][5]+");'>보기</button>";
 							var delete_btn = "<button class='delete_btn' "
-												+"onclick='deleteMember("+memberList[i][5]+");'>설정</button>";
+												+"onclick='setDeletedMember("+memberList[i][5]+");'>설정</button>";
+							if(memberList[i][6]=='N'
+							&& memberList[i][7]!=null) {
+								delete_btn = "<button class='alreadyDeleted_btn' "
+												+"onclick='alreadyDeleted();'>설정</button>";
+							}
 							postL += " <tr> "
 										+"<td>"+memberList[i][0]+"</td> "
 										+"<td>"+memberList[i][1]+"</td> "
@@ -144,10 +151,14 @@
         	
         }//function END
         
-        function deleteMember(memberNo){
-        	/* 
+        function alreadyDeleted(){
+        	alert("이미 탈퇴한 상태의 회원입니다.");
+        }
+        
+        function setDeletedMember(memberNo){
+        	
            	$.ajax({
-   				url : "/approveMemberJoin.do",
+   				url : "/setDeletedMember.do",
    				data : {memberNo: memberNo},
    				type : "post",
    				success : function(data){
@@ -170,7 +181,7 @@
    					//alert("complete");
    				}
    			});
-        	 */
+        	
         }//function END
     </script>
 </head>

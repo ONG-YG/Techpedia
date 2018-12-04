@@ -22,8 +22,22 @@
 		</script>
 	<%
 		}else {
-			memberId = memSession.getMemberId();
-			memberNo = Integer.parseInt( request.getParameter("mem") );
+			String memberTypeCD = memSession.getMemberTypeCD();
+			if(memberTypeCD.equals("HP_AD")
+					|| memberTypeCD.equals("MNFE_AD")) {
+				String mem = request.getParameter("mem");
+				if(mem!=null){
+					memberNo = Integer.parseInt(mem);
+				}
+				else response.sendRedirect("/views/admin/abnormalAccess.jsp");
+			}else {
+				%>
+				<script>
+				alert("관리자만 사용가능한 기능입니다.");
+				location.href="/index.jsp";
+				</script>
+				<%
+			}
 		}
 	%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
