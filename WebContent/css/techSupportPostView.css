@@ -8,7 +8,7 @@ body{
     background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
     background-position: topcenter;
     background-color: black;
-*/ 
+*/
 }
 #techSppWrite{
 /*
@@ -201,6 +201,173 @@ body{
 
 
 
+
+
+#commentWrite_tb *{
+    box-sizing: border-box;
+/*    border: 1px dashed; border-color: rebeccapurple;*/
+}
+#commentWrite_tb{
+/*    border-color: transparent;*/
+    margin-left: auto;
+    margin-right: auto;
+    height: auto; width: 700px;
+    margin-top: 10px;
+    border-spacing: 0px;
+    text-align: center;
+}
+#commentWrite_tb #sppStatSelect_th{
+    height: auto;
+    padding-bottom: 5px;
+}
+#commentWrite_tb #sppStatSelect_td{
+    height: auto;
+    text-align: left;
+    padding-left: 15px;
+    padding-bottom: 5px;
+}
+#commentWrite_tb #sppStatSelect{
+    height: 25px; width: 160px;
+    align-items: baseline;
+}
+#commentWrite_tb #cmmWrite_td{
+    height: 60px;
+}
+#commentWrite_tb th{
+    width: 120px;
+    color: darkslategrey;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: right;
+    padding-right: 20px;
+}
+#commentWrite_tb #cmmWrite_td{
+/*    border: 1px dashed; border-color: blue;*/
+    width: 465px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 0px;
+    font-size: 15px;
+    color: darkslategrey;
+    text-shadow: none;
+}
+#commentWrite_tb #cmmWrite_td textarea{
+    height: 100%; width: 100%;
+    resize: none;
+}
+#commentWrite_tb #cmmWrite_btn_td{
+    height: 100%;
+    width: 115px;
+    padding-left: 10px;
+    text-align: left;
+}
+#commentWrite_tb #cmmWrite_btn_td button{
+    height: 60px; width: 70px;
+    /*    border: 1px solid; border-color: blue;*/
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin: 0px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+#commentView_tb *{
+    box-sizing: border-box;
+}
+#commentView_tb{
+/*    border-color: transparent;*/
+    margin-left: auto;
+    margin-right: auto;
+    height: auto; width: 700px;
+    margin-top: 10px;
+    border-spacing: 0px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#commentView_tb th{
+    height: 40px;
+    width: 120px;
+    color: darkslategrey;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+}
+
+#commentView_tb tbody tr:first-child td{
+    border-top: 2px solid;
+    border-color: darkgray;
+}
+#commentView_tb tbody td{
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: darkgray;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+#commentView_tb tbody td,
+#commentView_tb .cmmContent textarea{
+    font-size: 14px;
+    font-family: '맑은고딕';
+}
+#commentView_tb .cmmContent{
+/*    border: 1px dashed; border-color: blue;*/
+    width: 465px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 0px;
+    color: darkslategrey;
+    text-shadow: none;
+}
+#commentView_tb .cmmContent textarea{
+    border: none;
+    /* border: 1px dashed red; */
+    height: 50px; width: 100%;
+    resize: none;
+    background-color: transparent;
+    vertical-align: middle;
+    word-break: break-all;
+}
+
+
+
+
+.rewriteCmm,
+.deleteCmm,
+.reInsert{
+/*    border: 1px solid; border-color: blue;*/
+    height: 22px; width: 40px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+    
+	float: right;
+	margin-left: 5px;
+}
 
 
 

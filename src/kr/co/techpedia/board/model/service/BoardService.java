@@ -456,4 +456,41 @@ public class BoardService {
 		
 		return result;
 	}
+
+	public int insertAnswerCmm(String sppStatSelect, String comment, int memberNo, int postNo, String boardCD) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int stat_result = new BoardDao().updateSpptState(conn, postNo, sppStatSelect);
+		int cmm_result = new BoardDao().insertComment(conn, comment, memberNo, postNo, boardCD);
+		
+		if(stat_result>0 && cmm_result>0) result = 1;
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int setTechSpptEngck(int postNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().setTechSpptEngck(conn, postNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
 }

@@ -82,30 +82,24 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						techShPostList = [];
+   						//techShPostList = [];
+   						var postL = '';
 						for(var i=0; i<data.techSharePostL.length; i++) {
-							var post = [data.techSharePostL[i].postNo,
-										data.techSharePostL[i].shrTitle,
-										data.techSharePostL[i].shrWriterName,
-										data.techSharePostL[i].shrDate,
-										data.techSharePostL[i].shrCnt];
-							techShPostList.push(post);
+							var cmmCnt = data.techSharePostL[i].cmmCnt;
+							var cmmCnt_span = "<span class='cmmCnt'></span>";
+							if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
+							postL += " <tr> "
+										+"<td>"+data.techSharePostL[i].postNo+"</td> "
+										+"<td>"
+										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechShR&currPg="+currPg+"&postNo="+data.techSharePostL[i].postNo+"'>"
+											+data.techSharePostL[i].shrTitle +"</a>" + cmmCnt_span
+										+"</td> "
+										+"<td>"+data.techSharePostL[i].shrWriterName+"</td> "
+										+"<td>"+data.techSharePostL[i].shrDate+"</td> "
+										+"<td>"+data.techSharePostL[i].shrCnt+"</td> "
+									+"</tr> ";
 						}
 						
-						//var postL = $('#techShare-tb').html();
-						var postL = '';
-						for(var i=0; i<techShPostList.length; i++) {
-							postL += " <tr> "
-										+"<td>"+techShPostList[i][0]+"</td> "
-										+"<td>"
-										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechShR&currPg="+currPg+"&postNo="+techShPostList[i][0]+"'>"
-											+techShPostList[i][1] +"</a>"
-										+"</td> "
-										+"<td>"+techShPostList[i][2]+"</td> "
-										+"<td>"+techShPostList[i][3]+"</td> "
-										+"<td>"+techShPostList[i][4]+"</td> "
-									+"</tr> ";	
-						}
 						$('#techShare-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);
    					}

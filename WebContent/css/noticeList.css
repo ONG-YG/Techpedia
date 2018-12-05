@@ -149,3 +149,6 @@ body{
 }
 
 
+#noticeBoard #notice-tb .cmmCnt{
+	margin-left: 5px;
+}

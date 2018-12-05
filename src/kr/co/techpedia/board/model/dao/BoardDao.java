@@ -236,9 +236,16 @@ public class BoardDao {
 		String query = "SELECT * FROM "
 				+ "(SELECT TECH_SHR.*, "
 					+ "MEMBER_NAME AS WRITER_NAME, "
-					+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+					+ "NVL(CMM_CNT,0) AS CMM_CNT, "
+					+ "ROW_NUMBER() OVER(ORDER BY TECH_SHR.POST_NO DESC) AS R_NUM "
 				+ "FROM TECH_SHR "
 				+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER)"
+				+ "LEFT JOIN ("
+						+ "SELECT POST_NO, "
+						+ "COUNT(POST_NO) AS CMM_CNT FROM COMMENTS "
+						+ "WHERE BRD_CODE='SHR' "
+						+ "GROUP BY POST_NO) CMM "
+				+ "ON (TECH_SHR.POST_NO = CMM.POST_NO)"
 				+ ") "
 				+ "WHERE R_NUM BETWEEN ? AND ?";
 		
@@ -257,6 +264,7 @@ public class BoardDao {
 				post.setShrWriterName(rset.getString("WRITER_NAME"));
 				post.setShrDate(rset.getDate("SHR_DATE").toString());
 				post.setShrCnt(rset.getInt("SHR_CNT"));
+				post.setCmmCnt(rset.getInt("CMM_CNT"));
 				
 				techSharePostL.add(post);
 				
@@ -300,15 +308,23 @@ public class BoardDao {
 								+ "COMP_NO AS WRITER_COMPANY, "
 								+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
 								+ "STAT_NAME, "
-								+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+								+ "NVL(CMM_CNT,0) AS CMM_CNT, "
+								+ "ROW_NUMBER() OVER(ORDER BY TECH_SPPT.POST_NO DESC) AS R_NUM "
 								+ "FROM TECH_SPPT "
 								+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
 								+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
 								+ "JOIN COMPANY_L ON(M1.COMP_NO = COMPANY_L.COMP_NO) "
 								+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+								+ "LEFT JOIN ("
+										+ "SELECT POST_NO, "
+										+ "COUNT(POST_NO) AS CMM_CNT FROM COMMENTS "
+										+ "WHERE BRD_CODE='SPPT' "
+										+ "GROUP BY POST_NO) CMM "
+								+ "ON (TECH_SPPT.POST_NO = CMM.POST_NO)"
 								+ "WHERE COMP_NO=?"
 								+ ") "
 							+ "WHERE R_NUM BETWEEN ? AND ?";
+		
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -332,6 +348,7 @@ public class BoardDao {
 				post.setSpptStatName(rset.getString("STAT_NAME"));
 				post.setSpptCnt(rset.getInt("SPPT_CNT"));
 				//post.setSpptEngck(rset.getString("SPPT_ENGCK").charAt(0));
+				post.setCmmCnt(rset.getInt("CMM_CNT"));
 				
 				techSupportPostL.add(post);
 				
@@ -372,11 +389,18 @@ public class BoardDao {
 								+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
 								+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
 								+ "STAT_NAME, "
-								+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+								+ "NVL(CMM_CNT,0) AS CMM_CNT, "
+								+ "ROW_NUMBER() OVER(ORDER BY TECH_SPPT.POST_NO DESC) AS R_NUM "
 								+ "FROM TECH_SPPT "
 								+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
 								+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
 								+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
+								+ "LEFT JOIN ("
+										+ "SELECT POST_NO, "
+										+ "COUNT(POST_NO) AS CMM_CNT FROM COMMENTS "
+										+ "WHERE BRD_CODE='SPPT' "
+										+ "GROUP BY POST_NO) CMM "
+								+ "ON (TECH_SPPT.POST_NO = CMM.POST_NO)"
 								+ ") "
 							+ "WHERE R_NUM BETWEEN ? AND ?";
 		
@@ -401,6 +425,7 @@ public class BoardDao {
 				post.setSpptStatName(rset.getString("STAT_NAME"));
 				post.setSpptCnt(rset.getInt("SPPT_CNT"));
 				//post.setSpptEngck(rset.getString("SPPT_ENGCK").charAt(0));
+				post.setCmmCnt(rset.getInt("CMM_CNT"));
 				
 				techSupportPostL.add(post);
 				
@@ -431,10 +456,17 @@ public class BoardDao {
 						+ "(SELECT NOTICE.*, "
 							+ "MEMBER_NAME AS WRITER_NAME, "
 							+ "NGRD_NAME, "
-							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+							+ "NVL(CMM_CNT,0) AS CMM_CNT, "
+							+ "ROW_NUMBER() OVER(ORDER BY NOTICE.POST_NO DESC) AS R_NUM "
 						+ "FROM NOTICE "
 						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER) "
 						+ "JOIN NTC_GRD_L ON(NOTICE.NTC_GRADECD = NTC_GRD_L.NTC_GRADECD)"
+						+ "LEFT JOIN ("
+								+ "SELECT POST_NO, "
+								+ "COUNT(POST_NO) AS CMM_CNT FROM COMMENTS "
+								+ "WHERE BRD_CODE='NTC' "
+								+ "GROUP BY POST_NO) CMM "
+						+ "ON (NOTICE.POST_NO = CMM.POST_NO)"
 						+ ") "
 						+ "WHERE R_NUM BETWEEN ? AND ?";
 		
@@ -456,6 +488,7 @@ public class BoardDao {
 				post.setNtcCnt(rset.getInt("NTC_CNT"));
 				post.setNtcGradeCD(rset.getString("NTC_GRADECD"));
 				post.setNgrdName(rset.getString("NGRD_NAME"));
+				post.setCmmCnt(rset.getInt("CMM_CNT"));
 				
 				noticeList.add(post);
 				
@@ -1216,6 +1249,49 @@ public class BoardDao {
 			if(rset.next()) {
 				result = 1;
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateSpptState(Connection conn, int postNo, String sppStatSelect) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TECH_SPPT SET SPPT_STATCD=? "
+										+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, sppStatSelect);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int setTechSpptEngck(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TECH_SPPT SET SPPT_ENGCK='Y' "
+										+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

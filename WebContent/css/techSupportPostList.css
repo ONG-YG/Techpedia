@@ -69,7 +69,7 @@ body{
 #TechSpptBoard #techSppt-tb .newPost{
 	color: red;
 	font-size: 12px;
-	margin-left: 10px;
+	margin-left: 5px;
 }
 
 #TechSpptBoard #techSppt-tb th:nth-child(1){
@@ -148,3 +148,7 @@ body{
 }
 
 
+
+#TechSpptBoard #techSppt-tb .cmmCnt{
+	margin-left: 5px;
+}

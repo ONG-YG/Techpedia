@@ -356,7 +356,7 @@ public class AdminDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE TP_MEMBER SET MEMBER_ACTIVE='Y' WHERE MEMBER_NO=?";
+		String query = "UPDATE TP_MEMBER SET MEMBER_ACTIVE='Y', APPROVAL_DATE=SYSDATE WHERE MEMBER_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

@@ -18,13 +18,13 @@ import kr.co.techpedia.board.model.vo.SupportState;
  * Servlet implementation class GetSupportStateListServlet
  */
 @WebServlet(name = "GetSupportStateList", urlPatterns = { "/getSupportStateList.do" })
-public class GetSupportStateListServlet extends HttpServlet {
+public class GetSupportStateListServlet00000지우자 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetSupportStateListServlet() {
+    public GetSupportStateListServlet00000지우자() {
         super();
     }
 

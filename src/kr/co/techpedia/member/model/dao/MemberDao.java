@@ -18,7 +18,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		TpMember loginMember = null;
 		
-		String query = "SELECT * FROM TP_MEMBER WHERE MEMBER_ID=? AND MEMBER_PW=?";
+		String query = "SELECT * FROM TP_MEMBER WHERE MEMBER_ID=? AND MEMBER_PW=? AND MEMBER_DELNO IS NULL";
 		// Active 여부는 Servlet에서 직접 memberActive 값 확인
 		// 관리자 페이지에서 Active 여부 상관없이 멤버 정보 가져올 수 있도록 메소드 작성
 		
@@ -53,7 +53,8 @@ public class MemberDao {
 		ResultSet rset = null;
 		TpMember memberInfo = null;
 		
-		String query = "SELECT MEMBER_ID, "
+		String query = "SELECT MEMBER_NO, "
+							+ "MEMBER_ID, "
 							+ "MEMBER_PW, "
 							+ "MEMBER_NAME, "
 							+ "MEMBER_P_PHONE, "
@@ -78,7 +79,7 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				memberInfo = new TpMember();
-				//memberInfo.setMemberNo(rset.getInt("MEMBER_NO"));
+				memberInfo.setMemberNo(rset.getInt("MEMBER_NO"));
 				memberInfo.setMemberId(rset.getString("MEMBER_ID"));
 				memberInfo.setMemberPw(rset.getString("MEMBER_PW"));
 				memberInfo.setMemberName(rset.getString("MEMBER_NAME"));

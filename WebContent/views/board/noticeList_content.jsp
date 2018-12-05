@@ -84,35 +84,28 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						noticeList = [];
+   						//noticeList = [];
+   						var postL = '';
 						for(var i=0; i<data.noticeList.length; i++) {
-							var post = [data.noticeList[i].postNo,
-										data.noticeList[i].ngrdName,
-										data.noticeList[i].ntcTitle,
-										data.noticeList[i].ntcWriterName,
-										data.noticeList[i].ntcDate,
-										data.noticeList[i].ntcCnt,
-										data.noticeList[i].ntcGradeCD];
-							noticeList.push(post);
-						}
-						
-						//var postL = $('#notice-tb tbody').html();
-						var postL = '';
-						for(var i=0; i<noticeList.length; i++) {
-							var grade = noticeList[i][1];
-							var tdTag = "<td class='"+noticeList[i][6]+"'>";
+							
+							var grade = data.noticeList[i].ngrdName;
+							var tdTag = "<td class='"+data.noticeList[i].ntcGradeCD+"'>";
+							var cmmCnt = data.noticeList[i].cmmCnt;
+							var cmmCnt_span = "<span class='cmmCnt'></span>";
+							if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
 							postL += " <tr> "
-										+"<td>"+noticeList[i][0]+"</td> "
-										+ tdTag +noticeList[i][1]+"</td> "
+										+"<td>"+data.noticeList[i].postNo+"</td> "
+										+ tdTag +data.noticeList[i].ngrdName+"</td> "
 										+"<td>"
-											+"<a class='title_a' href='/views/main/mainpage.jsp?board=NoticeR&currPg="+currPg+"&postNo="+noticeList[i][0]+"'>"
-											+ noticeList[i][2] +"</a>"
+											+"<a class='title_a' href='/views/main/mainpage.jsp?board=NoticeR&currPg="+currPg+"&postNo="+data.noticeList[i].postNo+"'>"
+											+ data.noticeList[i].ntcTitle +"</a>" + cmmCnt_span
 										+ "</td> "
-										+"<td>"+noticeList[i][3]+"</td> "
-										+"<td>"+noticeList[i][4]+"</td> "
-										+"<td>"+noticeList[i][5]+"</td> "
+										+"<td>"+data.noticeList[i].ntcWriterName+"</td> "
+										+"<td>"+data.noticeList[i].ntcDate+"</td> "
+										+"<td>"+data.noticeList[i].ntcCnt+"</td> "
 									+"</tr> ";
 						}
+						
 						$('#notice-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);
    					}

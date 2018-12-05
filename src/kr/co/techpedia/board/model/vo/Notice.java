@@ -12,13 +12,14 @@ public class Notice {
 	private int ntcCnt;
 	private String ntcGradeCD;
 	private String ngrdName;
+	private int cmmCnt;
 	
 	
 	public Notice() {
 		super();
 	}
 	public Notice(int postNo, String ntcTitle, String ntcContent, int ntcWriterNo, String ntcWriterName, String ntcDate,
-			char ntcMainview, int ntcCnt, String ntcGradeCD, String ngrdName) {
+			char ntcMainview, int ntcCnt, String ntcGradeCD, String ngrdName, int cmmCnt) {
 		super();
 		this.postNo = postNo;
 		this.ntcTitle = ntcTitle;
@@ -30,11 +31,10 @@ public class Notice {
 		this.ntcCnt = ntcCnt;
 		this.ntcGradeCD = ntcGradeCD;
 		this.ngrdName = ngrdName;
+		this.cmmCnt = cmmCnt;
 	}
-
-
-
-
+	
+	
 	public int getPostNo() {
 		return postNo;
 	}
@@ -95,7 +95,12 @@ public class Notice {
 	public void setNgrdName(String ngrdName) {
 		this.ngrdName = ngrdName;
 	}
-	
+	public int getCmmCnt() {
+		return cmmCnt;
+	}
+	public void setCmmCnt(int cmmCnt) {
+		this.cmmCnt = cmmCnt;
+	}
 	
 	
 	@Override
@@ -110,6 +115,7 @@ public class Notice {
 							+"ntcMainview : "+ntcMainview+"\n"
 							+"ntcCnt : "+ntcCnt+"\n"
 							+"ngrdName : "+ngrdName+"\n"
+							+"cmmCnt : "+cmmCnt+"\n"
 							+"-----------------------------------------------\n";
 		
 		return noticeInfo;

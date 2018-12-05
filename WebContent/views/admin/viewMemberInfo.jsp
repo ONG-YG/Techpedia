@@ -78,6 +78,7 @@
 						location.href = "/views/main/mainpage.jsp";
 					}
 					else {
+						var memberNo = data.memberNo;
 						var memberId = data.memberId;
 						var memberName = data.memberName;
 						var memberPrivatePhone = data.memberPrivatePhone;
@@ -87,6 +88,7 @@
 						var compName = data.compName;
 						var companyMemNo = data.companyMemNo;
 						
+						$('#memberNoInput').val( memberNo );
 						$('#memberIdInput').val( memberId );
 						$('#memberNameInput').val( memberName );
 			            $('#member_P_PhoneInput').val( memberPrivatePhone );
@@ -122,6 +124,12 @@
                 <div id="member-info-box">
                 	<div>
                         <table>
+                        	<tr>
+                                <th>회원번호</th>
+                                <td>
+                                	<input type="text" id="memberNoInput" readonly/>
+                                </td>
+                            </tr>
                             <tr>
                                 <th>ID</th>
                                 <td>

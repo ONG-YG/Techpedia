@@ -13,7 +13,7 @@ public class TechSupportPost {
 	private String spptStatName;
 	private int spptCnt;
 	private char spptEngck;
-	
+	private int cmmCnt;
 	
 	
 	public TechSupportPost() {
@@ -21,7 +21,7 @@ public class TechSupportPost {
 	}
 	public TechSupportPost(int postNo, String spptTitle, String spptContent, int spptWriter, String spptWriterName,
 			int spptEng, String spptEngName, String spptDate, String spptStatcd, String spptStatName, int spptCnt,
-			char spptEngck) {
+			char spptEngck, int cmmCnt) {
 		super();
 		this.postNo = postNo;
 		this.spptTitle = spptTitle;
@@ -35,7 +35,9 @@ public class TechSupportPost {
 		this.spptStatName = spptStatName;
 		this.spptCnt = spptCnt;
 		this.spptEngck = spptEngck;
+		this.cmmCnt = cmmCnt;
 	}
+
 
 
 	public int getPostNo() {
@@ -110,6 +112,13 @@ public class TechSupportPost {
 	public void setSpptEngck(char spptEngck) {
 		this.spptEngck = spptEngck;
 	}
+	public int getCmmCnt() {
+		return cmmCnt;
+	}
+	public void setCmmCnt(int cmmCnt) {
+		this.cmmCnt = cmmCnt;
+	}
+	
 	
 	
 	@Override
@@ -127,6 +136,7 @@ public class TechSupportPost {
 							+"spptStatName : "+spptStatName+"\n"
 							+"spptCnt : "+spptCnt+"\n"
 							+"spptEngck : "+spptEngck+"\n"
+							+"cmmCnt : "+cmmCnt+"\n"
 							+"-----------------------------------------------\n";
 		
 		return techSupportPost;

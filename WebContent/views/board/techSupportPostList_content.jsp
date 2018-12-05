@@ -88,45 +88,37 @@
 					//console.log(data);////////////////////
 					
 					if(data) {
-						techSpPostList = [];
+						//techSpPostList = [];
+						var postL = '';
 						for(var i=0; i<data.techSupportPostL.length; i++) {
 							var engName = data.techSupportPostL[i].spptEngName;
-							
 							if (engName==null) {
 								engName = '(배정되지 않음)';
 							}
-							var post = [data.techSupportPostL[i].postNo,
-										data.techSupportPostL[i].spptStatName,
-										data.techSupportPostL[i].spptTitle,
-										data.techSupportPostL[i].spptWriterName,
-										engName,
-										data.techSupportPostL[i].spptDate,
-										data.techSupportPostL[i].spptCnt];
-							techSpPostList.push(post);
-						}
-						
-						//var postL = $('#techSppt-tb').html();
-						var postL = '';
-						for(var i=0; i<techSpPostList.length; i++) {
 							
 							var newPost = "<span></span>";
-							if (techSpPostList[i][4]=='(배정되지 않음)') {
+							if (engName=='(배정되지 않음)') {
 								newPost = "<span class='newPost'>new</span>";
 							}
+
+							var cmmCnt = data.techSupportPostL[i].cmmCnt;
+							var cmmCnt_span = "<span class='cmmCnt'></span>";
+							if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
 							
 							postL += " <tr> "
-										+"<td>"+techSpPostList[i][0]+"</td> "
-										+"<td>"+techSpPostList[i][1]+"</td> "
+										+"<td>"+data.techSupportPostL[i].postNo+"</td> "
+										+"<td>"+data.techSupportPostL[i].spptStatName+"</td> "
 										+"<td>"
-										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+techSpPostList[i][0]+"'>"
-											+techSpPostList[i][2] +"</a>"+newPost
+										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+data.techSupportPostL[i].postNo+"'>"
+											+data.techSupportPostL[i].spptTitle +"</a>" + cmmCnt_span + newPost
 										+"</td> "
-										+"<td>"+techSpPostList[i][3]+"</td> "
-										+"<td>"+techSpPostList[i][4]+"</td> "
-										+"<td>"+techSpPostList[i][5]+"</td> "
-										+"<td>"+techSpPostList[i][6]+"</td> "
+										+"<td>"+data.techSupportPostL[i].spptWriterName+"</td> "
+										+"<td>"+engName+"</td> "
+										+"<td>"+data.techSupportPostL[i].spptDate+"</td> "
+										+"<td>"+data.techSupportPostL[i].spptCnt+"</td> "
 									+"</tr> ";
 						}
+						
 						$('#techSppt-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);
 					}

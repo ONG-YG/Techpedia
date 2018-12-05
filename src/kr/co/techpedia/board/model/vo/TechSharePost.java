@@ -8,15 +8,14 @@ public class TechSharePost {
 	private String shrWriterName;
 	private String shrDate;
 	private int shrCnt;
-	
+	private int cmmCnt;
 	
 	
 	public TechSharePost() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public TechSharePost(int postNo, String shrTitle, String shrContent, int shrWriter, String shrWriterName,
-			String shrDate, int shrCnt) {
+			String shrDate, int shrCnt, int cmmCnt) {
 		super();
 		this.postNo = postNo;
 		this.shrTitle = shrTitle;
@@ -25,10 +24,11 @@ public class TechSharePost {
 		this.shrWriterName = shrWriterName;
 		this.shrDate = shrDate;
 		this.shrCnt = shrCnt;
+		this.cmmCnt = cmmCnt;
 	}
-	
-	
-	
+
+
+
 	public int getPostNo() {
 		return postNo;
 	}
@@ -71,6 +71,12 @@ public class TechSharePost {
 	public void setShrCnt(int shrCnt) {
 		this.shrCnt = shrCnt;
 	}
+	public int getCmmCnt() {
+		return cmmCnt;
+	}
+	public void setCmmCnt(int cmmCnt) {
+		this.cmmCnt = cmmCnt;
+	}
 	
 	
 	
@@ -84,6 +90,7 @@ public class TechSharePost {
 							+"shrWriterName : "+shrWriterName+"\n"
 							+"shrDate : "+shrDate+"\n"
 							+"shrCnt : "+shrCnt+"\n"
+							+"cmmCnt : "+cmmCnt+"\n"
 							+"-----------------------------------------------\n";
 		
 		return techSharePost;
