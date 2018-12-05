@@ -86,39 +86,26 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						noticeList = [];
+   						//noticeList = [];
+   						var postL = '';
 						for(var i=0; i<data.noticeList.length; i++) {
-							var post = [data.noticeList[i].postNo,
-										data.noticeList[i].ngrdName,
-										data.noticeList[i].ntcTitle,
-										data.noticeList[i].ntcWriterName,
-										data.noticeList[i].ntcDate,
-										data.noticeList[i].ntcCnt,
-										data.noticeList[i].ntcGradeCD,
-										data.noticeList[i].ntcMainview];
-							noticeList.push(post);
-						}
-						
-						//var postL = $('#notice-tb tbody').html();
-						var postL = '';
-						for(var i=0; i<noticeList.length; i++) {
-							var grade = noticeList[i][1];
-							var tdTag = "<td class='"+noticeList[i][6]+"'>";
+							var grade = data.noticeList[i].ngrdName;
+							var tdTag = "<td class='"+data.noticeList[i].ntcGradeCD+"'>";
 							var button = "<button class='checked_btn' "
 											+"onclick='alreadyChecked();'>설정</button>";
-							if(noticeList[i][7]=='N') {
+							if(data.noticeList[i].ntcMainview=='N') {
 								button = "<button class='chkMainView_btn' "
-											+"onclick='chkMainView("+noticeList[i][0]+");'>설정</button>";
+											+"onclick='chkMainView("+data.noticeList[i].postNo+");'>설정</button>";
 							}
 							postL += " <tr> "
-										+"<td>"+noticeList[i][0]+"</td> "
-										+ tdTag +noticeList[i][1]+"</td> "
+										+"<td>"+data.noticeList[i].postNo+"</td> "
+										+ tdTag +data.noticeList[i].ngrdName+"</td> "
 										+"<td>"
-											+"<a class='title_a' target='_blank' href='/views/main/mainpage.jsp?board=NoticeR&currPg="+currPg+"&postNo="+noticeList[i][0]+"'>"
-											+ noticeList[i][2] +"</a>"
+											+"<a class='title_a' target='_blank' href='/views/main/mainpage.jsp?board=NoticeR&currPg="+currPg+"&postNo="+data.noticeList[i].postNo+"'>"
+											+ data.noticeList[i].ntcTitle +"</a>"
 										+ "</td> "
-										+"<td>"+noticeList[i][3]+"</td> "
-										+"<td>"+noticeList[i][4]+"</td> "
+										+"<td>"+data.noticeList[i].ntcWriterName+"</td> "
+										+"<td>"+data.noticeList[i].ntcDate+"</td> "
 										+"<td>"+button+"</td> "
 									+"</tr> ";
 						}

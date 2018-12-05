@@ -81,32 +81,21 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						memberList = [];
+   						//memberList = [];
+   						var postL = '';
 						for(var i=0; i<data.memberList.length; i++) {
-							var post = [data.memberList[i].memberTypeName,
-										data.memberList[i].compName,
-										data.memberList[i].companyMemNo,
-										data.memberList[i].memberName,
-										data.memberList[i].enrollDate,
-										data.memberList[i].memberNo];
-							memberList.push(post);
-						}
-						
-						//var postL = $('#enrollApprove-tb tbody').html();
-						var postL = '';
-						for(var i=0; i<memberList.length; i++) {
 							var detail_btn = "<button class='detail_btn' "
-											+"onclick='viewMemberInfo("+memberList[i][5]+");'>보기</button>";
+											+"onclick='viewMemberInfo("+data.memberList[i].memberNo+");'>보기</button>";
 							var approve_btn = "<button class='approve_btn' "
-												+"onclick='approve("+memberList[i][5]+");'>승인</button>";
+												+"onclick='approve("+data.memberList[i].memberNo+");'>승인</button>";
 							var reject_btn = "<button class='reject_btn' "
-												+"onclick='reject("+memberList[i][5]+");'>거절</button>";
+												+"onclick='reject("+data.memberList[i].memberNo+");'>거절</button>";
 							postL += " <tr> "
-										+"<td>"+memberList[i][0]+"</td> "
-										+"<td>"+memberList[i][1]+"</td> "
-										+"<td>"+memberList[i][2]+"</td> "
-										+"<td>"+memberList[i][3]+"</td> "
-										+"<td>"+memberList[i][4]+"</td> "
+										+"<td>"+data.memberList[i].memberTypeName+"</td> "
+										+"<td>"+data.memberList[i].compName+"</td> "
+										+"<td>"+data.memberList[i].companyMemNo+"</td> "
+										+"<td>"+data.memberList[i].memberName+"</td> "
+										+"<td>"+data.memberList[i].enrollDate+"</td> "
 										+"<td>"+detail_btn+"</td> "
 										+"<td>"+approve_btn+reject_btn+"</td> "
 									+"</tr> ";

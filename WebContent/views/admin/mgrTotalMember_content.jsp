@@ -81,37 +81,24 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						memberList = [];
+   						//memberList = [];
+   						var postL = '';
 						for(var i=0; i<data.memberList.length; i++) {
-							var post = [data.memberList[i].memberTypeName,
-										data.memberList[i].compName,
-										data.memberList[i].companyMemNo,
-										data.memberList[i].memberName,
-										data.memberList[i].enrollDate,
-										data.memberList[i].memberNo,
-										data.memberList[i].memberActive,
-										data.memberList[i].memberDelNo];
-							memberList.push(post);
-						}
-						
-						//var postL = $('#totalMember-tb tbody').html();
-						var postL = '';
-						for(var i=0; i<memberList.length; i++) {
 							var detail_btn = "<button class='detail_btn' "
-											+"onclick='viewMemberInfo("+memberList[i][5]+");'>보기</button>";
+											+"onclick='viewMemberInfo("+data.memberList[i].memberNo+");'>보기</button>";
 							var delete_btn = "<button class='delete_btn' "
-												+"onclick='setDeletedMember("+memberList[i][5]+");'>설정</button>";
-							if(memberList[i][6]=='N'
-							&& memberList[i][7]!=null) {
+												+"onclick='setDeletedMember("+data.memberList[i].memberNo+");'>탈퇴</button>";
+							if(data.memberList[i].memberActive=='N'
+							&& data.memberList[i].memberDelNo!=null) {
 								delete_btn = "<button class='alreadyDeleted_btn' "
-												+"onclick='alreadyDeleted();'>설정</button>";
+												+"onclick='alreadyDeleted();'>탈퇴</button>";
 							}
 							postL += " <tr> "
-										+"<td>"+memberList[i][0]+"</td> "
-										+"<td>"+memberList[i][1]+"</td> "
-										+"<td>"+memberList[i][2]+"</td> "
-										+"<td>"+memberList[i][3]+"</td> "
-										+"<td>"+memberList[i][4]+"</td> "
+										+"<td>"+data.memberList[i].memberTypeName+"</td> "
+										+"<td>"+data.memberList[i].compName+"</td> "
+										+"<td>"+data.memberList[i].companyMemNo+"</td> "
+										+"<td>"+data.memberList[i].memberName+"</td> "
+										+"<td>"+data.memberList[i].enrollDate+"</td> "
 										+"<td>"+detail_btn+"</td> "
 										+"<td>"+delete_btn+"</td> "
 									+"</tr> ";
