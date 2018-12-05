@@ -396,6 +396,7 @@
 					}
 					else {
 						$('#engCheck_span').html('Y');
+						$('#engCheck_span').css('color','slategrey');
 					}
 				},
 				error : function(){

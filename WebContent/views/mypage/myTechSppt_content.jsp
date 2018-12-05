@@ -59,7 +59,7 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/myTechSppt.css?ver=1" rel="stylesheet" type="text/css">
+	<link href="/css/myTechSppt.css" rel="stylesheet" type="text/css">
 	
 	<script>
 	$(document).ready(function(){
@@ -85,38 +85,35 @@
 					//console.log(data);////////////////////
 					
 					if(data) {
-						techSpPostList = [];
-					for(var i=0; i<data.techSupportPostL.length; i++) {
-						var charger = null;
-						if(memberTypeCD=='COP') {
-							charger = data.techSupportPostL[i].spptEngName;
-						}else {
-							charger = data.techSupportPostL[i].spptWriterName;
+						//techSpPostList = [];
+						var postL = '';
+						for(var i=0; i<data.techSupportPostL.length; i++) {
+							var charger = null;
+							if(memberTypeCD=='COP') {
+								charger = data.techSupportPostL[i].spptEngName;
+								if (charger==null) {
+									charger = '(배정되지 않음)';
+								}
+							}else {
+								charger = data.techSupportPostL[i].spptWriterName;
+							}
+							
+							postL += " <tr> "
+								+"<td>"+data.techSupportPostL[i].postNo+"</td> "
+								+"<td>"
+								+"<a class='title_a' target='_blank' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+data.techSupportPostL[i].postNo+"'>"
+									+ data.techSupportPostL[i].spptTitle +"</a>"
+								+"</td> "
+								+"<td>"+charger+"</td> "
+								+"<td>"+data.techSupportPostL[i].spptDate+"</td> "
+								+"<td>"+data.techSupportPostL[i].spptStatName+"</td> "
+								+"<td>"+data.techSupportPostL[i].spptEngck+"</td> "
+							+"</tr> ";
+							
 						}
-						var post = [data.techSupportPostL[i].postNo,
-									data.techSupportPostL[i].spptTitle,
-									charger,
-									data.techSupportPostL[i].spptDate,
-									data.techSupportPostL[i].spptStatName,
-									data.techSupportPostL[i].spptEngck];
-						techSpPostList.push(post);
-					}
-					
-					//var postL = $('#techSppt-tb').html();
-					var postL = '';
-					for(var i=0; i<techSpPostList.length; i++) {
-						postL += " <tr> "
-									+"<td>"+techSpPostList[i][0]+"</td> "
-									+"<td>"+techSpPostList[i][1]+"</td> "
-									+"<td>"+techSpPostList[i][2]+"</td> "
-									+"<td>"+techSpPostList[i][3]+"</td> "
-									+"<td>"+techSpPostList[i][4]+"</td> "
-									+"<td>"+techSpPostList[i][5]+"</td> "
-								+"</tr> ";
-								
-					}
-					$('#techSppt-tb tbody').html(postL);
-					$('#navi').html(data.pageNavi);
+						
+						$('#techSppt-tb tbody').html(postL);
+						$('#navi').html(data.pageNavi);
 					}
 					else {
 						var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"

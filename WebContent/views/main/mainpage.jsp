@@ -37,7 +37,6 @@
 				%>
 				<script>
 					alert("담당 엔지니어가 자동 배정된 기술지원 게시물이 존재합니다.");
-					location.href = "/views/main/mainpage.jsp";
 				</script>
 				<%
 			}
@@ -47,10 +46,14 @@
 				%>
 				<script>
 					alert("확인하지 않은 기술지원 게시물이 존재합니다.");
-					location.href = "/views/main/mainpage.jsp";
 				</script>
 				<%
 			}
+				%>
+				<script>
+					location.href = "/views/main/mainpage.jsp";
+				</script>
+				<%
 		}
 	}
 	

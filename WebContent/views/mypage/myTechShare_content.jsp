@@ -65,8 +65,12 @@
 	    	getTechShareList();
 	    }
 	    
+	    function rewritePost(postNo){
+	    	alert("rewritePost");/////////
+	    }
+	    
         function delPost(postNo){
-	    	alert();//////////
+	    	alert("delPost");//////////
 	    }
 	    
         function getTechShareList(){
@@ -81,29 +85,25 @@
    					//console.log(data);////////////////////
    					
    					if(data) {
-   						techShPostList = [];
+   						//techShPostList = [];
+   						var postL = '';
 						for(var i=0; i<data.techSharePostL.length; i++) {
-							var post = [data.techSharePostL[i].postNo,
-										data.techSharePostL[i].shrTitle,
-										data.techSharePostL[i].shrDate];
-							techShPostList.push(post);
+							postL += " <tr> "
+								+"<td>"+data.techSharePostL[i].postNo+"</td> "
+								+"<td>"
+								+"<a class='title_a' target='_blank' href='/views/main/mainpage.jsp?board=TechShR&currPg="+currPg+"&postNo="+data.techSharePostL[i].postNo+"'>"
+									+ data.techSharePostL[i].shrTitle +"</a>"
+								+"</td> "
+								+"<td>"+data.techSharePostL[i].shrDate+"</td> "
+								+"<td> "
+									+"<button id='rewrite-btn' onclick='rewritePost("+data.techSharePostL[i].postNo+");'>수정</button> "
+								+"</td> "
+								+"<td> "
+									+"<button id='delete-btn' onclick='delPost("+data.techSharePostL[i].postNo+");'>삭제</button> "
+								+"</td> "
+							+"</tr> ";
 						}
 						
-						//var postL = $('#techShare-tb').html();
-						var postL = '';
-						for(var i=0; i<techShPostList.length; i++) {
-							postL += " <tr> "
-										+"<td>"+techShPostList[i][0]+"</td> "
-										+"<td>"+techShPostList[i][1]+"</td> "
-										+"<td>"+techShPostList[i][2]+"</td> "
-										+"<td> "
-											+"<button id='rewrite-btn'>수정</button> "
-										+"</td> "
-										+"<td> "
-											+"<button id='delete-btn' onclick='delPost("+techShPostList[i][0]+");'>삭제</button> "
-										+"</td> "
-									+"</tr> ";
-						}
 						//$('#techShare-tb').html(postL);
 						$('#techShare-tb tbody').html(postL);
 						$('#navi').html(data.pageNavi);
