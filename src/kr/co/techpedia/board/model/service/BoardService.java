@@ -492,5 +492,56 @@ public class BoardService {
 		
 		return result;
 	}
+
+	public int takeChargeOfTechSpp(int postNo, int memberNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().takeChargeOfTechSpp(conn, postNo, memberNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int deletePost(int postNo, String boardCD) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		String tableName = "";
+		if(boardCD.equals("NTC")) tableName = "NOTICE";
+		else if(boardCD.equals("SHR")) tableName = "TECH_SHR";
+		else if(boardCD.equals("SPPT")) tableName = "TECH_SPPT";
+		else return 0;
+		
+		int postDel_result = new BoardDao().deletePost(conn, postNo, tableName);
+		
+		int cmmCnt = new BoardDao().getCommentCnt(conn, postNo, boardCD);
+		int cmmDel_result = new BoardDao().deleteTotalComment(conn, postNo, boardCD);
+		
+		int attCnt = new BoardDao().getCommentAtt(conn, postNo, boardCD);
+		int attDel_result = new BoardDao().deleteAttFiles(conn, postNo, boardCD);
+		
+		if(postDel_result>0 
+				&& (cmmDel_result>0 || cmmCnt==0) 
+				&& (attDel_result>0 || attCnt==0)) result = 1;
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
+	
 	
 }

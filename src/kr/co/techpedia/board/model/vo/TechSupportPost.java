@@ -6,6 +6,7 @@ public class TechSupportPost {
 	private String spptContent;
 	private int spptWriter;
 	private String spptWriterName;
+	private int spptWriterCompNo;
 	private int spptEng;
 	private String spptEngName;
 	private String spptDate;
@@ -14,20 +15,22 @@ public class TechSupportPost {
 	private int spptCnt;
 	private char spptEngck;
 	private int cmmCnt;
+	private String attName;
 	
 	
 	public TechSupportPost() {
 		super();
 	}
 	public TechSupportPost(int postNo, String spptTitle, String spptContent, int spptWriter, String spptWriterName,
-			int spptEng, String spptEngName, String spptDate, String spptStatcd, String spptStatName, int spptCnt,
-			char spptEngck, int cmmCnt) {
+			int spptWriterCompNo, int spptEng, String spptEngName, String spptDate, String spptStatcd,
+			String spptStatName, int spptCnt, char spptEngck, int cmmCnt, String attName) {
 		super();
 		this.postNo = postNo;
 		this.spptTitle = spptTitle;
 		this.spptContent = spptContent;
 		this.spptWriter = spptWriter;
 		this.spptWriterName = spptWriterName;
+		this.spptWriterCompNo = spptWriterCompNo;
 		this.spptEng = spptEng;
 		this.spptEngName = spptEngName;
 		this.spptDate = spptDate;
@@ -36,10 +39,11 @@ public class TechSupportPost {
 		this.spptCnt = spptCnt;
 		this.spptEngck = spptEngck;
 		this.cmmCnt = cmmCnt;
+		this.attName = attName;
 	}
-
-
-
+	
+	
+	
 	public int getPostNo() {
 		return postNo;
 	}
@@ -69,6 +73,12 @@ public class TechSupportPost {
 	}
 	public void setSpptWriterName(String spptWriterName) {
 		this.spptWriterName = spptWriterName;
+	}
+	public int getSpptWriterCompNo() {
+		return spptWriterCompNo;
+	}
+	public void setSpptWriterCompNo(int spptWriterCompNo) {
+		this.spptWriterCompNo = spptWriterCompNo;
 	}
 	public int getSpptEng() {
 		return spptEng;
@@ -118,6 +128,12 @@ public class TechSupportPost {
 	public void setCmmCnt(int cmmCnt) {
 		this.cmmCnt = cmmCnt;
 	}
+	public String getAttName() {
+		return attName;
+	}
+	public void setAttName(String attName) {
+		this.attName = attName;
+	}
 	
 	
 	
@@ -129,6 +145,7 @@ public class TechSupportPost {
 							+"spptContent : "+spptContent+"\n"
 							+"spptWriter : "+spptWriter+"\n"
 							+"spptWriterName : "+spptWriterName+"\n"
+							+"spptWriterCompNo : "+spptWriterCompNo+"\n"
 							+"spptEng : "+spptEng+"\n"
 							+"spptEngName : "+spptEngName+"\n"
 							+"spptDate : "+spptDate+"\n"
@@ -137,6 +154,7 @@ public class TechSupportPost {
 							+"spptCnt : "+spptCnt+"\n"
 							+"spptEngck : "+spptEngck+"\n"
 							+"cmmCnt : "+cmmCnt+"\n"
+							+"attName : "+attName+"\n"
 							+"-----------------------------------------------\n";
 		
 		return techSupportPost;

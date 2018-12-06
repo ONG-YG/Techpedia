@@ -19,15 +19,17 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				int compNo = memSession.getCompNo();
 				String currBoard = memSession.getCurrBoard();
 				//System.out.println("\nTechShareBoard memSession check 2\n"+memSession);////////////////////////
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var compNo = <%=compNo%>;
 				var currBoard = '<%=currBoard%>';
 				
-				if(!writeStart || currBoard!='TechSpp') {
+				if(!writeStart || memberTypeCD!='COP' || currBoard!='TechSpp') {
 					location.href="/views/board/writeError.jsp";
 				}
 			</script>
@@ -48,13 +50,13 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/techSupportAnswerWrite.css" rel="stylesheet" type="text/css">
+	<link href="/css/techSupportPostWrite.css" rel="stylesheet" type="text/css">
     
 	<script>
         
 	    $(document).ready(function(){
 	    	
-	    	getSpptStateList();
+	    	getTechSppPost();
 	    	
 	    	$('#fileInput').click(function(){
 	    		if(event.currentTarget==this) {
@@ -72,48 +74,6 @@
 	    });//$(document).ready END
 	    
 	    
-	    function getSpptStateList() {
-	    	$.ajax({
-				url : "/getSupportStateList.do",
-				data : {memberTypeCD: memberTypeCD},
-				type : "post",
-				success : function(data){
-					//console.log("정상 처리 완료");
-					//alert("success");
-					//console.log(data);
-					if(data==false) {
-						alert("오류가 발생했습니다.\n"
-								+"문제가 지속될 경우 관리자에게 문의해주세요.");
-						location.href="/index.jsp";
-					}
-					else {
-						spptStateList = [];
-						for(var i=0; i<data.length; i++) {
-							var spptState = [data[i].spptStatCD,
-											data[i].statName];
-							spptStateList.push(spptState);
-						}
-						
-						var spptStateList_sel = "<option value='none'>선택</option>";
-						for(var i=0; i<spptStateList.length; i++) {
-							spptStateList_sel += "<option value='"+spptStateList[i][0]+"'>"
-											+spptStateList[i][1]+"</option>";
-						}
-						$('#spptStateSelect').html(spptStateList_sel);
-					}
-				},
-				error : function(){
-					//console.log("ajax 통신 에러");
-					alert("오류가 발생했습니다.\n"
-							+"문제가 지속될 경우 관리자에게 문의해주세요.");
-					location.href="/index.jsp";
-				},
-				complete : function(){
-					//alert("complete");
-				}
-			});
-	    }//function END
-	    
 	    function chooseFile(){
 	    	$('#fileInput').click();
 	    	
@@ -126,32 +86,63 @@
 	    	
 	    	return false;
 	    }//function END
-	    
+
+	    function getTechSppPost() {
+	    	$.ajax({
+				url : "/techSupportPostRead.do",
+				data : {postNo: postNo},
+				type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data=='false') {
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/views/board/readFail.jsp";
+					}
+					else {
+						var writerCompNo = data.spptWriterCompNo;
+						
+						if(writerCompNo!=compNo && memberTypeCD=='COP') {
+							location.href="/views/board/abnormalAccess.jsp";
+						}
+						else {
+							$('#titleInput').val(data.spptTitle);
+							$('#content_txt').val(data.spptContent);
+							$('#fileInput_span').text(data.attName);//첨부파일
+							
+						}
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/views/board/readFail.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+	    }//function END
     </script>
 </head>
 <body>
 	
 	<div id="techSppWrite">
 	    
-	    <span>기술 지원 답변 작성</span>
+	    <span>기술 지원 요청글 수정</span>
 	    <form action="/techSpportPostWrite.do" method="post" enctype="multipart/form-data">
 	    
 		    <table id="techSpp-tb">
-		    	<tr id="spptState_tr">
-		            <th id="spptState">진행현황</th>
-	                <td>
-		                <select name="spptState" id="spptStateSelect">
-		                    <option value='none'>선택</option>
-		                </select>
-	                </td>
-		        </tr>
 		        <tr id="techSppTitle_tr">
 		            <th id="techSppTitle">제목</th>
 	                <td><input type="text" name="title" id="titleInput"></td>
 		        </tr>
 	            <tr id="techSppContent_tr">
 		            <th id="techSppContent">내용</th>
-	                <td><textarea name="content"></textarea></td>
+	                <td><textarea name="content" id="content_txt"></textarea></td>
 		        </tr>
 		        <tr id="fileUpload_tr">
 		            <th id="techSppFile">파일첨부</th>

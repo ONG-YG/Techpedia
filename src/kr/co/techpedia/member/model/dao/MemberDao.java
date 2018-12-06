@@ -300,5 +300,40 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public TpMember getContactInfo(Connection conn, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		TpMember contactInfo = null;
+		
+		String query = "SELECT MEMBER_P_PHONE, "
+							+ "MEMBER_C_PHONE, "
+							+ "MEMBER_EMAIL "
+							+ "FROM TP_MEMBER "
+							+ "WHERE MEMBER_NO=?";
+		// Active 여부는 Servlet에서 직접 memberActive 값 확인
+		// 관리자 페이지에서 Active 여부 상관없이 멤버 정보 가져올 수 있도록 메소드 작성
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				contactInfo = new TpMember();
+				contactInfo.setMemberPrivatePhone(rset.getString("MEMBER_P_PHONE"));
+				contactInfo.setMemberCompanyPhone(rset.getString("MEMBER_C_PHONE"));
+				contactInfo.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return contactInfo;
+	}
 	
 }

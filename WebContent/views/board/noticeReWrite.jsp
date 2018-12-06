@@ -19,18 +19,22 @@
 			if(memSession!=null) {
 				String memberTypeCD = memSession.getMemberTypeCD();
 				int memberNo = memSession.getMemberNo();
+				String currBoard = memSession.getCurrBoard();
 				//System.out.println("\nTechShareBoard memSession check 2\n"+memSession);////////////////////////
+				
 	%>
 			<script>
 				var memberTypeCD = '<%=memberTypeCD%>';
 				var memberNo = <%=memberNo%>;
+				var currBoard = '<%=currBoard%>';
+				var postNo = -1;
 				
-				if(!writeStart || memberTypeCD=='COP') {
+				if(!writeStart || memberTypeCD=='COP' || currBoard!='Notice') {
 					location.href="/views/board/writeError.jsp";
 				}
 			</script>
 	<%
-				if(request.getParameter("postNo")!=null){
+				if(!request.getParameter("postNo").equals("null")){
 					int postNo = Integer.parseInt(request.getParameter("postNo"));
 					%>
 					<script>
@@ -40,7 +44,7 @@
 				}else {
 					%>
 					<script>
-						location.href="/views/board/writeError.jsp";
+						location.href="/views/board/readError.jsp";
 					</script>
 					<%
 				}
@@ -60,7 +64,7 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/noticeReWrite.css" rel="stylesheet" type="text/css">
+	<link href="/css/noticeWrite.css" rel="stylesheet" type="text/css">
     
 	<script>
         
@@ -68,7 +72,7 @@
 	    	
 	    	if(memberTypeCD!='COP') {
 	    		getNoticeGradeList();
-	    		if(postNo!=-1) getNoticePost();
+	    		getNoticePost();
 	    	}
 	    	
 	    	$('#fileInput').click(function(){
@@ -86,6 +90,7 @@
             
 	    });//$(document).ready END
 	    
+	    
 	    function getNoticeGradeList() {
 	    	$.ajax({
 				url : "/getNoticeGrdList.do",
@@ -95,7 +100,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);
-					if(data==false) {
+					if(data=='false') {
 						alert("오류가 발생했습니다.\n"
 								+"문제가 지속될 경우 관리자에게 문의해주세요.");
 						location.href="/index.jsp";
@@ -110,8 +115,8 @@
 						
 						var noticeGrdList_sel = "<option value='none'>선택</option>";
 						for(var i=0; i<noticeGrdList.length; i++) {
-							noticeGrdList_sel += "<option value='"+noticeGrdList[i][0]+"' "
-											+"id='"+noticeGrdList[i][0]+"'>"
+							noticeGrdList_sel += "<option value='"+noticeGrdList[i][0]
+											+"' id='"+noticeGrdList[i][0]+"'>"
 											+noticeGrdList[i][1]+"</option>";
 						}
 						$('#noticeGradeSelect').html(noticeGrdList_sel);
@@ -128,45 +133,6 @@
 				}
 			});
 	    }//function END
-
-	    function getNoticePost() {
-	    	$.ajax({
-				url : "/noticeRead.do",
-				data : {postNo: posNo},
-				type : "post",
-				success : function(data){
-					//console.log("정상 처리 완료");
-					//alert("success");
-					//console.log(data);
-					if(data==false) {
-						alert("오류가 발생했습니다.\n"
-								+"문제가 지속될 경우 관리자에게 문의해주세요.");
-						location.href="/views/board/readFail.jsp";
-					}
-					else {
-						if( memberNo!=data.ntcWriterNo ) {
-							location.href="/views/board/writeError.jsp";
-						}
-						$('#noticeGradeSelect').children().attr('selected', false);
-						$('#'+data.ntcGradeCD).attr('selected', true);
-						$('#titleInput').val(data.ntcTitle);
-						$('#noticeContent_txt').html(data.ntcContent);
-						//$('#fileDownload_td').html();//첨부파일
-						
-					}
-				},
-				error : function(){
-					//console.log("ajax 통신 에러");
-					alert("오류가 발생했습니다.\n"
-							+"문제가 지속될 경우 관리자에게 문의해주세요.");
-					location.href="/views/board/readFail.jsp";
-				},
-				complete : function(){
-					//alert("complete");
-				}
-			});
-	    }//function END
-	    
 	    
 	    function chooseFile(){
 	    	$('#fileInput').click();
@@ -181,14 +147,65 @@
 	    	return false;
 	    }//function END
 	    
+	    function registerPost(){
+	    	var grd = $('#noticeGradeSelect').val();
+	    	var tit = $('#titleInput').val();
+	    	var con = $('#content_txt').val();
+	    	
+	    	if(grd=='none') {
+	    		alert("등급을 선택해주세요.");
+	    	}
+	    	else if(tit=='' || con=='') {
+	    		alert("제목과 내용을 모두 입력해주세요.");
+	    	}
+	    	else {
+	    		$('#writeForm').submit();
+	    	}
+	    	
+	    	return false;
+	    }//function END
+	    
+	    function getNoticePost() {
+	    	$.ajax({
+				url : "/noticeRead.do",
+				data : {postNo: postNo},
+				type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data=='false') {
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/views/board/readFail.jsp";
+					}
+					else {
+						$('#'+data.ntcGradeCD).attr('selected','true');
+						$('#titleInput').val(data.ntcTitle);
+						$('#content_txt').val(data.ntcContent);
+						$('#fileInput_span').text(data.attName);//첨부파일
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/views/board/readFail.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+	    }//function END
+	    
     </script>
 </head>
 <body>
 	
 	<div id="noticeWrite">
 	    
-	    <span>공지사항 작성</span>
-	    <form action="/noticeWrite.do" method="post" enctype="multipart/form-data">
+	    <span>공지사항 수정</span>
+	    <form action="/noticeWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
 	    
 		    <table id="notice-tb">
 		    
@@ -211,7 +228,7 @@
 		        </tr>
 	            <tr id="noticeContent_tr">
 		            <th id="noticeContent">내용</th>
-	                <td><textarea name="content" id="noticeContent_txt"></textarea></td>
+	                <td><textarea name="content" id="content_txt"></textarea></td>
 		        </tr>
 		        <tr id="fileUpload_tr">
 		            <th id="noticeFile">파일첨부</th>
@@ -232,7 +249,7 @@
 		        </tr>
 	            <tr id="register_tr">
 	                <th></th>
-	                <td><button id="register_btn">등록</button></td>
+	                <td><button id="register_btn" onclick="return registerPost();">등록</button></td>
 	            </tr>
 		    </table>
 	    	

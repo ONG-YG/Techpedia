@@ -72,7 +72,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);//////////////////////////
-					if(data==false) {
+					if(data=='false') {
 						alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
 								+"문제가 지속될 경우 관리자에게 문의해주세요.");
 						location.href = "/views/main/mainpage.jsp";

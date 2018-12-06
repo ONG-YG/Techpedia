@@ -908,11 +908,15 @@ public class BoardDao {
 			
 		String query = "SELECT NOTICE.*, "
 							+ "MEMBER_NAME AS WRITER_NAME, "
+							+ "ATT_NAME, "
 							+ "NGRD_NAME "
 						+ "FROM NOTICE "
 						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = NOTICE.NTC_WRITER) "
 						+ "JOIN NTC_GRD_L ON(NOTICE.NTC_GRADECD = NTC_GRD_L.NTC_GRADECD) "
-						+ "WHERE POST_NO=?";
+						+ "LEFT JOIN "
+							+ "(SELECT * FROM ATTCH_FILE WHERE BRD_CODE='NTC') ATTCH_FILE "
+							+ "ON(NOTICE.POST_NO=ATTCH_FILE.POST_NO) "
+						+ "WHERE NOTICE.POST_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -931,6 +935,7 @@ public class BoardDao {
 				post.setNtcCnt(rset.getInt("NTC_CNT"));
 				post.setNtcGradeCD(rset.getString("NTC_GRADECD"));
 				post.setNgrdName(rset.getString("NGRD_NAME"));
+				post.setAttName(rset.getString("ATT_NAME"));
 				
 				//System.out.println("dao notice check\n"+post);//////////////
 			}
@@ -1081,10 +1086,14 @@ public class BoardDao {
 		TechSharePost post = null;
 			
 		String query = "SELECT TECH_SHR.*, "
+							+ "ATT_NAME, "
 							+ "MEMBER_NAME AS WRITER_NAME "
 						+ "FROM TECH_SHR "
 						+ "JOIN TP_MEMBER ON(TP_MEMBER.MEMBER_NO = TECH_SHR.SHR_WRITER) "
-						+ "WHERE POST_NO=?";
+						+ "LEFT JOIN "
+							+ "(SELECT * FROM ATTCH_FILE WHERE BRD_CODE='SHR') ATTCH_FILE "
+							+ "ON(TECH_SHR.POST_NO=ATTCH_FILE.POST_NO) "
+						+ "WHERE TECH_SHR.POST_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -1100,6 +1109,7 @@ public class BoardDao {
 				post.setShrWriterName(rset.getString("WRITER_NAME"));
 				post.setShrDate(rset.getDate("SHR_DATE").toString());
 				post.setShrCnt(rset.getInt("SHR_CNT"));
+				post.setAttName(rset.getString("ATT_NAME"));
 				
 				//System.out.println("dao TechSharePost check\n"+post);//////////////
 			}
@@ -1141,14 +1151,19 @@ public class BoardDao {
 			
 		String query = "SELECT TECH_SPPT.*, "
 							+ "M1.MEMBER_NAME AS SPPT_WRITERNAME, "
+							+ "M1.COMP_NO AS SPPT_WRITERCOMPNO, "
 							+ "M2.MEMBER_NAME AS SPPT_ENGNAME, "
 							+ "STAT_NAME, "
-							+ "ROW_NUMBER() OVER(ORDER BY POST_NO DESC) AS R_NUM "
+							+ "ATT_NAME "/////////////////
+							//+ "ROW_NUMBER() OVER(ORDER BY TECH_SPPT.POST_NO DESC) AS R_NUM "
 						+ "FROM TECH_SPPT "
 						+ "JOIN TP_MEMBER M1 ON(M1.MEMBER_NO = TECH_SPPT.SPPT_WRITER) "
 						+ "LEFT JOIN TP_MEMBER M2 ON(M2.MEMBER_NO = TECH_SPPT.SPPT_ENG) "
 						+ "JOIN SPPT_STAT ON(SPPT_STAT.SPPT_STATCD = TECH_SPPT.SPPT_STATCD) "
-						+ "WHERE POST_NO=?";
+						+ "LEFT JOIN "
+							+ "(SELECT * FROM ATTCH_FILE WHERE BRD_CODE='SPPT') ATTCH_FILE "
+							+ "ON(TECH_SPPT.POST_NO=ATTCH_FILE.POST_NO) "
+						+ "WHERE TECH_SPPT.POST_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -1162,6 +1177,7 @@ public class BoardDao {
 				post.setSpptContent(rset.getString("SPPT_CONTENT"));
 				post.setSpptWriter(rset.getInt("SPPT_WRITER"));
 				post.setSpptWriterName(rset.getString("SPPT_WRITERNAME"));
+				post.setSpptWriterCompNo(rset.getInt("SPPT_WRITERCOMPNO"));
 				if(rset.getString("SPPT_ENG")!=null) {
 					post.setSpptEng(rset.getInt("SPPT_ENG"));
 				}else {
@@ -1174,6 +1190,7 @@ public class BoardDao {
 				post.setSpptStatName(rset.getString("STAT_NAME"));
 				post.setSpptCnt(rset.getInt("SPPT_CNT"));
 				post.setSpptEngck(rset.getString("SPPT_ENGCK").charAt(0));
+				post.setAttName(rset.getString("ATT_NAME"));
 				
 				//System.out.println("dao TechSupportPost check\n"+post);//////////////
 			}
@@ -1300,6 +1317,144 @@ public class BoardDao {
 		}
 		
 		return result;
+	}
+
+	public int takeChargeOfTechSpp(Connection conn, int postNo, int memberNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE TECH_SPPT SET SPPT_ENG=?, SPPT_STATCD='ENG_ASSIGNED' "
+																+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deletePost(Connection conn, int postNo, String tableName) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM "+tableName+" WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteTotalComment(Connection conn, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM COMMENTS WHERE BRD_CODE=? AND POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteAttFiles(Connection conn, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM ATTCH_FILE WHERE BRD_CODE=? AND POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int getCommentCnt(Connection conn, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int cnt = 0;
+		
+		String query = "SELECT COUNT(*) AS CNT FROM COMMENTS "
+							+ "WHERE BRD_CODE=? AND POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				cnt = rset.getInt("CNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return cnt;
+	}
+
+	public int getCommentAtt(Connection conn, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int cnt = 0;
+		
+		String query = "SELECT COUNT(*) AS CNT FROM ATTCH_FILE "
+								+ "WHERE BRD_CODE=? AND POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				cnt = rset.getInt("CNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return cnt;
 	}
 	
 	

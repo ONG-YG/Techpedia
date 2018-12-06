@@ -83,7 +83,36 @@
 	    }//function END
 	    
 	    function deletePost() {
-	    	alert("deletePost");////////////////
+
+    		$.ajax({
+				url : "/deletePost.do",
+				data : {postNo: postNo, boardCD: "SHR"},
+				type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data=='false') {
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+						location.href="/index.jsp";
+					}
+					else {
+						alert("게시물이 성공적으로 삭제되었습니다.");
+						location.href="/views/main/mainpage.jsp?board=TechSh";
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/index.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+    		
 	    }//function END
 	    
 	    function writeCmm() {
@@ -104,7 +133,7 @@
 						//console.log("정상 처리 완료");
 						//alert("success");
 						//console.log(data);
-						if(data==false) {
+						if(data=='false') {
 							alert("오류가 발생했습니다.\n"
 									+"문제가 지속될 경우 관리자에게 문의해주세요.");
 							location.href="/views/board/writeFail.jsp";
@@ -139,7 +168,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);
-					if(data==false) {
+					if(data=='false') {
 						alert("오류가 발생했습니다.\n"
 								+"문제가 지속될 경우 관리자에게 문의해주세요.");
 						location.href="/views/board/readFail.jsp";
@@ -151,7 +180,7 @@
 						$('#techShWriter_td').html(data.shrWriterName);
 						$('#techShDate_td').html(data.shrDate);
 						$('#techShCnt_td').html(data.shrCnt+1);
-						//$('#fileDownload_td').html();//첨부파일
+						$('#fileDownload_td').html(data.attName);//첨부파일
 						
 						if(memberNo==data.shrWriter) {
 							$('#rewrite_btn').css('display','block');
@@ -185,7 +214,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);
-					if(data==false) {
+					if(data=='false') {
 						var noComment = "<tr><td colspan='3'>댓글이 존재하지 않습니다.</td></tr>";
 						$('#commentView_tb tbody').html(noComment);
 					}
@@ -242,7 +271,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);
-					if(data==false) {
+					if(data=='false') {
 						alert("오류가 발생했습니다.\n"
 								+"문제가 지속될 경우 관리자에게 문의해주세요.");
 						location.href="/index.jsp";
@@ -298,7 +327,7 @@
 					//console.log("정상 처리 완료");
 					//alert("success");
 					//console.log(data);
-					if(data==false) {
+					if(data=='false') {
 						alert("오류가 발생했습니다.\n"
 								+"문제가 지속될 경우 관리자에게 문의해주세요.");
 						location.href="/index.jsp";
@@ -343,7 +372,7 @@
 						//console.log("정상 처리 완료");
 						//alert("success");
 						//console.log(data);
-						if(data==false) {
+						if(data=='false') {
 							alert("오류가 발생했습니다.\n"
 									+"문제가 지속될 경우 관리자에게 문의해주세요.");
 							location.href="/index.jsp";

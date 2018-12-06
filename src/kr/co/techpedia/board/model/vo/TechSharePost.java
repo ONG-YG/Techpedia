@@ -9,13 +9,14 @@ public class TechSharePost {
 	private String shrDate;
 	private int shrCnt;
 	private int cmmCnt;
+	private String attName;
 	
 	
 	public TechSharePost() {
 		super();
 	}
 	public TechSharePost(int postNo, String shrTitle, String shrContent, int shrWriter, String shrWriterName,
-			String shrDate, int shrCnt, int cmmCnt) {
+			String shrDate, int shrCnt, int cmmCnt, String attName) {
 		super();
 		this.postNo = postNo;
 		this.shrTitle = shrTitle;
@@ -25,10 +26,11 @@ public class TechSharePost {
 		this.shrDate = shrDate;
 		this.shrCnt = shrCnt;
 		this.cmmCnt = cmmCnt;
+		this.attName = attName;
 	}
-
-
-
+	
+	
+	
 	public int getPostNo() {
 		return postNo;
 	}
@@ -77,6 +79,12 @@ public class TechSharePost {
 	public void setCmmCnt(int cmmCnt) {
 		this.cmmCnt = cmmCnt;
 	}
+	public String getAttName() {
+		return attName;
+	}
+	public void setAttName(String attName) {
+		this.attName = attName;
+	}
 	
 	
 	
@@ -91,6 +99,7 @@ public class TechSharePost {
 							+"shrDate : "+shrDate+"\n"
 							+"shrCnt : "+shrCnt+"\n"
 							+"cmmCnt : "+cmmCnt+"\n"
+							+"attName : "+attName+"\n"
 							+"-----------------------------------------------\n";
 		
 		return techSharePost;

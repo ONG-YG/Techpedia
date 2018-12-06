@@ -75,20 +75,20 @@
 			else if(pg=='TechShW') {
 				$('#mainView').load("/views/board/techSharePostWrite.jsp");
 			}
-			else if(pg=='TechSppAW') {
-				$('#mainView').load("/views/board/techSupportAnswerWrite.jsp");
-			}
 			else if(pg=='NoticeR') {
 				$('#mainView').load("/views/board/noticeView.jsp?currPg="+cp+"&postNo="+postNo);
-			}
-			else if(pg=='TechShR') {
-				$('#mainView').load("/views/board/techSharePostView.jsp?currPg="+cp+"&postNo="+postNo);
 			}
 			else if(pg=='TechSppR') {
 				$('#mainView').load("/views/board/techSupportPostView.jsp?currPg="+cp+"&postNo="+postNo);
 			}
+			else if(pg=='TechShR') {
+				$('#mainView').load("/views/board/techSharePostView.jsp?currPg="+cp+"&postNo="+postNo);
+			}
 			else if(pg=='NoticeRW') {
 				$('#mainView').load("/views/board/noticeReWrite.jsp?postNo="+postNo);
+			}
+			else if(pg=='TechSppRW') {
+				$('#mainView').load("/views/board/techSupportPostReWrite.jsp?postNo="+postNo);
 			}
 			else if(pg=='TechShRW') {
 				$('#mainView').load("/views/board/techSharePostReWrite.jsp?postNo="+postNo);

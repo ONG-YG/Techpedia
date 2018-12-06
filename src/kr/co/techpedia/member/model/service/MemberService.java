@@ -112,5 +112,15 @@ public class MemberService {
 		
 		return result;
 	}
+
+	public TpMember getContactInfo(int memberNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		TpMember contactInfo = new MemberDao().getContactInfo(conn, memberNo);
+		
+		JDBCTemplate.close(conn);		
+		
+		return contactInfo;
+	}
 	
 }

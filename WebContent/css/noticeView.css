@@ -355,3 +355,8 @@ body{
 	float: right;
 	margin-left: 5px;
 }
+
+
+#noticeWrite #fileDownload_td{
+	cursor: pointer;
+}

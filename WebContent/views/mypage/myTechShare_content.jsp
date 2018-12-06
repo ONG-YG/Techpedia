@@ -65,12 +65,36 @@
 	    	getTechShareList();
 	    }
 	    
-	    function rewritePost(postNo){
-	    	alert("rewritePost");/////////
-	    }
-	    
         function delPost(postNo){
-	    	alert("delPost");//////////
+
+    		$.ajax({
+				url : "/deletePost.do",
+				data : {postNo: postNo, boardCD: "SHR"},
+				type : "post",
+				success : function(data){
+					//console.log("정상 처리 완료");
+					//alert("success");
+					//console.log(data);
+					if(data=='false') {
+						alert("오류가 발생했습니다.\n"
+								+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					}
+					else {
+						alert("게시물이 성공적으로 삭제되었습니다.");
+						getTechShareList();
+					}
+				},
+				error : function(){
+					//console.log("ajax 통신 에러");
+					alert("오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href="/index.jsp";
+				},
+				complete : function(){
+					//alert("complete");
+				}
+			});
+    		
 	    }
 	    
         function getTechShareList(){
@@ -95,9 +119,6 @@
 									+ data.techSharePostL[i].shrTitle +"</a>"
 								+"</td> "
 								+"<td>"+data.techSharePostL[i].shrDate+"</td> "
-								+"<td> "
-									+"<button id='rewrite-btn' onclick='rewritePost("+data.techSharePostL[i].postNo+");'>수정</button> "
-								+"</td> "
 								+"<td> "
 									+"<button id='delete-btn' onclick='delPost("+data.techSharePostL[i].postNo+");'>삭제</button> "
 								+"</td> "
@@ -149,7 +170,6 @@
 		                <th>번호</th>
 		                <th>제목</th>
 		                <th>작성일</th>
-		                <th>수정</th>
 		                <th>삭제</th>
 			        </tr>
 	            </thead>

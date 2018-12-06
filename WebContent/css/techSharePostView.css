@@ -357,3 +357,8 @@ body{
 	padding-right: 5px;
 	margin-right: 5px;
 }
+
+
+#techShWrite #fileDownload_td{
+	cursor: pointer;
+}

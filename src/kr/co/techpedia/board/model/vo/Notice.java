@@ -13,13 +13,14 @@ public class Notice {
 	private String ntcGradeCD;
 	private String ngrdName;
 	private int cmmCnt;
+	private String attName;
 	
 	
 	public Notice() {
 		super();
 	}
 	public Notice(int postNo, String ntcTitle, String ntcContent, int ntcWriterNo, String ntcWriterName, String ntcDate,
-			char ntcMainview, int ntcCnt, String ntcGradeCD, String ngrdName, int cmmCnt) {
+			char ntcMainview, int ntcCnt, String ntcGradeCD, String ngrdName, int cmmCnt, String attName) {
 		super();
 		this.postNo = postNo;
 		this.ntcTitle = ntcTitle;
@@ -32,7 +33,9 @@ public class Notice {
 		this.ntcGradeCD = ntcGradeCD;
 		this.ngrdName = ngrdName;
 		this.cmmCnt = cmmCnt;
+		this.attName = attName;
 	}
+	
 	
 	
 	public int getPostNo() {
@@ -101,6 +104,12 @@ public class Notice {
 	public void setCmmCnt(int cmmCnt) {
 		this.cmmCnt = cmmCnt;
 	}
+	public String getAttName() {
+		return attName;
+	}
+	public void setAttName(String attName) {
+		this.attName = attName;
+	}
 	
 	
 	@Override
@@ -116,6 +125,7 @@ public class Notice {
 							+"ntcCnt : "+ntcCnt+"\n"
 							+"ngrdName : "+ngrdName+"\n"
 							+"cmmCnt : "+cmmCnt+"\n"
+							+"attName : "+attName+"\n"
 							+"-----------------------------------------------\n";
 		
 		return noticeInfo;

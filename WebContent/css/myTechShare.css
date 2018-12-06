@@ -73,17 +73,19 @@ body{
     width: 80px;
 }
 #myTechShare #techShare-tb th:nth-child(2){
-    width: 490px;
+    width: 540px;
 }
 #myTechShare #techShare-tb th:nth-child(3){
-    width: 150px;
+    width: 170px;
 }
 #myTechShare #techShare-tb th:nth-child(4){
-    width: 90px;
+    width: 110px;
 }
+/* 
 #myTechShare #techShare-tb th:nth-child(5){
     width: 90px;
 }
+ */
 
 
 #myTechShare #techShare-tb .title_a{
@@ -96,7 +98,7 @@ body{
 #myTechShare #techShare-tb #rewrite-btn,
 #myTechShare #techShare-tb #delete-btn{
 /*    border: 1px solid; border-color: blue;*/
-    height: 30px; width: 50px;
+    height: 25px; width: 37px;
     font-size: 12px;
     font-weight: 900;
     color: black;
@@ -111,13 +113,14 @@ body{
     color: white;
     cursor: pointer;
 }
+/* 
 #myTechShare #techShare-tb #delete-btn{
     border: 1px solid; border-color: dimgray;
     background-color: gainsboro;
     color: dimgray;
     cursor: pointer;
 }
-
+ */
 
 #myTechShare #bottomSpace{
 /*    border: 1px solid; border-color: red;*/
