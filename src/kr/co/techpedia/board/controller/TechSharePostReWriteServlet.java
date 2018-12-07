@@ -1,5 +1,6 @@
 package kr.co.techpedia.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,16 +16,16 @@ import kr.co.techpedia.board.model.service.BoardService;
 import kr.co.techpedia.member.model.vo.MemberSession;
 
 /**
- * Servlet implementation class TechSharePostWriteServlet
+ * Servlet implementation class TechSharePostReWriteServlet
  */
-@WebServlet(name = "TechSharePostWrite", urlPatterns = { "/techSharePostWrite.do" })
-public class TechSharePostWriteServlet extends HttpServlet {
+@WebServlet(name = "TechSharePostReWrite", urlPatterns = { "/techSharePostReWrite.do" })
+public class TechSharePostReWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TechSharePostWriteServlet() {
+    public TechSharePostReWriteServlet() {
         super();
     }
 
@@ -41,8 +42,6 @@ public class TechSharePostWriteServlet extends HttpServlet {
 			
 			if(memSession!=null
 					&& memSession.getCurrBoard().equals("TechSh")) {
-				
-				int memberNo = memSession.getMemberNo();
 				
 				// 최대 업로드 파일 사이즈
 				int fileSizeLimit = 10 * 1024 *1024; //10MB
@@ -64,28 +63,41 @@ public class TechSharePostWriteServlet extends HttpServlet {
 				String fileName = multi.getFilesystemName("upfile");
 				//System.out.println("파일 이름 :"+fileName);////////////
 				
-				
-				// 업로드 파일의 실제 총 경로 (filePath)
-				//업로드 되는  경로 + 파일이름
-				//String fullFilePath = uploadPath+"\\"+fileName;
-				//System.out.println("총 경로 : "+fullFilePath);
-				//  \는 따로 역할이 있기 때문에 문자로\를 쓰려면 두번써줘야함
-				
-				
-				// 파일의 크기 (length)
-				//File file = new File(fullFilePath); // import java.io.File
-				//long fileSize = file.length(); // 파일의 사이즈를 가져옴
+				int postNo = Integer.parseInt( multi.getParameter("postNo") );
 				
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 				
 				
-				int result = new BoardService().insertTechShare(memberNo, title, content, fileName);
+				int result = new BoardService().updateTechShare(postNo, title, content, fileName);
 				
 				if(result>0) {
+
+					if(fileName!=null) {
+						String originFile = multi.getParameter("originFile");
+						
+						//기존파일 삭제
+						String deletePath = getServletContext().getRealPath("/")+"uploadFile\\"+originFile;
+						
+						File delFile = new File(deletePath);
+						delFile.delete();
+						
+					}
+					
 					//작성글 등록 완료 페이지로 리다이렉트
 					response.sendRedirect("/views/board/writeSuccess.jsp");
 				}else {
+					if(fileName!=null) {
+						//새로 업로드한 파일 삭제
+						String deletePath = getServletContext().getRealPath("/")+"uploadFile\\"+fileName;
+						
+						File delFile = new File(deletePath);
+						
+						if(delFile.exists()) {
+							delFile.delete();
+						}
+					}
+					
 					//작성글 등록 실패 페이지로 리다이렉트
 					response.sendRedirect("/views/board/writeFail.jsp");
 				}

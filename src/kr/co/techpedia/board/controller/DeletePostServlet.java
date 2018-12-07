@@ -1,5 +1,6 @@
 package kr.co.techpedia.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,9 +42,18 @@ public class DeletePostServlet extends HttpServlet {
 				int postNo = Integer.parseInt(request.getParameter("postNo"));
 				String boardCD = request.getParameter("boardCD");
 				
+				String attFile = new BoardService().getAttFileName(postNo, boardCD);
+				
 				int result = new BoardService().deletePost(postNo, boardCD);
 				
 				if(result>0) {
+					if(attFile!=null) {
+						//기존파일 삭제
+						String deletePath = getServletContext().getRealPath("/")+"uploadFile\\"+attFile;
+						
+						File delFile = new File(deletePath);
+						delFile.delete();
+					}
 					response.getWriter().print(true);
 				}else {
 					throw new Exception();

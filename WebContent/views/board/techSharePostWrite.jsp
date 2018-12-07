@@ -82,6 +82,20 @@
 	    	
 	    	return false;
 	    }//function END
+
+	    function registerPost(){
+	    	var tit = $('#titleInput').val();
+	    	var con = $('#content_txt').val();
+	    	
+	    	if(tit=='' || con=='') {
+	    		alert("제목과 내용을 모두 입력해주세요.");
+	    	}
+	    	else {
+	    		$('#writeForm').submit();
+	    	}
+	    	
+	    	return false;
+	    }//function END
 	    
     </script>
 </head>
@@ -90,7 +104,7 @@
 	<div id="techShWrite">
 	    
 	    <span>기술 공유 게시물 작성</span>
-	    <form action="/techSharePostWrite.do" method="post" enctype="multipart/form-data">
+	    <form action="/techSharePostWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
 	    
 		    <table id="techSh-tb">
 		        <tr id="techShTitle_tr">
@@ -120,7 +134,7 @@
 		        </tr>
 	            <tr id="register_tr">
 	                <th></th>
-	                <td><button id="register_btn">등록</button></td>
+	                <td><button id="register_btn" onclick="return registerPost();">등록</button></td>
 	            </tr>
 		    </table>
 	    	

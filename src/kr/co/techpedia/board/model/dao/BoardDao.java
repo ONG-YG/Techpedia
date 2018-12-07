@@ -1430,7 +1430,7 @@ public class BoardDao {
 		return cnt;
 	}
 
-	public int getCommentAtt(Connection conn, int postNo, String boardCD) {
+	public int getAttCnt(Connection conn, int postNo, String boardCD) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int cnt = 0;
@@ -1455,6 +1455,111 @@ public class BoardDao {
 		}
 		
 		return cnt;
+	}
+
+	public int updateNoticeContent(Connection conn, int postNo, String noticeGrade, String title, String content) {
+		PreparedStatement pstmt = null;
+		int updateResult = 0;
+		
+		String query = "UPDATE NOTICE SET "
+										+ "NTC_TITLE=?, "
+										+ "NTC_CONTENT=?, "
+										+ "NTC_GRADECD=? "
+										+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setString(3, noticeGrade);
+			pstmt.setInt(4, postNo);
+			updateResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return updateResult;
+	}
+
+	public String getAttFileName(Connection conn, int postNo, String boardCD) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String attFile = null;
+		
+		String query = "SELECT ATT_NAME FROM ATTCH_FILE "
+								+ "WHERE BRD_CODE=? AND POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardCD);
+			pstmt.setInt(2, postNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				attFile = rset.getString("ATT_NAME");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return attFile;
+	}
+
+	public int updateTechShare(Connection conn, int postNo, String title, String content) {
+		PreparedStatement pstmt = null;
+		int updateResult = 0;
+		
+		String query = "UPDATE TECH_SHR SET "
+										+ "SHR_TITLE=?, "
+										+ "SHR_CONTENT=? "
+										+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, postNo);
+			updateResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return updateResult;
+	}
+
+	public int updateTechSupport(Connection conn, int postNo, String title, String content) {
+		PreparedStatement pstmt = null;
+		int updateResult = 0;
+		
+		String query = "UPDATE TECH_SPPT SET "
+										+ "SPPT_TITLE=?, "
+										+ "SPPT_CONTENT=?, "
+										+ "SPPT_ENGCK='N' "
+										+ "WHERE POST_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, postNo);
+			updateResult = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return updateResult;
 	}
 	
 	

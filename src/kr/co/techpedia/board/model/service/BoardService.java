@@ -524,7 +524,7 @@ public class BoardService {
 		int cmmCnt = new BoardDao().getCommentCnt(conn, postNo, boardCD);
 		int cmmDel_result = new BoardDao().deleteTotalComment(conn, postNo, boardCD);
 		
-		int attCnt = new BoardDao().getCommentAtt(conn, postNo, boardCD);
+		int attCnt = new BoardDao().getAttCnt(conn, postNo, boardCD);
 		int attDel_result = new BoardDao().deleteAttFiles(conn, postNo, boardCD);
 		
 		if(postDel_result>0 
@@ -533,6 +533,112 @@ public class BoardService {
 		
 		if(result>0) {
 			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int updateNotice(int postNo, String noticeGrade, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int updateResult = new BoardDao().updateNoticeContent(conn, postNo, noticeGrade, title, content);
+		
+		int uploadResult = 1;
+		int attCnt = 0;
+		int attDel_result = 1;
+		if(fileName!=null) {
+			// 기존 파일 대신 새로 첨부한 파일이 있을 경우
+			// DB에서 기존에 첨부되어있던 파일 정보 삭제
+			attCnt = new BoardDao().getAttCnt(conn, postNo, "NTC");
+			attDel_result = new BoardDao().deleteAttFiles(conn, postNo, "NTC");
+			
+			// 새로 첨부한 파일 정보 DB에 입력
+			uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "NTC");
+		}
+		
+		if(updateResult>0 && uploadResult>0
+				 && (attCnt==0 || attDel_result>0) ) {
+			JDBCTemplate.commit(conn);
+			result = 1;
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public String getAttFileName(int postNo, String boardCD) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		String attFile = new BoardDao().getAttFileName(conn, postNo, boardCD);
+		
+		JDBCTemplate.close(conn);
+		
+		return attFile;
+	}
+
+	public int updateTechShare(int postNo, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int updateResult = new BoardDao().updateTechShare(conn, postNo, title, content);
+		
+		int uploadResult = 1;
+		int attCnt = 0;
+		int attDel_result = 1;
+		if(fileName!=null) {
+			// 기존 파일 대신 새로 첨부한 파일이 있을 경우
+			// DB에서 기존에 첨부되어있던 파일 정보 삭제
+			attCnt = new BoardDao().getAttCnt(conn, postNo, "SHR");
+			attDel_result = new BoardDao().deleteAttFiles(conn, postNo, "SHR");
+			
+			// 새로 첨부한 파일 정보 DB에 입력
+			uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "SHR");
+		}
+		
+		if(updateResult>0 && uploadResult>0
+				 && (attCnt==0 || attDel_result>0) ) {
+			JDBCTemplate.commit(conn);
+			result = 1;
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int updateTechSupport(int postNo, String title, String content, String fileName) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = 0;
+		
+		int updateResult = new BoardDao().updateTechSupport(conn, postNo, title, content);
+		
+		int uploadResult = 1;
+		int attCnt = 0;
+		int attDel_result = 1;
+		if(fileName!=null) {
+			// 기존 파일 대신 새로 첨부한 파일이 있을 경우
+			// DB에서 기존에 첨부되어있던 파일 정보 삭제
+			attCnt = new BoardDao().getAttCnt(conn, postNo, "SPPT");
+			attDel_result = new BoardDao().deleteAttFiles(conn, postNo, "SPPT");
+			
+			// 새로 첨부한 파일 정보 DB에 입력
+			uploadResult = new BoardDao().uploadFile(conn, fileName, postNo, "SPPT");
+		}
+		
+		if(updateResult>0 && uploadResult>0
+				 && (attCnt==0 || attDel_result>0) ) {
+			JDBCTemplate.commit(conn);
+			result = 1;
 		}else {
 			JDBCTemplate.rollback(conn);
 		}

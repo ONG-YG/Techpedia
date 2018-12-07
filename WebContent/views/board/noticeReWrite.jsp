@@ -39,6 +39,7 @@
 					%>
 					<script>
 						postNo = <%=postNo%>;
+						$('#postNo_hidden').val(postNo);
 					</script>
 					<%
 				}else {
@@ -183,7 +184,8 @@
 						$('#'+data.ntcGradeCD).attr('selected','true');
 						$('#titleInput').val(data.ntcTitle);
 						$('#content_txt').val(data.ntcContent);
-						$('#fileInput_span').text(data.attName);//첨부파일
+						$('#fileInput_span').text(data.attName);//기존 첨부파일
+						$('#originFile_hidden').val(data.attName);//기존 첨부파일(servlet에 보낼 값)
 					}
 				},
 				error : function(){
@@ -205,7 +207,7 @@
 	<div id="noticeWrite">
 	    
 	    <span>공지사항 수정</span>
-	    <form action="/noticeWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
+	    <form action="/noticeReWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
 	    
 		    <table id="notice-tb">
 		    
@@ -249,10 +251,11 @@
 		        </tr>
 	            <tr id="register_tr">
 	                <th></th>
-	                <td><button id="register_btn" onclick="return registerPost();">등록</button></td>
+	                <td><button id="register_btn" onclick="return registerPost();">수정</button></td>
 	            </tr>
 		    </table>
-	    	
+	    	<input type="hidden" name="postNo" id="postNo_hidden" value="" />
+	    	<input type="hidden" name="originFile" id="originFile_hidden" value="" />
 	    </form>
 	</div>
 	

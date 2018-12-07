@@ -28,12 +28,28 @@
 				var memberNo = <%=memberNo%>;
 				var compNo = <%=compNo%>;
 				var currBoard = '<%=currBoard%>';
+				var postNo = -1;
 				
 				if(!writeStart || memberTypeCD!='COP' || currBoard!='TechSpp') {
 					location.href="/views/board/writeError.jsp";
 				}
 			</script>
 	<%
+				if(!request.getParameter("postNo").equals("null")){
+					int postNo = Integer.parseInt(request.getParameter("postNo"));
+					%>
+					<script>
+						postNo = <%=postNo%>;
+						$('#postNo_hidden').val(postNo);
+					</script>
+					<%
+				}else {
+					%>
+					<script>
+						location.href="/views/board/readError.jsp";
+					</script>
+					<%
+				}
 			}else {			
 	%>
 				<script>
@@ -50,7 +66,7 @@
 		}
 	%>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/css/techSupportPostWrite.css" rel="stylesheet" type="text/css">
+	<link href="/css/techSupportPostReWrite.css" rel="stylesheet" type="text/css">
     
 	<script>
         
@@ -86,7 +102,21 @@
 	    	
 	    	return false;
 	    }//function END
-
+		
+	    function registerPost(){
+	    	var tit = $('#titleInput').val();
+	    	var con = $('#content_txt').val();
+	    	
+	    	if(tit=='' || con=='') {
+	    		alert("제목과 내용을 모두 입력해주세요.");
+	    	}
+	    	else {
+	    		$('#writeForm').submit();
+	    	}
+	    	
+	    	return false;
+	    }//function END
+	    
 	    function getTechSppPost() {
 	    	$.ajax({
 				url : "/techSupportPostRead.do",
@@ -110,8 +140,8 @@
 						else {
 							$('#titleInput').val(data.spptTitle);
 							$('#content_txt').val(data.spptContent);
-							$('#fileInput_span').text(data.attName);//첨부파일
-							
+							$('#fileInput_span').text(data.attName);//기존 첨부파일
+							$('#originFile_hidden').val(data.attName);//기존 첨부파일(servlet에 보낼 값)
 						}
 					}
 				},
@@ -133,7 +163,7 @@
 	<div id="techSppWrite">
 	    
 	    <span>기술 지원 요청글 수정</span>
-	    <form action="/techSpportPostWrite.do" method="post" enctype="multipart/form-data">
+	    <form action="/techSpportPostReWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
 	    
 		    <table id="techSpp-tb">
 		        <tr id="techSppTitle_tr">
@@ -163,10 +193,11 @@
 		        </tr>
 	            <tr id="register_tr">
 	                <th></th>
-	                <td><button id="register_btn">등록</button></td>
+	                <td><button id="register_btn" onclick="return registerPost();">수정</button></td>
 	            </tr>
 		    </table>
-	    	
+	    	<input type="hidden" name="postNo" id="postNo_hidden" value="" />
+	    	<input type="hidden" name="originFile" id="originFile_hidden" value="" />
 	    </form>
 	</div>
 	

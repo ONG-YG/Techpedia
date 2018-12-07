@@ -82,6 +82,20 @@
 	    	
 	    	return false;
 	    }//function END
+
+	    function registerPost(){
+	    	var tit = $('#titleInput').val();
+	    	var con = $('#content_txt').val();
+	    	
+	    	if(tit=='' || con=='') {
+	    		alert("제목과 내용을 모두 입력해주세요.");
+	    	}
+	    	else {
+	    		$('#writeForm').submit();
+	    	}
+	    	
+	    	return false;
+	    }//function END
 	    
     </script>
 </head>
@@ -90,7 +104,7 @@
 	<div id="techSppWrite">
 	    
 	    <span>기술 지원 요청글 작성</span>
-	    <form action="/techSpportPostWrite.do" method="post" enctype="multipart/form-data">
+	    <form action="/techSpportPostWrite.do" method="post" enctype="multipart/form-data" id="writeForm">
 	    
 		    <table id="techSpp-tb">
 		        <tr id="techSppTitle_tr">
@@ -120,7 +134,7 @@
 		        </tr>
 	            <tr id="register_tr">
 	                <th></th>
-	                <td><button id="register_btn">등록</button></td>
+	                <td><button id="register_btn" onclick="return registerPost();">등록</button></td>
 	            </tr>
 		    </table>
 	    	

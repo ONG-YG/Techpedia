@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+div{
+/*    border: 5px dashed; border-color: white;*/
+}
+body{
+	/*
+    background-image: url("../img/Information-Technology-Wallpaper-21.jpg");
+    background-position: topcenter;
+    background-color: black;
+    */
+}
+#techSppWrite{
+	/*
+    background-color: rgb(255,255,255,0.86);
+    border: 2px dashed; border-color: gainsboro;
+    height: 630px; width: 1020px;
+    */
+}
+
+#techSppWrite>span{
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 900;
+    color: darkblue;
+    text-shadow: 3px 3px 5px darkgray;
+}
+
+
+
+#techSppWrite #techSpp-tb *{
+    box-sizing: border-box;
+}
+#techSppWrite #techSpp-tb{
+/*    border-color: transparent;*/
+    margin-left: auto;
+    margin-right: auto;
+    height: auto; width: 700px;
+    margin-top: 30px;
+    border-spacing: 0px;
+    text-align: center;
+    text-shadow: -1px -1px 2px white,
+                1px 1px 5px rgb(197,206,215);
+}
+#techSppWrite #techSpp-tb th{
+    width: 120px;
+    color: darkblue;
+    font-size: 14px;
+    font-weight: 900;
+    text-shadow: -1px 0 2px rgb(230,230,230),
+                0 1px 2px rgb(230,230,230),
+                1px 0 2px rgb(230,230,230),
+                0 -1px 2px rgb(230,230,230);
+    text-align: right;
+    padding-right: 20px;
+}
+#techSppWrite #techSpp-tb td{
+/*    border: 1px dashed; border-color: blue;*/
+    width: 580px;
+    text-align: left;
+    padding-left: 15px;
+}
+#techSppWrite #techSpp-tb #spptState_tr th,
+#techSppWrite #techSpp-tb #spptState_tr td{
+    height: 30px;
+    vertical-align: bottom;
+}
+#techSppWrite #techSpp-tb #spptState_tr th{
+	vertical-align: middle;
+}
+#techSppWrite #techSpp-tb #spptState_tr select{
+	height: 24px;
+	align-items: baseline;
+}
+#techSppWrite #techSpp-tb #techSppTitle_tr th,
+#techSppWrite #techSpp-tb #techSppTitle_tr td{
+    height: 40px;
+    vertical-align: middle;
+}
+#techSppWrite #techSpp-tb #techSppContent_tr th,
+#techSppWrite #techSpp-tb #techSppContent_tr td{
+    height: 300px;
+    vertical-align: top;
+    padding-top: 0px;
+}
+#techSppWrite #techSpp-tb #titleInput,
+#techSppWrite #techSpp-tb textarea{
+    width: 450px;
+    border: 1px solid; border-color: dimgray;
+    border-radius: 4px;
+}
+#techSppWrite #techSpp-tb #titleInput{
+    height: 25px;
+}
+#techSppWrite #techSpp-tb textarea{
+    height: 100%;
+    resize: none;
+}
+#techSppWrite #techSpp-tb #fileUpload_tr,
+#techSppWrite #techSpp-tb #fileUpload_td{
+	vertical-align: middle;
+	padding: 0px;
+	height: 40px;
+}
+#techSppWrite #techSpp-tb #fileUpload_tr th,
+#techSppWrite #techSpp-tb #fileUpload_td{
+	padding-top: 5px;
+}
+#techSppWrite #techSpp-tb #fileUpload_td{
+	text-align: left;
+	padding-left: 15px;
+}
+#techSppWrite #techSpp-tb #fileUpload_td #fileInput_btn,
+#techSppWrite #techSpp-tb #fileUpload_td .upload_btn{
+    border: 1px solid; border-color: dimgray;
+    border-radius: 4px;
+    line-height: 170%;
+    color: dimgray;
+    margin-right: 5px;
+    float: left;
+}
+#techSppWrite #techSpp-tb #fileUpload_td #fileInput_div{
+	border: 1px solid; border-color: dimgray;
+    border-radius: 4px;
+	height: 27px; width: 245px;
+	margin-left: 2px;
+	margin-right: 15px;
+	float: left;
+	padding-top: 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+}
+#techSppWrite #techSpp-tb #fileUpload_td #fileInput{
+	opacity: 0;
+	/*input type="file" tag 투명하게 처리*/
+	position: relative;
+}
+#techSppWrite #techSpp-tb #fileUpload_td #fileInput_span{
+	font-size: 14px;
+	color: dimgray;
+}
+#techSppWrite #techSpp-tb #fileCondition_tr td{
+	padding-right: 130px;
+	font-size: 13px;
+	color: dimgray;
+	text-shadow: none;
+}
+
+
+#techSppWrite #techSpp-tb #register_tr td{
+	padding: 0px;
+    height: 50px;
+    text-align: right;
+    vertical-align: middle;
+}
+#techSppWrite #techSpp-tb #register_btn{
+/*    border: 1px solid; border-color: blue;*/
+    height: 35px; width: 60px;
+    font-size: 12px;
+    font-weight: 900;
+    color: black;
+    text-align: center;
+    margin: 0px;
+    margin-right: 120px;
+    
+/*    background-color: gainsboro;*/
+    background-color: rgb(0,0,65);
+    border: 0.5px solid; border-color: aliceblue;
+    border-radius: 7px;
+/*    color: dimgray;*/
+    color: white;
+    cursor: pointer;
+}
+
+
+
