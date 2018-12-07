@@ -70,6 +70,13 @@
 	    	if(postNo!=-1) {
 	    		getTechShPost();
 	    	}
+
+	    	$('#fileDownload_td').click(function(){
+				var fileName = $('#fileDownload_td').html();
+	    		
+	    		location.href = "/downloadFile.do?fileName="+fileName;
+	    		
+	    	});
 	    	
 	    	
 	    });//$(document).ready END
