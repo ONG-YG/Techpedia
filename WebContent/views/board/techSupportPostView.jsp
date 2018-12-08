@@ -247,9 +247,10 @@
 							if(data.spptEngck=='N') {
 								$('#engCheck_span').css('color','coral');
 							}
-							if(data.spptEngName==null) $('#engCheck_span').remove();
+							if(data.spptEngName==null) $('#engCheck_span').css('display','none');
+							else $('#engCheck_span').css('display','inline');
 							
-							if(memberNo==data.spptWriter) {
+							if(memberNo==data.spptWriter || memberTypeCD=='HP_AD') {
 								
 								$('#rewrite_btn').css('display','block');
 								$('#rewrite_btn').attr('onclick','rewrite();');
@@ -298,7 +299,7 @@
 						for(var i=0; i<data.length; i++) {
 							var buttons = "";
 							
-							if(data[i].cmmWriterNo==memberNo) {
+							if(data[i].cmmWriterNo==memberNo || memberTypeCD=='HP_AD') {
 								/* 
 								buttons = "<button class='deleteCmm' onclick='delCmm("+data[i].cmmNo+");'>삭제</button>"
 											+"<button class='rewriteCmm' onclick='reWriteCmm("+data[i].cmmNo+");'>수정</button>";

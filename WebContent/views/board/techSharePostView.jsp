@@ -195,7 +195,7 @@
 							$('#fileDownload_td').css('cursor','pointer');
 						}
 						
-						if(memberNo==data.shrWriter) {
+						if(memberNo==data.shrWriter || memberTypeCD=='HP_AD') {
 							$('#rewrite_btn').css('display','block');
 							$('#rewrite_btn').attr('onclick','rewrite();');
 							$('#delete_btn').css('display','block');
@@ -237,7 +237,7 @@
 						
 						for(var i=0; i<data.length; i++) {
 							var buttons = "";
-							if(data[i].cmmWriterNo==memberNo) {
+							if(data[i].cmmWriterNo==memberNo || memberTypeCD=='HP_AD') {
 								buttons = "<button class='deleteCmm' onclick='delCmm("+data[i].cmmNo+");'>삭제</button>"
 											+"<button class='rewriteCmm' onclick='reWriteCmm("+data[i].cmmNo+");'>수정</button>";
 							}
