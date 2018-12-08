@@ -647,7 +647,120 @@ public class BoardService {
 		
 		return result;
 	}
+
+	public BoardPageData searchNoticeBoardList(int currPg, String searchArea, String searchKeyword) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<Notice> noticeList = new BoardDao().searchNoticeBoardList(conn, currPg, recordCountPerPage, 
+																					searchArea, searchKeyword);
+		String pageNavi = new BoardDao().getSearchPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"Notice", 
+														-1, -1,
+														searchArea, searchKeyword);
+		
+		BoardPageData pd = null;
+		if(!noticeList.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setNoticeList(noticeList);
+			pd.setPageNavi(pageNavi);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return pd;
+	}
 	
+	public BoardPageData searchTechShareBoardList(int currPg, String searchArea, String searchKeyword) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		//ArrayList<TechSharePost> techSharePostL = new ArrayList<>();
+		//techSharePostL = new BoardDao().techShareBoardList(conn);
+		ArrayList<TechSharePost> techSharePostL = new BoardDao().searchTechShareBoardList(conn, currPg, recordCountPerPage, 
+																								searchArea, searchKeyword);
+		String pageNavi = new BoardDao().getSearchPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSh", 
+														-1, -1,
+														searchArea, searchKeyword);
+		
+		BoardPageData pd = null;
+		if(!techSharePostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSharePostL(techSharePostL);
+			pd.setPageNavi(pageNavi);
+		}
+		
+		return pd;
+	}
 	
+	public BoardPageData searchTechSupportBoardListByCompNo(int compNo, int currPg, String searchArea,
+			String searchKeyword) {
+		Connection conn = JDBCTemplate.getConnection();
+
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<TechSupportPost> techSupportPostL
+			= new BoardDao().searchTechSupportBoardListByCompNo(conn, compNo, currPg, recordCountPerPage, 
+																		searchArea, searchKeyword);
+		String pageNavi = new BoardDao().getSearchPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSpp", 
+														compNo, -1,
+														searchArea, searchKeyword);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSupportPostL(techSupportPostL);
+			pd.setPageNavi(pageNavi);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return pd;
+	}
+
+	public BoardPageData searchTechSupportBoardList(int currPg, String searchArea, String searchKeyword) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int recordCountPerPage = 10;	// 게시물 개수
+		int naviCountPerPage = 5;		// navi 개수
+		
+		ArrayList<TechSupportPost> techSupportPostL = new BoardDao().searchTechSupportBoardList(conn, currPg, recordCountPerPage, 
+																								searchArea, searchKeyword);
+		
+		String pageNavi = new BoardDao().getSearchPageNavi(conn, 
+														currPg, 
+														recordCountPerPage, 
+														naviCountPerPage, 
+														"TechSpp", 
+														-1, -1,
+														searchArea, searchKeyword);
+		
+		BoardPageData pd = null;
+		if(!techSupportPostL.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new BoardPageData();
+			pd.setTechSupportPostL(techSupportPostL);
+			pd.setPageNavi(pageNavi);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return pd;
+	}
 	
 }

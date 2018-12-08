@@ -57,95 +57,181 @@
 	<link href="/css/techSupportPostList.css" rel="stylesheet" type="text/css">
 	
 	<script>
-	$(document).ready(function(){
-    	
-		techSpptBoardList();
-		
-		if(memberTypeCD=='COP') {
-    		$('#writeBtn').css('display','block');
-    	}
-    	
-    });//$(document).ready END
-    
-    function move(pageNo){
-    	currPg = pageNo;
-    	techSpptBoardList();
-    }
-
-    function writePost(){
-    	location.href="/writePost.do";
-    }
-    
-    function techSpptBoardList(){
-		
-       	$.ajax({
-				url : "/techSupportBoardList.do",
-				data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg},
-				type : "post",
-				success : function(data){
-					//console.log("정상 처리 완료");
-					//alert("success");
-					//console.log(data);////////////////////
-					
-					if(data) {
-						//techSpPostList = [];
-						var postL = '';
-						for(var i=0; i<data.techSupportPostL.length; i++) {
-							var engName = data.techSupportPostL[i].spptEngName;
-							if (engName==null) {
-								engName = '(배정되지 않음)';
-							}
-							
-							var newPost = "<span></span>";
-							if (engName=='(배정되지 않음)') {
-								newPost = "<span class='newPost'>new</span>";
-							}
-
-							var cmmCnt = data.techSupportPostL[i].cmmCnt;
-							var cmmCnt_span = "<span class='cmmCnt'></span>";
-							if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
-							
-							postL += " <tr> "
-										+"<td>"+data.techSupportPostL[i].postNo+"</td> "
-										+"<td>"+data.techSupportPostL[i].spptStatName+"</td> "
-										+"<td>"
-										+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+data.techSupportPostL[i].postNo+"'>"
-											+data.techSupportPostL[i].spptTitle +"</a>" + cmmCnt_span + newPost
-										+"</td> "
-										+"<td>"+data.techSupportPostL[i].spptWriterName+"</td> "
-										+"<td>"+engName+"</td> "
-										+"<td>"+data.techSupportPostL[i].spptDate+"</td> "
-										+"<td>"+data.techSupportPostL[i].spptCnt+"</td> "
-									+"</tr> ";
-						}
+		$(document).ready(function(){
+	    	
+			techSpptBoardList();
+			
+			if(memberTypeCD=='COP') {
+	    		$('#writeBtn').css('display','block');
+	    	}
+	    	
+	    });//$(document).ready END
+	    
+	    function move(pageNo){
+	    	currPg = pageNo;
+	    	techSpptBoardList();
+	    }
+	
+	    function writePost(){
+	    	location.href="/writePost.do";
+	    }
+	    
+	    function techSpptBoardList(){
+			
+	       	$.ajax({
+					url : "/techSupportBoardList.do",
+					data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg},
+					type : "post",
+					success : function(data){
+						//console.log("정상 처리 완료");
+						//alert("success");
+						//console.log(data);////////////////////
 						
-						$('#techSppt-tb tbody').html(postL);
-						$('#navi').html(data.pageNavi);
+						if(data) {
+							//techSpPostList = [];
+							var postL = '';
+							for(var i=0; i<data.techSupportPostL.length; i++) {
+								var engName = data.techSupportPostL[i].spptEngName;
+								if (engName==null) {
+									engName = '(배정되지 않음)';
+								}
+								
+								var newPost = "<span></span>";
+								if (engName=='(배정되지 않음)') {
+									newPost = "<span class='newPost'>new</span>";
+								}
+	
+								var cmmCnt = data.techSupportPostL[i].cmmCnt;
+								var cmmCnt_span = "<span class='cmmCnt'></span>";
+								if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
+								
+								postL += " <tr> "
+											+"<td>"+data.techSupportPostL[i].postNo+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptStatName+"</td> "
+											+"<td>"
+											+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+data.techSupportPostL[i].postNo+"'>"
+												+data.techSupportPostL[i].spptTitle +"</a>" + cmmCnt_span + newPost
+											+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptWriterName+"</td> "
+											+"<td>"+engName+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptDate+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptCnt+"</td> "
+										+"</tr> ";
+							}
+							
+							$('#techSppt-tb tbody').html(postL);
+							$('#navi').html(data.pageNavi);
+						}
+						else {
+							var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span><img src='' id='next_img' width='20px'></span>";
+							$('#techSppt-tb tbody').html('');
+							$('#navi').html(emptyPageNavi);
+						} 
+					},
+					error : function(){
+						//console.log("ajax 통신 에러");
+						alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href = "/views/main/mainpage.jsp";
+					},
+					complete : function(){
+						//alert("complete");
 					}
-					else {
-						var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
-							                +"<span></span>"
-							                +"<span></span>"
-							                +"<span></span>"
-							                +"<span></span>"
-							                +"<span></span>"
-							                +"<span><img src='' id='next_img' width='20px'></span>";
-						$('#techSppt-tb tbody').html('');
-						$('#navi').html(emptyPageNavi);
-					} 
-				},
-				error : function(){
-					//console.log("ajax 통신 에러");
-					alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
-						+"문제가 지속될 경우 관리자에게 문의해주세요.");
-				location.href = "/views/main/mainpage.jsp";
-				},
-				complete : function(){
-					//alert("complete");
-				}
-			});
-    }//function END
-         
+				});
+	       	
+	    }//function END
+	    
+	    function search(currPg) {
+        	var searchArea = $('#searchArea_form input[name=searchArea]:checked').val();
+        	var searchKeyword = $('#searchKeyword').val();
+        	
+        	if(searchArea==null) {
+        		alert("검색 조건을 선택해주세요.");///////////
+        	}
+        	else if(searchKeyword=='') {
+        		alert("검색어를 입력해주세요.");
+        	}
+	    	else {
+	    		
+	    		$.ajax({
+					url : "/searchTechSupportBoardList.do",
+					data : {memberTypeCD: memberTypeCD, compNo: compNo, currPg: currPg,
+									searchArea: searchArea, searchKeyword: searchKeyword},
+					type : "post",
+					success : function(data){
+						//console.log("정상 처리 완료");
+						//alert("success");
+						//console.log(data);////////////////////
+						
+						if(data) {
+							//techSpPostList = [];
+							var postL = '';
+							for(var i=0; i<data.techSupportPostL.length; i++) {
+								var engName = data.techSupportPostL[i].spptEngName;
+								if (engName==null) {
+									engName = '(배정되지 않음)';
+								}
+								
+								var newPost = "<span></span>";
+								if (engName=='(배정되지 않음)') {
+									newPost = "<span class='newPost'>new</span>";
+								}
+	
+								var cmmCnt = data.techSupportPostL[i].cmmCnt;
+								var cmmCnt_span = "<span class='cmmCnt'></span>";
+								if (cmmCnt!=0) cmmCnt_span = "<span class='cmmCnt'>["+cmmCnt+"]</span>";
+								
+								postL += " <tr> "
+											+"<td>"+data.techSupportPostL[i].postNo+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptStatName+"</td> "
+											+"<td>"
+											+"<a class='title_a' href='/views/main/mainpage.jsp?board=TechSppR&currPg="+currPg+"&postNo="+data.techSupportPostL[i].postNo+"'>"
+												+data.techSupportPostL[i].spptTitle +"</a>" + cmmCnt_span + newPost
+											+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptWriterName+"</td> "
+											+"<td>"+engName+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptDate+"</td> "
+											+"<td>"+data.techSupportPostL[i].spptCnt+"</td> "
+										+"</tr> ";
+							}
+							
+							$('#techSppt-tb tbody').html(postL);
+							$('#navi').html(data.pageNavi);
+						}
+						else {
+							var emptyPageNavi ="<span><img src='' id='prev_img' width='20px'></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span></span>"
+								                +"<span><img src='' id='next_img' width='20px'></span>";
+							$('#techSppt-tb tbody').html('');
+							$('#navi').html(emptyPageNavi);
+						} 
+					},
+					error : function(){
+						//console.log("ajax 통신 에러");
+						alert("페이지를 불러오는 도중 오류가 발생했습니다.\n"
+							+"문제가 지속될 경우 관리자에게 문의해주세요.");
+					location.href = "/views/main/mainpage.jsp";
+					},
+					complete : function(){
+						//alert("complete");
+					}
+				});
+	    		
+	    	}
+	    	
+	    	return false;
+	    }//function END
+	    
     </script>
 </head>
 <body>
@@ -184,6 +270,17 @@
                 <span></span>
                 <span><img src='' id='next_img' width='20px'></span>
             </div>
+        </div>
+		<div id="search_div">
+        	<div>
+	       		<form id="searchArea_form">
+	       			<input type="radio" name="searchArea" value="SPPT_WRITERNAME" />협력사 담당자
+	       			<input type="radio" name="searchArea" value="SPPT_ENGNAME" />담당 엔지니어
+	       			<input type="radio" name="searchArea" value="SPPT_TITLE" checked/>제목
+	        		<input type="text" name="searchKeyword" id="searchKeyword"/>
+	        		<button id="search_btn" onclick="return search(1);">검색</button>
+	        	</form>
+        	</div>
         </div>
 	</div>
 	

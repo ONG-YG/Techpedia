@@ -153,14 +153,23 @@
 	    	var tit = $('#titleInput').val();
 	    	var con = $('#content_txt').val();
 	    	
-	    	if(grd=='none') {
-	    		alert("등급을 선택해주세요.");
-	    	}
-	    	else if(tit=='' || con=='') {
-	    		alert("제목과 내용을 모두 입력해주세요.");
+	    	var fileNameSplit = $('#fileInput_span').text().split('.');
+	    	var fileType = fileNameSplit[fileNameSplit.length-1];
+    		var res = fileType.match(/(txt|doc|hwp|jpg|png|zip)$/i);
+    		
+	    	if(res || $('#fileInput').val()=='') {
+		    	if(grd=='none') {
+		    		alert("등급을 선택해주세요.");
+		    	}
+		    	else if(tit=='' || con=='') {
+		    		alert("제목과 내용을 모두 입력해주세요.");
+		    	}
+		    	else {
+		    		$('#writeForm').submit();
+		    	}
 	    	}
 	    	else {
-	    		$('#writeForm').submit();
+	    		alert("업로드 가능한 파일 형식이 아닙니다.");
 	    	}
 	    	
 	    	return false;
@@ -238,7 +247,7 @@
 							<button id="fileInput_btn" onclick="return chooseFile();">파일선택</button>
 							<div id="fileInput_div">
 								<span id="fileInput_span">선택된 파일 없음</span>
-								<input type="file" name="upfile" id="fileInput"/>
+								<input type="file" name="upfile" id="fileInput" accept=".txt, .doc, .hwp, .jpg, .png, .zip" />
 							</div>
 							<!-- <input type="submit" value="파일첨부" class="upload_btn"/> -->
 							<!-- <input type="reset" value="취소" class="upload_btn" onclick="resetUpload();"/> -->

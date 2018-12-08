@@ -56,6 +56,8 @@
 	<script>
 	    $(document).ready(function(){
 	    	
+	    	history.pushState({},"", "/views/main/mainpage.jsp");
+	    	
 	    	getTechShareList();
 	    	
 	    });//$(document).ready END

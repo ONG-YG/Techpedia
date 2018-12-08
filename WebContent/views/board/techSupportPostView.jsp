@@ -81,13 +81,17 @@
 	    	});
 	    	
 	    	$('#engName_span').click(function(){
-	    		getContactInfo(spptEng);
+	    		if(!$('#engName_span').hasClass('noEng')) {
+	    			getContactInfo(spptEng);
+	    		}
+	    		
 	    	});
 	    	
 	    	$('#fileDownload_td').click(function(){
-				var fileName = $('#fileDownload_td').html();
-	    		
-	    		location.href = "/downloadFile.do?fileName="+fileName;
+	    		if($('#fileDownload_td').hasClass('fileExist')) {
+	    			var fileName = $('#fileDownload_td').html();
+		    		location.href = "/downloadFile.do?fileName="+fileName;
+	    		}
 	    		
 	    	});
 	    	
@@ -205,13 +209,18 @@
 							spptWriter = data.spptWriter;
 							spptEng = data.spptEng;
 							var engName = data.spptEngName;
-							if(engName==null) engName = '(배정되지 않음)';
+							if(engName==null) {
+								engName = '(배정되지 않음)';
+								$('#engName_span').addClass('noEng');
+								$('#engName_span').css('cursor','text');
+							}
+							
 					    	if(data.spptStatcd=='COMPLETE') {
 					    		$('#cmmWrite_tr').remove();
 					    	}
 					    	else if(data.spptStatcd=='NEW' 
-					    			&& memberTypeCD=='MNFE_AD'
-					    				&& memberTypeCD=='MNFE') {
+					    			&& (memberTypeCD=='MNFE_AD'
+					    				|| memberTypeCD=='MNFE')) {
 					    		$('#takeCharge_btn').css('display','block');
 					    		$('#takeCharge_btn').attr('onclick','takeCharge();');
 					    	}
@@ -229,6 +238,11 @@
 							$('#techSppDate_td').html(data.spptDate);
 							$('#techSppCnt_td').html(data.spptCnt+1);
 							$('#fileDownload_td').html(data.attName);//첨부파일
+
+							if(data.attName!=null) {
+								$('#fileDownload_td').addClass('fileExist');
+								$('#fileDownload_td').css('cursor','pointer');
+							}
 							
 							if(data.spptEngck=='N') {
 								$('#engCheck_span').css('color','coral');
@@ -598,7 +612,7 @@
 		        <tr id="fileDownload_tr">
 		            <th id="techSppFile">첨부파일</th>
 	                <td id="fileDownload_td">
-						첨부파일 다운로드 링크
+						첨부파일된 파일이 존재하지 않습니다.
 	                </td>
 		        </tr>
 		        <tr id="button_tr">

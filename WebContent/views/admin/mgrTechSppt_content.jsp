@@ -62,6 +62,8 @@
 	
 	<script>
 	$(document).ready(function(){
+		
+		history.pushState({},"", "/views/main/mainpage.jsp");
     	
 		if(memberTypeCD=='HP_AD' || memberTypeCD=='MNFE_AD') {
 			techSpptBoardList();

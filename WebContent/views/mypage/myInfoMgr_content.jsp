@@ -50,6 +50,8 @@
         
 	    $(document).ready(function(){
 	    	
+	    	history.pushState({},"", "/views/main/mainpage.jsp");
+	    	
 	    	getMemberInfo();
 	    	//check();
 	    	
@@ -187,7 +189,7 @@
 				}
 			});
 	    }//function END
-        
+	    
 	    function check() {
             var memberPwInput = document.getElementById("memberPwInput").value;
             var memberPwReInput = document.getElementById("memberPwReInput").value;

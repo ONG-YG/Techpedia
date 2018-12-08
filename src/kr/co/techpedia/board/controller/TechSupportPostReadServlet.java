@@ -43,13 +43,22 @@ public class TechSupportPostReadServlet extends HttpServlet {
 				
 				TechSupportPost post = new BoardService().getOneTechSupportPost(postNo);
 				
+				
 				response.setContentType("application/json");
 				response.setCharacterEncoding("utf-8");
 				
 				if(post!=null) {
-					int result = new BoardService().addReadCnt("TECH_SPPT", "SPPT_CNT", postNo);
-					if(result>0) new Gson().toJson(post, response.getWriter());
-					else throw new Exception();
+					
+					if(memSession.getMemberTypeCD().equals("COP")
+							&& post.getSpptWriterCompNo()!=memSession.getCompNo()) {
+						response.sendRedirect("/views/board/abnormalAccess.jsp");
+					}
+					else {
+						int result = new BoardService().addReadCnt("TECH_SPPT", "SPPT_CNT", postNo);
+						if(result>0) new Gson().toJson(post, response.getWriter());
+						else throw new Exception();
+					}
+					
 				}
 				else {
 					throw new Exception();

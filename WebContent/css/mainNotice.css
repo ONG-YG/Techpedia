@@ -22,7 +22,7 @@ div{
     margin-right: auto;
     height: auto; width: 900px;
     text-align: center;
-    text-shadow: -1px -1px %px white,
+    text-shadow: -1px -1px 5px white,
                 1px 1px 5px rgb(197,206,215);
 }
 #mainNotice #notice-tb tr:first-child th{

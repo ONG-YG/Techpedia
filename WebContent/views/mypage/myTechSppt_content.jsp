@@ -64,11 +64,14 @@
 	<script>
 	$(document).ready(function(){
     	
+		history.pushState({},"", "/views/main/mainpage.jsp");
+    	
 		getTechSpptList();
     	
     });//$(document).ready END
     
     function move(pageNo){
+    	
     	currPg = pageNo;
     	getTechSpptList();
     }

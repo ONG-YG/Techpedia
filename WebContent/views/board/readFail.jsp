@@ -10,7 +10,7 @@
 
 	<script>
 		location.href="/index.jsp";
-		alert("글을 불러오는 중 오류가 발생했습니다."
+		alert("오류가 발생했습니다."
 				+ "문제가 지속될 경우 관리자에게 문의해주세요.");
 	</script>
 

@@ -72,9 +72,10 @@
 	    	}
 
 	    	$('#fileDownload_td').click(function(){
-				var fileName = $('#fileDownload_td').html();
-	    		
-	    		location.href = "/downloadFile.do?fileName="+fileName;
+	    		if($('#fileDownload_td').hasClass('fileExist')) {
+	    			var fileName = $('#fileDownload_td').html();
+		    		location.href = "/downloadFile.do?fileName="+fileName;
+	    		}
 	    		
 	    	});
 	    	
@@ -188,6 +189,11 @@
 						$('#techShDate_td').html(data.shrDate);
 						$('#techShCnt_td').html(data.shrCnt+1);
 						$('#fileDownload_td').html(data.attName);//첨부파일
+
+						if(data.attName!=null) {
+							$('#fileDownload_td').addClass('fileExist');
+							$('#fileDownload_td').css('cursor','pointer');
+						}
 						
 						if(memberNo==data.shrWriter) {
 							$('#rewrite_btn').css('display','block');
@@ -438,7 +444,7 @@
 		        <tr id="fileDownload_tr">
 		            <th id="techShFile">첨부파일</th>
 	                <td id="fileDownload_td">
-						첨부파일 다운로드 링크
+						첨부파일된 파일이 존재하지 않습니다.
 	                </td>
 		        </tr>
 		        <tr id="button_tr">
